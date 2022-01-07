@@ -15,7 +15,12 @@ type DataType = {
   lang: string;
   meta: any;
   title?: string;
-  author?: string;
+  author?: AuthorType;
+}
+
+type AuthorType = {
+  name: string;
+  summary: string;
 }
 
 function Seo({ description, lang, meta, title }: DataType) {
@@ -26,7 +31,10 @@ function Seo({ description, lang, meta, title }: DataType) {
           siteMetadata {
             title
             description
-            author
+            author {
+              name
+              summary
+            }
           }
         }
       }
@@ -66,7 +74,7 @@ function Seo({ description, lang, meta, title }: DataType) {
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata?.author || ``,
+          content: site.siteMetadata?.author?.name || ``,
         },
         {
           name: `twitter:title`,
