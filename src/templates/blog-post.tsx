@@ -85,6 +85,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        type
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {
@@ -119,7 +120,7 @@ type BlogType = {
     frontmatter: {
         title: string;
         date: string;
-        description: string
+        description: string;
     }
 }
 
