@@ -7,6 +7,7 @@
 
 import * as React from "react"
 import PropTypes from "prop-types"
+import {ChangeLocale} from "./changeLocale";
 // import { useStaticQuery, graphql } from "gatsby"
 
 
@@ -24,6 +25,7 @@ const Layout: React.FC = ({ children }) => {
   return (
     <>
       {/*<Header siteTitle={data.site.siteMetadata?.title || `Title`} />*/}
+      <ChangeLocale />
       <div
       >
         <main>{children}</main>
