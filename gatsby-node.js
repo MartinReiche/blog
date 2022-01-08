@@ -1,5 +1,6 @@
 const path = require(`path`)
 const {createFilePath} = require(`gatsby-source-filesystem`)
+const {getBlogPath} = require(`./src/utils/getBlogPath`)
 
 exports.createPages = async ({graphql, actions, reporter}) => {
   const {createPage} = actions
@@ -18,10 +19,9 @@ exports.createPages = async ({graphql, actions, reporter}) => {
           nodes {
             id
             frontmatter {
+              path
+              lang
               type
-            }
-            fields {
-              slug
             }
           }
         }
@@ -37,27 +37,17 @@ exports.createPages = async ({graphql, actions, reporter}) => {
     return
   }
 
-  const posts = result.data.allMarkdownRemark.nodes
+  const posts = result.data.allMarkdownRemark.nodes.filter(node => node.frontmatter.type === 'blog');
 
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
 
   if (posts.length > 0) {
-    posts.filter(post => post.frontmatter.type === 'BlogPost').forEach((post, index) => {
-      const previousPostId = index === 0 ? null : posts[index - 1].id
-      const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
-
-      createPage({
-        path: post.fields.slug,
-        component: blogPost,
-        context: {
-          id: post.id,
-          previousPostId,
-          nextPostId,
-        },
-      })
-    })
+    ['de', 'en'].map(lang => {
+      const languageSpecificPosts = posts.filter(post => post.frontmatter.lang === lang);
+      createMarkDownPages(languageSpecificPosts,blogPost,actions);
+    });
   }
 }
 
@@ -99,16 +89,34 @@ exports.createSchemaCustomization = ({actions}) => {
     }
     type MarkdownRemark implements Node {
       frontmatter: Frontmatter
-      fields: Fields
     }
     type Frontmatter {
       title: String
       description: String
       date: Date @dateformat
+      path: String
+      lang: String
       type: String
     }
-    type Fields {
-      slug: String
-    }
   `)
+}
+
+
+function createMarkDownPages(items, component, actions) {
+  const { createPage } = actions;
+  items.forEach((item, index) => {
+
+    const previousPostId = index === 0 ? null : items[index - 1].id
+    const nextPostId = index === items.length - 1 ? null : items[index + 1].id
+
+    createPage({
+      path: getBlogPath(item.frontmatter, 'de'),
+      component: component,
+      context: {
+        id: item.id,
+        previousPostId,
+        nextPostId,
+      },
+    })
+  })
 }

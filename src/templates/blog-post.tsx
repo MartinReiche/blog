@@ -3,10 +3,13 @@ import {graphql, Link} from "gatsby"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import {getBlogPath} from "../utils/getBlogPath";
+
 
 type BlogPostTemplateProps = {
     data: DataType;
 }
+
 
 const BlogPostTemplate = ({data }: BlogPostTemplateProps) => {
     const post = data.markdownRemark
@@ -46,14 +49,14 @@ const BlogPostTemplate = ({data }: BlogPostTemplateProps) => {
                 >
                     <li>
                         {previous && (
-                            <Link to={previous.fields.slug} rel="prev">
+                            <Link to={getBlogPath(previous.frontmatter, 'de')} rel="prev">
                                 ← {previous.frontmatter.title}
                             </Link>
                         )}
                     </li>
                     <li>
                         {next && (
-                            <Link to={next.fields.slug} rel="next">
+                            <Link to={getBlogPath(next.frontmatter, 'de')} rel="next">
                                 {next.frontmatter.title} →
                             </Link>
                         )}
@@ -85,23 +88,22 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
-        type
+        path
+        lang
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {
-      fields {
-        slug
-      }
       frontmatter {
         title
+        path
+        lang
       }
     }
     next: markdownRemark(id: { eq: $nextPostId }) {
-      fields {
-        slug
-      }
       frontmatter {
         title
+        path
+        lang
       }
     }
   }
@@ -121,6 +123,8 @@ type BlogType = {
         title: string;
         date: string;
         description: string;
+        path: string;
+        lang: string;
     }
 }
 
@@ -130,6 +134,8 @@ type PageType = {
     },
     frontmatter: {
         title: string;
+        path: string;
+        lang: string;
     }
 }
 

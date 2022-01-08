@@ -28,9 +28,45 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
+        name: `blogpost`,
         path: `${__dirname}/content/blog`,
       },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `podcast`,
+        path: `${__dirname}/content/podcast`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/locales`,
+        name: `locale`
+      }
+    },
+    {
+      resolve: `gatsby-plugin-react-i18next`,
+      options: {
+        localeJsonSourceName: `locale`,
+        languages: [`en`, `de`],
+        defaultLanguage: `de`,
+        siteUrl: `http://localhost:8000/`,
+        i18nextOptions: {
+          interpolation: {
+            escapeValue: false
+          },
+          keySeparator: false,
+          nsSeparator: false
+        },
+        pages: [
+          {
+            matchPath: '/:lang?/blog/:uid',
+            getLanguageFromPath: true,
+          },
+        ]
+      }
     },
     {
       resolve: `gatsby-transformer-remark`,
