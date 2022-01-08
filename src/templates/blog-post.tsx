@@ -11,7 +11,7 @@ type BlogPostTemplateProps = {
 }
 
 
-const BlogPostTemplate = ({data }: BlogPostTemplateProps) => {
+const BlogPostTemplate = ({data}: BlogPostTemplateProps) => {
     const post = data.markdownRemark
     // const siteTitle = data.site.siteMetadata?.title || `Title`
     const {previous, next} = data
@@ -74,6 +74,7 @@ export const pageQuery = graphql`
     $id: String!
     $previousPostId: String
     $nextPostId: String
+    $language: String!
   ) {
     site {
       siteMetadata {
@@ -104,6 +105,15 @@ export const pageQuery = graphql`
         title
         path
         lang
+      }
+    }
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
       }
     }
   }
