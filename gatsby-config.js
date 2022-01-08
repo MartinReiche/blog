@@ -11,11 +11,12 @@ module.exports = {
     description: `A blog about experimental thoughts, sustainable travel, alternative lifeforms`,
     author: {
       name: `Martin Reiche`,
-      summary: `Long range cycle maniac in search for meaning`
+      summary: `Long range cycle enthusiast in search for meaning`
     },
     siteUrl: `https://martinreiche.de/`,
   },
   plugins: [
+    'gatsby-plugin-top-layout',
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     {
