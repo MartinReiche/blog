@@ -5,5 +5,9 @@
   "i18n:podcast": "Podcast",
   "i18n:podcast:text": "This is my Podcast!",
   "i18n:about": "About the Author",
-  "i18n:about:text": "Hi, I'm Martin"
+  "i18n:about:text": "Hi, I'm Martin",
+  "i18n:support": "Support",
+  "i18n:support:text": "In Case you want to support me...",
+  "i18n:impressum": "Impressum",
+  "i18n:impressum:text": "Text for the Impressum"
 }

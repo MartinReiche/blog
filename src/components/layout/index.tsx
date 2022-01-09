@@ -1,48 +1,28 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/use-static-query/
- */
-
 import * as React from "react"
 import PropTypes from "prop-types"
-import Header from "./Header";
+import Header from "./header";
+import Footer from "./footer";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
-// import { useStaticQuery, graphql } from "gatsby"
+const Layout: React.FC = ({children}) => {
+    return (
+        <Box sx={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
+            <Header/>
+            <Box sx={{flexGrow: 1}}>
+                <Container maxWidth="md">
+                    <main>{children}</main>
+                </Container>
+            </Box>
+            <Footer />
+        </Box>
 
 
-const Layout: React.FC = ({ children }) => {
-  // const data = useStaticQuery(graphql`
-  //   query SiteTitleQuery {
-  //     site {
-  //       siteMetadata {
-  //         title
-  //       }
-  //     }
-  //   }
-  // `)
-
-  return (
-    <>
-      {/*<Header siteTitle={data.site.siteMetadata?.title || `Title`} />*/}
-      <Header />
-        <main>{children}</main>
-        <footer
-          style={{
-            marginTop: `2rem`,
-          }}
-        >
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
-        </footer>
-    </>
-  )
+    )
 }
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired,
+    children: PropTypes.node.isRequired,
 }
 
 export default Layout

@@ -13,7 +13,7 @@ export const ChangeLocale = () => {
    return (
         <Button
             onClick={handleLanguageChange}
-            sx={{ color: 'white '}}
+            sx={{ color: 'secondary.light'}}
         >
             {language === 'de' ? 'english' : 'deutsch'}
         </Button>

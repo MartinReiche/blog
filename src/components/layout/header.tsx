@@ -3,7 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
@@ -12,13 +11,14 @@ import MenuItem from '@mui/material/MenuItem';
 import {useI18next} from "gatsby-plugin-react-i18next";
 import Link from '../link';
 import {ChangeLocale} from "./ChangeLocale";
-import { StaticImage } from "gatsby-plugin-image"
+import {StaticImage} from "gatsby-plugin-image"
 
 
 const pages = [
     {label: 'i18n:blog', path: '/blog'},
     {label: 'i18n:podcast', path: '/podcast'},
-    {label: 'i18n:about', path: '/about'}
+    {label: 'i18n:about', path: '/about'},
+    {label: 'i18n:support', path: '/support'}
 ];
 
 const Header = () => {
@@ -37,7 +37,7 @@ const Header = () => {
         <AppBar position="static" color="primary">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Box sx={{ marginRight: 5, display: {xs: 'none', md: 'flex'}}}>
+                    <Box sx={{marginRight: 5, display: {xs: 'none', md: 'flex'}}}>
                         <Link to="/">
                             <StaticImage
                                 src="../../images/logo.png"
@@ -80,27 +80,29 @@ const Header = () => {
                             {pages.map((page) => (
                                 <Link to={page.path} key={page.label}>
                                     <MenuItem onClick={handleCloseNavMenu}>
-                                        <Typography textAlign="center">{t(page.label)}</Typography>
+                                        {t(page.label)}
                                     </MenuItem>
                                 </Link>
                             ))}
                         </Menu>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-                        <StaticImage
-                            src="../../images/logo.png"
-                            alt="Martin Reiche"
-                            placeholder="blurred"
-                            width={40}
-                            height={40}
-                        />
+                        <Link to="/">
+                            <StaticImage
+                                src="../../images/logo.png"
+                                alt="Martin Reiche"
+                                placeholder="blurred"
+                                width={40}
+                                height={40}
+                            />
+                        </Link>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
                             <Link to={page.path} key={page.label}>
                                 <Button
                                     onClick={handleCloseNavMenu}
-                                    sx={{my: 2, color: 'white', display: 'block'}}
+                                    sx={{my: 2, color: 'secondary.light', display: 'block'}}
                                 >
                                     {t(page.label)}
                                 </Button>
@@ -108,7 +110,6 @@ const Header = () => {
                         ))}
                     </Box>
                     <ChangeLocale/>
-
                 </Toolbar>
             </Container>
         </AppBar>

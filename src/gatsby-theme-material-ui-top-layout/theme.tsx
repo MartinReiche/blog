@@ -1,4 +1,4 @@
-import { red, deepOrange } from '@mui/material/colors';
+import { red, deepOrange, blueGrey } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
 // A custom theme for this app
@@ -8,7 +8,7 @@ const theme = createTheme({
             main: deepOrange[900],
         },
         secondary: {
-            main: '#19857b',
+            main: blueGrey[50],
         },
         error: {
             main: red.A400,
