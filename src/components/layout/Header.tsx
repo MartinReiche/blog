@@ -11,6 +11,9 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import {useI18next} from "gatsby-plugin-react-i18next";
 import Link from '../link';
+import {ChangeLocale} from "./ChangeLocale";
+import { StaticImage } from "gatsby-plugin-image"
+
 
 const pages = [
     {label: 'i18n:blog', path: '/blog'},
@@ -34,15 +37,17 @@ const Header = () => {
         <AppBar position="static" color="primary">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}
-                    >
-                        LOGO
-                    </Typography>
-
+                    <Box sx={{ marginRight: 5, display: {xs: 'none', md: 'flex'}}}>
+                        <Link to="/">
+                            <StaticImage
+                                src="../../images/logo.png"
+                                alt="Martin Reiche"
+                                placeholder="blurred"
+                                width={50}
+                                height={50}
+                            />
+                        </Link>
+                    </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
                             size="large"
@@ -73,24 +78,23 @@ const Header = () => {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page.label} onClick={handleCloseNavMenu}>
-                                    test
-                                    <Link to={page.path}>
-                                        {t(page.label)}
-                                        {/*<Typography textAlign="center">{t(page.label)}</Typography>*/}
-                                    </Link>
-                                </MenuItem>
+                                <Link to={page.path} key={page.label}>
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Typography textAlign="center">{t(page.label)}</Typography>
+                                    </MenuItem>
+                                </Link>
                             ))}
                         </Menu>
                     </Box>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}
-                    >
-                        LOGO
-                    </Typography>
+                    <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+                        <StaticImage
+                            src="../../images/logo.png"
+                            alt="Martin Reiche"
+                            placeholder="blurred"
+                            width={40}
+                            height={40}
+                        />
+                    </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
                             <Link to={page.path} key={page.label}>
@@ -103,6 +107,8 @@ const Header = () => {
                             </Link>
                         ))}
                     </Box>
+                    <ChangeLocale/>
+
                 </Toolbar>
             </Container>
         </AppBar>

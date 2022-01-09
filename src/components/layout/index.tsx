@@ -7,7 +7,6 @@
 
 import * as React from "react"
 import PropTypes from "prop-types"
-import {ChangeLocale} from "./ChangeLocale";
 import Header from "./Header";
 
 // import { useStaticQuery, graphql } from "gatsby"
@@ -28,9 +27,6 @@ const Layout: React.FC = ({ children }) => {
     <>
       {/*<Header siteTitle={data.site.siteMetadata?.title || `Title`} />*/}
       <Header />
-      <ChangeLocale />
-      <div
-      >
         <main>{children}</main>
         <footer
           style={{
@@ -41,7 +37,6 @@ const Layout: React.FC = ({ children }) => {
           {` `}
           <a href="https://www.gatsbyjs.com">Gatsby</a>
         </footer>
-      </div>
     </>
   )
 }
