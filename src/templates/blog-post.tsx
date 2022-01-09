@@ -1,20 +1,23 @@
 import * as React from "react"
-import {graphql, Link} from "gatsby"
+import {graphql} from "gatsby"
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+
 
 import Layout from "../components/layout"
 import Seo from "../components/layout/seo"
-import {getBlogPath} from "../utils/getBlogPath";
-
+import Link from "../components/link"
 
 type BlogPostTemplateProps = {
     data: DataType;
 }
 
-
 const BlogPostTemplate = ({data}: BlogPostTemplateProps) => {
-    const post = data.markdownRemark
-    // const siteTitle = data.site.siteMetadata?.title || `Title`
-    const {previous, next} = data
+    const {post, previous, next} = data
+
+    const image = getImage(post.frontmatter.featuredImage)
 
     return (
         <Layout>
@@ -22,21 +25,37 @@ const BlogPostTemplate = ({data}: BlogPostTemplateProps) => {
                 title={post.frontmatter.title}
                 description={post.frontmatter.description || post.excerpt}
             />
-            <article
-                className="blog-post"
-                itemScope
-                itemType="http://schema.org/Article"
-            >
-                <header>
-                    <h1 itemProp="headline">{post.frontmatter.title}</h1>
-                    <p>{post.frontmatter.date}</p>
-                </header>
-                <section
-                    dangerouslySetInnerHTML={{__html: post.html}}
-                    itemProp="articleBody"
-                />
-                <hr/>
-            </article>
+            <Box sx={{
+                marginTop: (theme) => theme.spacing(8)
+            }}>
+                <article
+                    className="blog-post"
+                    itemScope
+                    itemType="http://schema.org/Article"
+                >
+                    <header>
+                        <Typography variant="h2" color="primary.dark" sx={{ fontWeight: 'fontWeightBold'}} itemProp="headline">
+                            {post.frontmatter.title}
+                        </Typography>
+                        {post.frontmatter.description && (
+                            <Typography variant="h5" color="primary">
+                                {post.frontmatter.description}
+                            </Typography>
+                        )}
+                        <Typography>
+                            {post.frontmatter.date}
+                        </Typography>
+                        {image && <GatsbyImage image={image} alt={post.frontmatter.title} />}
+                    </header>
+                    <Divider />
+                    <section
+                        dangerouslySetInnerHTML={{__html: post.html}}
+                        itemProp="articleBody"
+                    />
+                    <Divider />
+                </article>
+            </Box>
+
             <nav className="blog-post-nav">
                 <ul
                     style={{
@@ -49,14 +68,14 @@ const BlogPostTemplate = ({data}: BlogPostTemplateProps) => {
                 >
                     <li>
                         {previous && (
-                            <Link to={getBlogPath(previous.frontmatter, 'de')} rel="prev">
+                            <Link to={previous.frontmatter.path} rel="prev">
                                 ← {previous.frontmatter.title}
                             </Link>
                         )}
                     </li>
                     <li>
                         {next && (
-                            <Link to={getBlogPath(next.frontmatter, 'de')} rel="next">
+                            <Link to={next.frontmatter.path} rel="next">
                                 {next.frontmatter.title} →
                             </Link>
                         )}
@@ -81,7 +100,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    markdownRemark(id: { eq: $id }) {
+    post: markdownRemark(id: { eq: $id }) {
       id
       excerpt(pruneLength: 160)
       html
@@ -91,6 +110,15 @@ export const pageQuery = graphql`
         description
         path
         lang
+        featuredImage {
+          childImageSharp {
+            gatsbyImageData(
+              width: 900
+              placeholder: BLURRED
+              formats: [AUTO, WEBP, AVIF]
+            )
+          }
+        }
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {
@@ -120,7 +148,7 @@ export const pageQuery = graphql`
 `
 type DataType = {
     site: SiteType;
-    markdownRemark: BlogType;
+    post: BlogType;
     previous: PageType;
     next: PageType;
 }
@@ -135,6 +163,7 @@ type BlogType = {
         description: string;
         path: string;
         lang: string;
+        featuredImage: any
     }
 }
 

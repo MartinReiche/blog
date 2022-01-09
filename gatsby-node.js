@@ -1,9 +1,7 @@
 const path = require(`path`)
 const {createFilePath} = require(`gatsby-source-filesystem`)
-const {getBlogPath} = require(`./src/utils/getBlogPath`)
 
 exports.createPages = async ({graphql, actions, reporter}) => {
-  const {createPage} = actions
 
   // Define a template for blog post
   const blogPost = path.resolve(`./src/templates/blog-post.tsx`)
@@ -110,7 +108,7 @@ function createMarkDownPages(items, component, actions) {
     const nextPostId = index === items.length - 1 ? null : items[index + 1].id
 
     createPage({
-      path: getBlogPath(item.frontmatter, 'de'),
+      path: getI18nPath(item.frontmatter, 'de'),
       component: component,
       context: {
         id: item.id,
@@ -120,3 +118,12 @@ function createMarkDownPages(items, component, actions) {
     })
   })
 }
+
+
+const getI18nPath = (frontMatter, defaultLang) => {
+  if (defaultLang === frontMatter.lang) {
+    return `${frontMatter.path}`;
+  } else {
+    return `/${frontMatter.lang}${frontMatter.path}`;
+  }
+};
