@@ -1,4 +1,9 @@
 {
-  "Hello": "Hallo",
-  "By": "Tschüss"
+  "i18n:home:text": "Wilkommen auf meiner Website. Ich schreibe Blogartikel und mache Podcasts.",
+  "i18n:blog": "Blog",
+  "i18n:blog:text": "Das ist mein Blog!",
+  "i18n:podcast": "Podcast",
+  "i18n:podcast:text": "Das ist mein Podcast!",
+  "i18n:about": "Über den Autor",
+  "i18n:about:text": "Hallo ich bin Martin"
 }
