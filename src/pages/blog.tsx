@@ -46,7 +46,7 @@ export const query = graphql`
         }
       }
     }
-    blog: allMarkdownRemark(
+    blog: allMdx(
       sort: { fields: [frontmatter___date], order: DESC },
       filter: {
         frontmatter: {

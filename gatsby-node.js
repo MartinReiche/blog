@@ -1,5 +1,4 @@
 const path = require(`path`)
-const {createFilePath} = require(`gatsby-source-filesystem`)
 
 exports.createPages = async ({graphql, actions, reporter}) => {
 
@@ -10,7 +9,7 @@ exports.createPages = async ({graphql, actions, reporter}) => {
   const result = await graphql(
     `
       {
-        allMarkdownRemark(
+        allMdx(
           sort: { fields: [frontmatter___date], order: ASC }
           limit: 1000
         ) {
@@ -35,33 +34,21 @@ exports.createPages = async ({graphql, actions, reporter}) => {
     return
   }
 
-  const posts = result.data.allMarkdownRemark.nodes.filter(node => node.frontmatter.type === 'blog');
+  const posts = result.data.allMdx.nodes.filter(node => node.frontmatter.type === 'blog');
 
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
 
+
   if (posts.length > 0) {
     ['de', 'en'].map(lang => {
       const languageSpecificPosts = posts.filter(post => post.frontmatter.lang === lang);
-      createMarkDownPages(languageSpecificPosts,blogPost,actions);
+      createMdxPages(languageSpecificPosts,blogPost,actions);
     });
   }
 }
 
-exports.onCreateNode = ({node, actions, getNode}) => {
-  const {createNodeField} = actions
-
-  if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({node, getNode})
-
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
-    })
-  }
-}
 
 exports.createSchemaCustomization = ({actions}) => {
   const {createTypes} = actions
@@ -85,22 +72,11 @@ exports.createSchemaCustomization = ({actions}) => {
     type Social {
       twitter: String
     }
-    type MarkdownRemark implements Node {
-      frontmatter: Frontmatter
-    }
-    type Frontmatter {
-      title: String
-      description: String
-      date: Date @dateformat
-      path: String
-      lang: String
-      type: String
-    }
   `)
 }
 
 
-function createMarkDownPages(items, component, actions) {
+function createMdxPages(items, component, actions) {
   const { createPage } = actions;
   items.forEach((item, index) => {
 

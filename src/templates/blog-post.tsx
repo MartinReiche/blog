@@ -9,6 +9,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
 import Seo from "../components/layout/seo"
 import Link from "../components/link"
+import {MDXRenderer} from "gatsby-plugin-mdx";
 
 type BlogPostTemplateProps = {
     data: DataType;
@@ -48,10 +49,11 @@ const BlogPostTemplate = ({data}: BlogPostTemplateProps) => {
                         {image && <GatsbyImage image={image} alt={post.frontmatter.title} />}
                     </header>
                     <Divider />
-                    <section
-                        dangerouslySetInnerHTML={{__html: post.html}}
-                        itemProp="articleBody"
-                    />
+                    <section itemProp="articleBody"
+
+                    >
+                        <MDXRenderer title="My Stuff!">{post.body}</MDXRenderer>
+                    </section>
                     <Divider />
                 </article>
             </Box>
@@ -100,10 +102,10 @@ export const pageQuery = graphql`
         title
       }
     }
-    post: markdownRemark(id: { eq: $id }) {
+    post: mdx(id: { eq: $id }) {
       id
       excerpt(pruneLength: 160)
-      html
+      body
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
@@ -121,14 +123,14 @@ export const pageQuery = graphql`
         }
       }
     }
-    previous: markdownRemark(id: { eq: $previousPostId }) {
+    previous: mdx(id: { eq: $previousPostId }) {
       frontmatter {
         title
         path
         lang
       }
     }
-    next: markdownRemark(id: { eq: $nextPostId }) {
+    next: mdx(id: { eq: $nextPostId }) {
       frontmatter {
         title
         path
@@ -156,7 +158,7 @@ type DataType = {
 type BlogType = {
     id: string;
     excerpt: string;
-    html: string;
+    body: string;
     frontmatter: {
         title: string;
         date: string;
