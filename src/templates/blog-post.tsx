@@ -1,24 +1,31 @@
 import * as React from "react"
-import {graphql} from "gatsby"
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-
+// @ts-ignore
+import { MDXProvider } from "@mdx-js/react"
+import { MDXRenderer } from "gatsby-plugin-mdx";
 
 import Layout from "../components/layout"
 import Seo from "../components/layout/seo"
 import Link from "../components/link"
-import {MDXRenderer} from "gatsby-plugin-mdx";
+import Gallery from "../components/gallery";
+import {graphql} from "gatsby";
 
 type BlogPostTemplateProps = {
     data: DataType;
 }
 
+const shortcodes = { Gallery };
+
 const BlogPostTemplate = ({data}: BlogPostTemplateProps) => {
     const {post, previous, next} = data
 
-    const image = getImage(post.frontmatter.featuredImage)
+    const image = getImage(post.frontmatter.title_image)
+    const galleryImages = post.frontmatter.gallery_images?.map(image => {
+        return { original: image.childImageSharp.original, image: getImage(image) }
+    });
 
     return (
         <Layout>
@@ -49,10 +56,12 @@ const BlogPostTemplate = ({data}: BlogPostTemplateProps) => {
                         {image && <GatsbyImage image={image} alt={post.frontmatter.title} />}
                     </header>
                     <Divider />
-                    <section itemProp="articleBody"
-
-                    >
-                        <MDXRenderer title="My Stuff!">{post.body}</MDXRenderer>
+                    <section itemProp="articleBody">
+                        <MDXProvider components={shortcodes}>
+                            <MDXRenderer galleryImages={galleryImages}>
+                                {post.body}
+                            </MDXRenderer>
+                        </MDXProvider>
                     </section>
                     <Divider />
                 </article>
@@ -112,13 +121,23 @@ export const pageQuery = graphql`
         description
         path
         lang
-        featuredImage {
+        title_image {
           childImageSharp {
             gatsbyImageData(
               width: 900
               placeholder: BLURRED
               formats: [AUTO, WEBP, AVIF]
             )
+          }
+        }
+        gallery_images {
+          childImageSharp {
+            original {
+              width
+              height
+              src
+            }
+            gatsbyImageData
           }
         }
       }
@@ -165,7 +184,8 @@ type BlogType = {
         description: string;
         path: string;
         lang: string;
-        featuredImage: any
+        title_image: any
+        gallery_images: any[]
     }
 }
 
@@ -185,3 +205,4 @@ type SiteType = {
         title: string;
     }
 }
+

@@ -1,11 +1,15 @@
 ---
-title: Mit dem Fahrrad um die Welt
+title: "Mit dem Fahrrad um die Welt"
 description: "Die Geschichte eines Traumes"
 date: "2021-01-09T12:00:00Z"
-path: /blog/20210109
-lang: de
-type: blog
-featuredImage: title.jpeg
+path: "/blog/20210109"
+lang: "de"
+type: "blog"
+title_image: "./salty_egg.jpg"
+gallery_images:
+    - "./dog.jpg"
+    - "./mountain.jpg"
+    - "./mountain2.jpg"
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus purus at enim tempor pretium. 
@@ -19,6 +23,16 @@ Integer non diam augue. Nam quis malesuada mi. Nunc faucibus sollicitudin erat, 
 Suspendisse id sagittis dolor, eget elementum nulla. Donec dolor mi, lobortis et arcu aliquet, euismod rutrum augue. 
 Etiam et elit vitae lorem bibendum venenatis malesuada id turpis. Curabitur volutpat purus eu massa lobortis dignissim. 
 Mauris et sagittis ex, eu molestie tortor. Vivamus molestie malesuada ipsum, quis imperdiet quam mattis et.
+
+<Gallery
+    images={props.galleryImages}
+    imageProps={[
+        {title: "A Dog", rows: 1, cols: 2},
+        {title: "A Mountain", rows: 1, cols: 2},
+        {title: "A second Mountain", rows: 1, cols: 1},
+    ]}
+    options={{cols:3, rowHeight: 300}}
+/>
 
 Fusce cursus sit amet est a venenatis. Maecenas ut nibh consectetur est tristique vestibulum tempus sagittis mauris. 
 Sed rutrum purus quis sapien pharetra venenatis. Suspendisse potenti. Pellentesque habitant morbi tristique senectus 

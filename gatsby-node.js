@@ -72,6 +72,19 @@ exports.createSchemaCustomization = ({actions}) => {
     type Social {
       twitter: String
     }
+    type Mdx implements Node {
+      frontmatter: FrontMatter
+    }
+    type FrontMatter {
+      title: String
+      description: String
+      date: Date @dateformat
+      path: String
+      lang: String
+      type: String
+      title_image: File @fileByRelativePath
+      gallery_images: [File] @fileByRelativePath
+    }
   `)
 }
 

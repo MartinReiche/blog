@@ -68,6 +68,8 @@ module.exports = {
         ]
       }
     },
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
     `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
@@ -82,8 +84,6 @@ module.exports = {
         ],
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

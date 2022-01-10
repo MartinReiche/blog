@@ -50,7 +50,7 @@ export const query = graphql`
       sort: { fields: [frontmatter___date], order: DESC },
       filter: {
         frontmatter: {
-            lang: {eq: $language}, 
+            lang: {eq: $language},
             type: {eq: "blog"}
             }
         }
@@ -65,14 +65,16 @@ export const query = graphql`
         path
         lang
         description
-        featuredImage {
+        title_image {
           childImageSharp {
-            fluid(maxWidth: 800) {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(
+              width: 900
+              placeholder: BLURRED
+              formats: [AUTO, WEBP, AVIF]
+            )
           }
         }
-      } 
+      }
     }
     }
   }
