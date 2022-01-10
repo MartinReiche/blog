@@ -9,7 +9,7 @@ export default function Gallery({images, imageProps, options}: GalleryProps) {
         <ImageList
             variant="quilted"
             cols={options.cols || 4}
-            rowHeight={options.rowHeight || 500}
+            rowHeight={options.rowHeight || undefined}
         >
             {images.map((item, key) => (
                 <ImageListItem key={key} cols={imageProps[key].cols || 1} rows={imageProps[key].rows || 1}>
