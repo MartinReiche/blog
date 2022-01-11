@@ -7,25 +7,25 @@ import {GatsbyImage, getImage} from "gatsby-plugin-image"
 import {MDXProvider} from "@mdx-js/react"
 import {MDXRenderer} from "gatsby-plugin-mdx";
 
-import Layout from "../components/layout"
-import Seo from "../components/layout/seo"
-import Link from "../components/link"
-import { CombinedGallery, GridGallery, StepperGallery } from "../components/gallery"
+import Layout from "../../components/layout"
+import Seo from "../../components/layout/seo"
+import {CombinedGallery, GridGallery, StepperGallery} from "../../components/gallery"
 import {graphql} from "gatsby";
+import {BlogNavigation} from "./nav";
+import PropTypes, {InferProps, string} from "prop-types";
+import {ImageDataLike} from 'gatsby-plugin-image'
 
-type BlogPostTemplateProps = {
-    data: DataType;
-}
 
 const shortcodes = {CombinedGallery, GridGallery, StepperGallery};
 
-const BlogPostTemplate = ({ data }: BlogPostTemplateProps) => {
+export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTemplate.propTypes>) {
     const {post, previous, next} = data
+    const { title_image, gallery_images } = post.frontmatter;
 
-    const image = getImage(post.frontmatter.title_image)
-    const galleryImages = post.frontmatter.gallery_images?.map(image => {
-        return getImage(image);
-    });
+    const image = title_image ? getImage(title_image as ImageDataLike) : null;
+    const galleryImages = gallery_images ? gallery_images.map(image => {
+        return getImage(image as ImageDataLike);
+    }) : null;
 
     return (
         <Layout>
@@ -34,7 +34,7 @@ const BlogPostTemplate = ({ data }: BlogPostTemplateProps) => {
                 description={post.frontmatter.description || post.excerpt}
             />
             <Box sx={{
-                marginTop: (theme) => theme.spacing(8)
+                marginTop: (theme) => theme.spacing(5)
             }}>
                 <article
                     className="blog-post"
@@ -42,6 +42,7 @@ const BlogPostTemplate = ({ data }: BlogPostTemplateProps) => {
                     itemType="http://schema.org/Article"
                 >
                     <header>
+                        <BlogNavigation previous={previous} next={next} />
                         <Typography variant="h2" color="primary.dark" sx={{fontWeight: 'fontWeightBold'}}
                                     itemProp="headline">
                             {post.frontmatter.title}
@@ -76,38 +77,40 @@ const BlogPostTemplate = ({ data }: BlogPostTemplateProps) => {
                     <Divider/>
                 </article>
             </Box>
-
-            <nav className="blog-post-nav">
-                <ul
-                    style={{
-                        display: `flex`,
-                        flexWrap: `wrap`,
-                        justifyContent: `space-between`,
-                        listStyle: `none`,
-                        padding: 0,
-                    }}
-                >
-                    <li>
-                        {previous && (
-                            <Link to={previous.frontmatter.path} rel="prev">
-                                ← {previous.frontmatter.title}
-                            </Link>
-                        )}
-                    </li>
-                    <li>
-                        {next && (
-                            <Link to={next.frontmatter.path} rel="next">
-                                {next.frontmatter.title} →
-                            </Link>
-                        )}
-                    </li>
-                </ul>
-            </nav>
+            <BlogNavigation previous={previous} next={next}/>
         </Layout>
     )
 }
 
-export default BlogPostTemplate
+const AdjacentBlog = PropTypes.shape({
+    frontmatter: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        path: string.isRequired
+    }).isRequired
+});
+
+const FrontMatter = PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+    lang: PropTypes.string.isRequired,
+    title_image: PropTypes.object,
+    gallery_images: PropTypes.arrayOf(PropTypes.object)
+});
+
+BlogPostTemplate.propTypes = {
+    data: PropTypes.shape({
+        post: PropTypes.shape({
+            excerpt: PropTypes.string.isRequired,
+            body: PropTypes.string.isRequired,
+            frontmatter: FrontMatter.isRequired
+        }).isRequired,
+        next: AdjacentBlog,
+        previous: AdjacentBlog
+    }).isRequired,
+}
+
 
 export const pageQuery = graphql`
   query BlogPostBySlug(
@@ -116,12 +119,6 @@ export const pageQuery = graphql`
     $nextPostId: String
     $language: String!
   ) {
-    site {
-      siteMetadata {
-        title
-        siteUrl
-      }
-    }
     post: mdx(id: { eq: $id }) {
       id
       excerpt(pruneLength: 160)
@@ -173,42 +170,6 @@ export const pageQuery = graphql`
     }
   }
 `
-type DataType = {
-    site: SiteType;
-    post: BlogType;
-    previous: PageType;
-    next: PageType;
-}
 
-type BlogType = {
-    id: string;
-    excerpt: string;
-    body: string;
-    frontmatter: {
-        title: string;
-        date: string;
-        description: string;
-        path: string;
-        lang: string;
-        title_image: any
-        gallery_images: any[]
-    }
-}
 
-type PageType = {
-    fields: {
-        slug: any
-    },
-    frontmatter: {
-        title: string;
-        path: string;
-        lang: string;
-    }
-}
-
-type SiteType = {
-    siteMetadata: {
-        title: string;
-    }
-}
 

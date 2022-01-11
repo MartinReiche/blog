@@ -17,7 +17,6 @@ export const CombinedGallery = ({images, options}: GalleryProps) => {
         setStepperOpen(false);
     }
 
-
     return (
         <React.Fragment>
             <GridGallery images={images} options={options} onClick={handleImageClick}/>
