@@ -3,7 +3,8 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import {GatsbyImage} from "gatsby-plugin-image";
 
-const ImageGrid = ({images, options, onClick}: ImageGridProps) => {
+export const GridGallery = ({images, options, onClick}: ImageGridProps) => {
+
     return (
         <ImageList
             variant="quilted"
@@ -16,7 +17,7 @@ const ImageGrid = ({images, options, onClick}: ImageGridProps) => {
                     key={index}
                     cols={item.cols || 1}
                     rows={item.rows || 1}
-                    onClick={() => {onClick(index)}}
+                    onClick={() => {if (onClick) onClick(index)}}
                 >
                     <GatsbyImage alt={item.title} image={item.src}/>
                 </ImageListItem>
@@ -25,7 +26,7 @@ const ImageGrid = ({images, options, onClick}: ImageGridProps) => {
     );
 }
 
-export default ImageGrid;
+export default GridGallery;
 
 type ImageGridProps = {
     images: Image[]
@@ -33,7 +34,7 @@ type ImageGridProps = {
         cols?: number
         rowHeight?: number
     }
-    onClick: (index: number) => void
+    onClick?: (index: number) => void
 }
 
 type Image = {

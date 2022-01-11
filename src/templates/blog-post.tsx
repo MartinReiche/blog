@@ -10,14 +10,14 @@ import {MDXRenderer} from "gatsby-plugin-mdx";
 import Layout from "../components/layout"
 import Seo from "../components/layout/seo"
 import Link from "../components/link"
-import Gallery from "../components/gallery";
+import { CombinedGallery, GridGallery, StepperGallery } from "../components/gallery"
 import {graphql} from "gatsby";
 
 type BlogPostTemplateProps = {
     data: DataType;
 }
 
-const shortcodes = {Gallery};
+const shortcodes = {CombinedGallery, GridGallery, StepperGallery};
 
 const BlogPostTemplate = ({ data }: BlogPostTemplateProps) => {
     const {post, previous, next} = data

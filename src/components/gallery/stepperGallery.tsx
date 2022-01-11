@@ -11,12 +11,9 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 // @ts-ignore
 import SwipeableViews from 'react-swipeable-views';
 // @ts-ignore
-import {autoPlay} from 'react-swipeable-views-utils';
 import { GatsbyImage } from "gatsby-plugin-image";
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-
-const ImageStepper = ({images, imageIndex, onClose}: ImageStepperProps) => {
+export const StepperGallery = ({images, imageIndex = 0, onClose}: ImageStepperProps) => {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -40,8 +37,12 @@ const ImageStepper = ({images, imageIndex, onClose}: ImageStepperProps) => {
         setActiveStep(step);
     };
 
+    const handleClickAway = (e: MouseEvent | TouchEvent) => {
+        if (onClose) onClose(e)
+    }
+
     return (
-        <ClickAwayListener onClickAway={onClose}>
+        <ClickAwayListener onClickAway={handleClickAway}>
             <Box sx={{ flexGrow: 1}}>
                 <Paper
                     square
@@ -112,13 +113,15 @@ const ImageStepper = ({images, imageIndex, onClose}: ImageStepperProps) => {
     );
 }
 
-export default ImageStepper;
+export default StepperGallery;
 
 type ImageStepperProps = {
     images: {
         title: string
         src: any
+        rows?: number
+        cols?: number
     }[]
-    imageIndex: number
-    onClose: () => void
+    imageIndex?: number
+    onClose?: (event: MouseEvent | TouchEvent) => void
 }
