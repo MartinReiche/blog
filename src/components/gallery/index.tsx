@@ -1,37 +1,43 @@
-import * as React from 'react';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import { GatsbyImage } from "gatsby-plugin-image";
+import * as React from "react";
+import ImageGrid from "./imageGrid";
+import ImageStepper from "./imageStepper";
 
-export default function Gallery({images, imageProps, options}: GalleryProps) {
+export default function Gallery({images, options}: GalleryProps) {
+    const [activeStep, setActiveStep] = React.useState(0);
+
+    const handleImageClick = (index: number) => {
+        console.log(`Clicked Image with Index ${index}`)
+        setActiveStep(index);
+    }
+
+    const handleCloseStepper = () => {
+        console.log("Close Stepper")
+    }
+
 
     return (
-        <ImageList
-            variant="quilted"
-            cols={options.cols || 4}
-            rowHeight={options.rowHeight || undefined}
-        >
-            {images.map((item, key) => (
-                <ImageListItem key={key} cols={imageProps[key].cols || 1} rows={imageProps[key].rows || 1}>
-                    <GatsbyImage alt={imageProps[key].title} image={item.image} />
-                </ImageListItem>
-            ))}
-        </ImageList>
-    );
+        <React.Fragment>
+            <ImageGrid images={images} options={options} onClick={handleImageClick}/>
+            <ImageStepper
+                images={images.map(image => ({ src: image.src, title: image.title }))}
+                imageIndex={activeStep}
+                onClose={handleCloseStepper}
+            />
+        </React.Fragment>
+    )
 }
 
-
 type GalleryProps = {
-    images: {
-      image: any
-    }[]
-    imageProps: {
-        title: string
-        rows: number
-        cols: number
-    }[]
+    images: Image[]
     options: {
-        cols: number
-        rowHeight: number
+        cols?: number
+        rowHeight?: number
     }
+}
+
+type Image = {
+    src: any
+    title: string
+    rows?: number
+    cols?: number
 }

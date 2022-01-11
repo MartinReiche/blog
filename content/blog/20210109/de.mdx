@@ -27,13 +27,12 @@ Etiam et elit vitae lorem bibendum venenatis malesuada id turpis. Curabitur volu
 Mauris et sagittis ex, eu molestie tortor. Vivamus molestie malesuada ipsum, quis imperdiet quam mattis et.
 
 <Gallery
-    images={props.galleryImages}
-    imageProps={[
-        {title: "Schwarzwald im Winter", rows: 2, cols: 4},
-        {title: "Schweinehunde!", rows: 1, cols: 2},
-        {title: "Berge, Berge, Kindersärge", rows: 1, cols: 2},
-        {title: "Treppen!", rows: 2, cols: 3},
-        {title: "Gute Nacht", rows: 2, cols: 3},
+    images={[
+        {src: props.galleryImages[0], title: "Schwarzwald im Winter", rows: 2, cols: 4},
+        {src: props.galleryImages[1], title: "Schweinehunde!", rows: 1, cols: 2},
+        {src: props.galleryImages[2], title: "Berge, Berge, Kindersärge", rows: 1, cols: 2},
+        {src: props.galleryImages[3], title: "Treppen!", rows: 2, cols: 3},
+        {src: props.galleryImages[4], title: "Gute Nacht", rows: 2, cols: 3},
     ]}
     options={{cols:6}}
 />

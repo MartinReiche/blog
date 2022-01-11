@@ -23,7 +23,7 @@ type AuthorType = {
   summary: string;
 }
 
-function Seo({ description, lang, meta, title }: DataType) {
+const Seo = ({ description, lang, meta, title }: DataType) => {
   const { site } = useStaticQuery(
     graphql`
       query {

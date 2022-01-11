@@ -2,10 +2,10 @@ import * as React from "react"
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import {GatsbyImage, getImage} from "gatsby-plugin-image"
 // @ts-ignore
-import { MDXProvider } from "@mdx-js/react"
-import { MDXRenderer } from "gatsby-plugin-mdx";
+import {MDXProvider} from "@mdx-js/react"
+import {MDXRenderer} from "gatsby-plugin-mdx";
 
 import Layout from "../components/layout"
 import Seo from "../components/layout/seo"
@@ -17,14 +17,14 @@ type BlogPostTemplateProps = {
     data: DataType;
 }
 
-const shortcodes = { Gallery };
+const shortcodes = {Gallery};
 
-const BlogPostTemplate = ({data}: BlogPostTemplateProps) => {
+const BlogPostTemplate = ({ data }: BlogPostTemplateProps) => {
     const {post, previous, next} = data
 
     const image = getImage(post.frontmatter.title_image)
     const galleryImages = post.frontmatter.gallery_images?.map(image => {
-        return { original: image.childImageSharp.original, image: getImage(image) }
+        return getImage(image);
     });
 
     return (
@@ -42,7 +42,8 @@ const BlogPostTemplate = ({data}: BlogPostTemplateProps) => {
                     itemType="http://schema.org/Article"
                 >
                     <header>
-                        <Typography variant="h2" color="primary.dark" sx={{ fontWeight: 'fontWeightBold'}} itemProp="headline">
+                        <Typography variant="h2" color="primary.dark" sx={{fontWeight: 'fontWeightBold'}}
+                                    itemProp="headline">
                             {post.frontmatter.title}
                         </Typography>
                         {post.frontmatter.description && (
@@ -53,17 +54,26 @@ const BlogPostTemplate = ({data}: BlogPostTemplateProps) => {
                         <Typography>
                             {post.frontmatter.date}
                         </Typography>
-                        {image && <GatsbyImage image={image} alt={post.frontmatter.title} />}
+                        {/* Implement Social Media Share Buttons */}
+                        {/*<TwitterShareButton*/}
+                        {/*    title={post.frontmatter.title}*/}
+                        {/*    url={canonicalUrl}*/}
+                        {/*>*/}
+                        {/*    <TwitterIcon />*/}
+                        {/*</TwitterShareButton>*/}
+                        {image && <GatsbyImage image={image} alt={post.frontmatter.title}/>}
                     </header>
-                    <Divider />
+                    <Divider/>
                     <section itemProp="articleBody">
-                        <MDXProvider components={shortcodes}>
-                            <MDXRenderer galleryImages={galleryImages}>
-                                {post.body}
-                            </MDXRenderer>
-                        </MDXProvider>
+                        <Box sx={{textAlign: 'justify'}}>
+                            <MDXProvider components={shortcodes}>
+                                <MDXRenderer galleryImages={galleryImages}>
+                                    {post.body}
+                                </MDXRenderer>
+                            </MDXProvider>
+                        </Box>
                     </section>
-                    <Divider />
+                    <Divider/>
                 </article>
             </Box>
 
@@ -109,6 +119,7 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        siteUrl
       }
     }
     post: mdx(id: { eq: $id }) {
@@ -132,11 +143,6 @@ export const pageQuery = graphql`
         }
         gallery_images {
           childImageSharp {
-            original {
-              width
-              height
-              src
-            }
             gatsbyImageData
           }
         }
