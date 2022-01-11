@@ -18,6 +18,7 @@ export const GridGallery = ({images, options, onClick}: ImageGridProps) => {
                     cols={item.cols || 1}
                     rows={item.rows || 1}
                     onClick={() => {if (onClick) onClick(index)}}
+                    sx={{ cursor: onClick ? 'pointer' : 'default' }}
                 >
                     <GatsbyImage alt={item.title} image={item.src}/>
                 </ImageListItem>

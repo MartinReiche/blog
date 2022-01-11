@@ -3,8 +3,6 @@ import {useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
@@ -13,13 +11,12 @@ import SwipeableViews from 'react-swipeable-views';
 // @ts-ignore
 import { GatsbyImage } from "gatsby-plugin-image";
 
-export const StepperGallery = ({images, imageIndex = 0, onClose}: ImageStepperProps) => {
+export const StepperGallery = ({images, imageIndex = 0, onClose, maxHeight}: ImageStepperProps) => {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
 
     // sets the active step when changed from outside
     React.useEffect(() => {
-        console.log("set active step")
         setActiveStep(imageIndex);
     }, [imageIndex]);
 
@@ -44,19 +41,6 @@ export const StepperGallery = ({images, imageIndex = 0, onClose}: ImageStepperPr
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
             <Box sx={{ flexGrow: 1}}>
-                <Paper
-                    square
-                    elevation={0}
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        height: 50,
-                        pl: 2,
-                        bgcolor: 'background.default',
-                    }}
-                >
-                    <Typography>{images[activeStep].title}</Typography>
-                </Paper>
                 <SwipeableViews
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                     index={activeStep}
@@ -71,6 +55,7 @@ export const StepperGallery = ({images, imageIndex = 0, onClose}: ImageStepperPr
                                         display: 'block',
                                         overflow: 'hidden',
                                         width: '100%',
+                                        maxHeight: maxHeight || undefined
                                     }}
                                 >
                                     <GatsbyImage alt={step.title} image={step.src} />
@@ -124,4 +109,5 @@ type ImageStepperProps = {
     }[]
     imageIndex?: number
     onClose?: (event: MouseEvent | TouchEvent) => void
+    maxHeight?: string
 }
