@@ -14,13 +14,14 @@ import {graphql} from "gatsby";
 import {BlogNavigation} from "./nav";
 import PropTypes, {InferProps, string} from "prop-types";
 import {ImageDataLike} from 'gatsby-plugin-image'
+import Info from "./info";
 
 
 const shortcodes = {CombinedGallery, GridGallery, StepperGallery};
 
 export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTemplate.propTypes>) {
     const {post, previous, next} = data
-    const { title_image, gallery_images } = post.frontmatter;
+    const {title_image, gallery_images, description, title, date} = post.frontmatter;
 
     const image = title_image ? getImage(title_image as ImageDataLike) : null;
     const galleryImages = gallery_images ? gallery_images.map(image => {
@@ -30,8 +31,8 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
     return (
         <Layout>
             <Seo
-                title={post.frontmatter.title}
-                description={post.frontmatter.description || post.excerpt}
+                title={title}
+                description={description || post.excerpt}
             />
             <Box sx={{
                 marginTop: (theme) => theme.spacing(5)
@@ -42,19 +43,17 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                     itemType="http://schema.org/Article"
                 >
                     <header>
-                        <BlogNavigation previous={previous} next={next} />
+                        <BlogNavigation previous={previous} next={next}/>
                         <Typography variant="h2" color="primary.dark" sx={{fontWeight: 'fontWeightBold'}}
                                     itemProp="headline">
-                            {post.frontmatter.title}
+                            {title}
                         </Typography>
-                        {post.frontmatter.description && (
+                        {description && (
                             <Typography variant="h5" color="primary">
-                                {post.frontmatter.description}
+                                {description}
                             </Typography>
                         )}
-                        <Typography>
-                            {post.frontmatter.date}
-                        </Typography>
+                        <Info date={date} />
                         {/* Implement Social Media Share Buttons */}
                         {/*<TwitterShareButton*/}
                         {/*    title={post.frontmatter.title}*/}
@@ -62,9 +61,9 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                         {/*>*/}
                         {/*    <TwitterIcon />*/}
                         {/*</TwitterShareButton>*/}
-                        {image && <GatsbyImage image={image} alt={post.frontmatter.title}/>}
+                        {image && <GatsbyImage image={image} alt={title}/>}
                     </header>
-                    <Divider/>
+                    {!image && <Divider/>}
                     <section itemProp="articleBody">
                         <Box sx={{textAlign: 'justify'}}>
                             <MDXProvider components={shortcodes}>
@@ -125,7 +124,7 @@ export const pageQuery = graphql`
       body
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
+        date(formatString: "dddd, Do MMMM YYYY", locale: $language)
         description
         path
         lang
