@@ -29,7 +29,7 @@ export default function ArticleInfo({date}: InferProps<typeof ArticleInfo.propTy
                             Martin Reiche
                         </Typography>
                         {date && (
-                            <Typography variant="caption" color="primary" sx={{display: {xs: 'none', sm: 'block'}}}>
+                            <Typography variant="caption" color="primary">
                                 {date}
                             </Typography>
                         )}
