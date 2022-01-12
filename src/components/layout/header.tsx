@@ -11,8 +11,8 @@ import MenuItem from '@mui/material/MenuItem';
 import {useI18next} from "gatsby-plugin-react-i18next";
 import Link from '../link';
 import {ChangeLocale} from "./ChangeLocale";
-import {StaticImage} from "gatsby-plugin-image"
-
+// @ts-ignore because this is handled by gatsby-plugin-react-svg
+import Logo from "../../images/logo.svg"
 
 const pages = [
     {label: 'i18n:blog', path: '/blog/'},
@@ -37,15 +37,9 @@ const Header = () => {
         <AppBar position="static" color="primary">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Box sx={{marginRight: 5, display: {xs: 'none', md: 'flex'}}}>
+                    <Box sx={{ marginRight: 5, display: {xs: 'none', md: 'flex'}}}>
                         <Link to="/">
-                            <StaticImage
-                                src="../../images/logo.png"
-                                alt="Martin Reiche"
-                                placeholder="blurred"
-                                width={50}
-                                height={50}
-                            />
+                            <Logo style={{ width: 50, height: 50}}/>
                         </Link>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -88,13 +82,7 @@ const Header = () => {
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <Link to="/">
-                            <StaticImage
-                                src="../../images/logo.png"
-                                alt="Martin Reiche"
-                                placeholder="blurred"
-                                width={40}
-                                height={40}
-                            />
+                            <Logo style={{ width: 50, height: 50}}/>
                         </Link>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
