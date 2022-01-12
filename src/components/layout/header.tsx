@@ -38,7 +38,7 @@ const Header = () => {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Box sx={{ marginRight: 5, display: {xs: 'none', md: 'flex'}}}>
-                        <Link to="/">
+                        <Link to="/" aria-label="Home" style={{ display: 'flex'}}>
                             <Logo style={{ width: 50, height: 50}}/>
                         </Link>
                     </Box>
@@ -81,8 +81,8 @@ const Header = () => {
                         </Menu>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-                        <Link to="/">
-                            <Logo style={{ width: 50, height: 50}}/>
+                        <Link to="/" aria-label="Home" style={{ display: 'flex' }}>
+                            <Logo style={{ width: 42, height: 42}}/>
                         </Link>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>

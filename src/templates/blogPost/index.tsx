@@ -44,12 +44,12 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                 >
                     <header>
                         <PageNavigation previous={previous} next={next}/>
-                        <Typography variant="h2" color="primary.dark" sx={{fontWeight: 'fontWeightBold'}}
+                        <Typography variant="h2" component="h1" color="primary.dark" sx={{fontWeight: 'fontWeightBold'}}
                                     itemProp="headline">
                             {title}
                         </Typography>
                         {description && (
-                            <Typography variant="h5" color="primary">
+                            <Typography variant="h5" component="h2" color="primary">
                                 {description}
                             </Typography>
                         )}
