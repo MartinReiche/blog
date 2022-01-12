@@ -9,5 +9,7 @@
   "i18n:support": "Unterstützen",
   "i18n:support:text": "Falls Du mich unterstützen willst...",
  "i18n:impressum": "Impressum",
-  "i18n:impressum:text": "Text für das Impressum"
+  "i18n:impressum:text": "Text für das Impressum",
+  "i18n:next": "Weiter",
+  "i18n:back": "Zurück"
 }

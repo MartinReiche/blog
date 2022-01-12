@@ -10,10 +10,12 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 // @ts-ignore
 import { GatsbyImage } from "gatsby-plugin-image";
+import {useI18next} from "gatsby-plugin-react-i18next";
 
 export const StepperGallery = ({images, imageIndex = 0, onClose, maxHeight}: ImageStepperProps) => {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
+    const {t} = useI18next();
 
     // sets the active step when changed from outside
     React.useEffect(() => {
@@ -74,7 +76,7 @@ export const StepperGallery = ({images, imageIndex = 0, onClose, maxHeight}: Ima
                             onClick={handleNext}
                             disabled={activeStep === maxSteps - 1}
                         >
-                            Next
+                            {t('i18n:next')}
                             {theme.direction === 'rtl' ? (
                                 <KeyboardArrowLeft/>
                             ) : (
@@ -89,7 +91,7 @@ export const StepperGallery = ({images, imageIndex = 0, onClose, maxHeight}: Ima
                             ) : (
                                 <KeyboardArrowLeft/>
                             )}
-                            Back
+                            {t('i18n:back')}
                         </Button>
                     }
                 />

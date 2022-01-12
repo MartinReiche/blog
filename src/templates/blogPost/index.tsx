@@ -11,10 +11,10 @@ import Layout from "../../components/layout"
 import Seo from "../../components/layout/seo"
 import {CombinedGallery, GridGallery, StepperGallery} from "../../components/gallery"
 import {graphql} from "gatsby";
-import {BlogNavigation} from "./nav";
+import PageNavigation from "../../components/page-navigation";
+import ArticleInfo from "../../components/article-info";
 import PropTypes, {InferProps, string} from "prop-types";
 import {ImageDataLike} from 'gatsby-plugin-image'
-import Info from "./info";
 
 
 const shortcodes = {CombinedGallery, GridGallery, StepperGallery};
@@ -43,7 +43,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                     itemType="http://schema.org/Article"
                 >
                     <header>
-                        <BlogNavigation previous={previous} next={next}/>
+                        <PageNavigation previous={previous} next={next}/>
                         <Typography variant="h2" color="primary.dark" sx={{fontWeight: 'fontWeightBold'}}
                                     itemProp="headline">
                             {title}
@@ -53,14 +53,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                                 {description}
                             </Typography>
                         )}
-                        <Info date={date} />
-                        {/* Implement Social Media Share Buttons */}
-                        {/*<TwitterShareButton*/}
-                        {/*    title={post.frontmatter.title}*/}
-                        {/*    url={canonicalUrl}*/}
-                        {/*>*/}
-                        {/*    <TwitterIcon />*/}
-                        {/*</TwitterShareButton>*/}
+                        <ArticleInfo date={date} />
                         {image && <GatsbyImage image={image} alt={title}/>}
                     </header>
                     {!image && <Divider/>}
@@ -76,7 +69,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                     <Divider/>
                 </article>
             </Box>
-            <BlogNavigation previous={previous} next={next}/>
+            <PageNavigation previous={previous} next={next}/>
         </Layout>
     )
 }

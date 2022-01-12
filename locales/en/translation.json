@@ -9,5 +9,7 @@
   "i18n:support": "Support",
   "i18n:support:text": "In Case you want to support me...",
   "i18n:impressum": "Impressum",
-  "i18n:impressum:text": "Text for the Impressum"
+  "i18n:impressum:text": "Text for the Impressum",
+  "i18n:next": "Next",
+  "i18n:back": "Back"
 }

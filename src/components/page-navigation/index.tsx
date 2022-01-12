@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
-export function BlogNavigation({previous, next}: InferProps<typeof BlogNavigation.propTypes>) {
+export default function PageNavigation({previous, next}: InferProps<typeof PageNavigation.propTypes>) {
 
     return (
         <Box sx={{ marginTop: 2, marginBottom: 2, display: 'flex', justifyContent: 'space-between'}}>
@@ -18,14 +18,18 @@ export function BlogNavigation({previous, next}: InferProps<typeof BlogNavigatio
                         size="small"
                     >
                         <KeyboardArrowLeft/>
-                        {previous.frontmatter.title}
+                        <Box sx={{ display: {xs: 'none', sm: 'block'}}}>
+                            {previous.frontmatter.title}
+                        </Box>
                     </Button>
                 </Link>)}
             </Box>
             <Box>
                 {next && (<Link to={next.frontmatter.path}>
                     <Button size="small">
-                        {next.frontmatter.title}
+                        <Box sx={{ display: {xs: 'none', sm: 'block'}}}>
+                            {next.frontmatter.title}
+                        </Box>
                         <KeyboardArrowRight/>
                     </Button>
                 </Link>)}
@@ -41,7 +45,7 @@ const BlogNode = PropTypes.shape({
     }).isRequired
 });
 
-BlogNavigation.propTypes = {
+PageNavigation.propTypes = {
     previous: BlogNode,
     next: BlogNode,
 }
