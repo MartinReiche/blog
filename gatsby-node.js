@@ -2,11 +2,6 @@ const path = require(`path`)
 
 exports.createPages = async ({graphql, actions, reporter}) => {
 
-  console.log("\n!!!!!!!!!!!!!! TEST !!!!!!!!!!!!!!!!!")
-  console.log(process.env.SITE_URL)
-  console.log("!!!!!!!!!!!!!! TEST !!!!!!!!!!!!!!!!!\n")
-
-
   // Define a template for blog post
   const blogPost = path.resolve(`./src/templates/blogPost/index.tsx`)
 

@@ -6,7 +6,10 @@ import PropTypes from "prop-types";
 
 const Link: React.FC<{ to: string }> = ({children, to}) => {
     const { language, defaultLanguage } = useI18next();
-    const path = language === defaultLanguage ? to : `/${language}${to}`;
+    let path = language === defaultLanguage ? to : `/${language}${to}`;
+
+    // first remove all trailing slashes than add excatly one
+    path = path.replace(/\/+$/, '') + "/";
 
     return (
         <GatsbyThemeLink to={path} style={{textDecoration: 'none'}}>

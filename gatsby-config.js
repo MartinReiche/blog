@@ -105,5 +105,11 @@ module.exports = {
     {
       resolve: `gatsby-theme-material-ui`,
     },
+    {
+      resolve: `gatsby-plugin-force-trailing-slashes`,
+      options: {
+        excludedPaths: [`/404.html`],
+      },
+    },
   ],
 }

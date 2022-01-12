@@ -35,7 +35,7 @@ const Footer = () => {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Link to="/impressum">
+                            <Link to="/impressum/">
                                 {t('i18n:impressum')}
                             </Link>
                         </Grid>

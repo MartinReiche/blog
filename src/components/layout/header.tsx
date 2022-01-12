@@ -15,10 +15,10 @@ import {StaticImage} from "gatsby-plugin-image"
 
 
 const pages = [
-    {label: 'i18n:blog', path: '/blog'},
-    {label: 'i18n:podcast', path: '/podcast'},
-    {label: 'i18n:about', path: '/about'},
-    {label: 'i18n:support', path: '/support'}
+    {label: 'i18n:blog', path: '/blog/'},
+    {label: 'i18n:podcast', path: '/podcast/'},
+    {label: 'i18n:about', path: '/about/'},
+    {label: 'i18n:support', path: '/support/'}
 ];
 
 const Header = () => {
