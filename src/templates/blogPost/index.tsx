@@ -34,7 +34,6 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                 title={title}
                 description={description || post.excerpt}
             />
-            test
             <Box sx={{
                 marginTop: (theme) => theme.spacing(5)
             }}>
