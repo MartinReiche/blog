@@ -1,0 +1,19 @@
+service cloud.firestore {
+
+  // Auth utility functions
+  function isAdmin() {
+    return request.auth.token.admin == true
+  }
+
+  match /databases/{database}/documents {
+     match /requests/{document=**} {
+      allow read: if isAdmin();
+      allow create: if request.resource.data.keys().hasAll(['name', 'email', 'body', 'locale'])
+                    && request.resource.data.name is string
+                    && request.resource.data.email is string
+                    && request.resource.data.body is string
+                    && request.resource.data.locale is string
+    }
+
+  }
+}
