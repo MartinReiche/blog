@@ -37,6 +37,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
             <Box sx={{
                 marginTop: (theme) => theme.spacing(5)
             }}>
+                {process.env.SITE_URL}
                 <article
                     className="blog-post"
                     itemScope

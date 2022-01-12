@@ -13,7 +13,7 @@ module.exports = {
       name: `Martin Reiche`,
       summary: `Long range cycle enthusiast in search for meaning`
     },
-    siteUrl: `https://martinreiche.de/`,
+    siteUrl: `${process.env.SITE_URL}`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -52,7 +52,7 @@ module.exports = {
         localeJsonSourceName: `locale`,
         languages: [`en`, `de`],
         defaultLanguage: `de`,
-        siteUrl: `http://localhost:8000/`,
+        siteUrl: `${process.env.SITE_URL}`,
         i18nextOptions: {
           interpolation: {
             escapeValue: false
