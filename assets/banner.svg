@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1200"
+   height="627"
+   viewBox="0 0 317.49999 165.89375"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="banner.svg"
+   inkscape:export-filename="/home/martin/private/blog/src/images/banner.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#242b38"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.5"
+     inkscape:cx="600"
+     inkscape:cy="548.57143"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1-6"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     showguides="false"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="225.95416,121.70833"
+       orientation="0,1"
+       id="guide57"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="143.93333,47.095833"
+       orientation="0,1"
+       id="guide59"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="20.637499,86.783333"
+       orientation="1,0"
+       id="guide61"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="297.39166,67.733333"
+       orientation="1,0"
+       id="guide63"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-131.10622)">
+    <g
+       transform="translate(-43.01368,56.167237)"
+       id="layer1-6"
+       inkscape:label="Layer 1">
+      <g
+         id="g995"
+         transform="translate(4.2333337,26.987499)">
+        <g
+           style="fill:#e84c1d;fill-opacity:1"
+           id="g168"
+           transform="matrix(0.35277777,0,0,-0.35277777,134.55952,129.17857)">
+          <path
+             d="m 0,0 c 0,-57.989 -47.01,-105 -105,-105 -57.99,0 -105,47.011 -105,105 0,57.989 47.01,105 105,105 C -47.01,105 0,57.989 0,0"
+             style="fill:#e84c1d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="path170"
+             inkscape:connector-curvature="0" />
+        </g>
+        <g
+           id="g172"
+           transform="matrix(0.35277777,0,0,-0.35277777,110.71721,110.68494)">
+          <path
+             d="m 0,0 h -54.077 l -6.337,-35.94 H -84.06 c -9.924,0 -17.97,-8.045 -17.97,-17.969 0,-9.925 8.046,-17.971 17.97,-17.971 h 17.309 l -4.893,-27.101 c -1.724,-9.774 4.803,-19.094 14.577,-20.818 9.773,-1.723 19.093,4.802 20.817,14.576 l 12.33,69.283 H 0 c 9.924,0 17.97,8.046 17.97,17.97 C 17.97,-8.046 9.924,0 0,0"
+             style="fill:#242b38;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="path174"
+             inkscape:connector-curvature="0" />
+        </g>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#e84c1d;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         x="151.49286"
+         y="153.52022"
+         id="text987"><tspan
+           sodipodi:role="line"
+           id="tspan985"
+           x="151.49286"
+           y="153.52022"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.39999962px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#e84c1d;fill-opacity:1;stroke-width:0.26458332">MARTIN REICHE</tspan><tspan
+           sodipodi:role="line"
+           x="151.49286"
+           y="180.08003"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:19.75555611px;font-family:Roboto;-inkscape-font-specification:'Roboto Light';fill:#e84c1d;fill-opacity:1;stroke-width:0.26458332"
+           id="tspan989">BLOG</tspan></text>
+    </g>
+  </g>
+</svg>
