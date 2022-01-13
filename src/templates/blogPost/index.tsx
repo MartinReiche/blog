@@ -56,7 +56,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                                 {description}
                             </Typography>
                         )}
-                        <ArticleInfo date={date} />
+                        <ArticleInfo date={date} title={title} description={description} />
                         {image && <GatsbyImage image={image} alt={title}/>}
                     </header>
                     {!image && <Divider/>}
