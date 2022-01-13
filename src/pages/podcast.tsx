@@ -6,11 +6,11 @@ import Seo from "../components/layout/seo"
 import {graphql} from "gatsby";
 
 const PodcastPage = () => {
-    const {t} = useI18next();
+    const {t, language} = useI18next();
 
     return (
         <Layout>
-            <Seo title={t('i18n:podcast')} />
+            <Seo title={t('i18n:podcast')} language={language}/>
             <h1>{t('i18n:podcast')}</h1>
             <p>{t('i18n:podcast:text')}</p>
         </Layout>
