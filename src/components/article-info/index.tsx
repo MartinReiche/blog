@@ -8,7 +8,7 @@ import PropTypes, {InferProps} from 'prop-types';
 import ShareButtons from "./shareButtons";
 
 
-export default function ArticleInfo({date}: InferProps<typeof ArticleInfo.propTypes>) {
+export default function ArticleInfo({date, title, description}: InferProps<typeof ArticleInfo.propTypes>) {
     return (
         <Box
             sx={{
@@ -36,11 +36,13 @@ export default function ArticleInfo({date}: InferProps<typeof ArticleInfo.propTy
                     </Box>
                 </Box>
             </Link>
-            <ShareButtons/>
+            <ShareButtons title={title} description={description} />
         </Box>
     )
 }
 
 ArticleInfo.propTypes = {
-    date: PropTypes.string
+    date: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string
 }

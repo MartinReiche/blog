@@ -3,9 +3,11 @@ import PropTypes, {InferProps} from "prop-types"
 import {Helmet} from "react-helmet"
 import {useLocation} from "@reach/router"
 import {useStaticQuery, graphql} from "gatsby"
+import {useI18next} from "gatsby-plugin-react-i18next";
 
-function SEO({title, description, image, article, language}: InferProps<typeof SEO.propTypes>) {
+function SEO({title, description, image, article}: InferProps<typeof SEO.propTypes>) {
     const {pathname} = useLocation()
+    const {language} = useI18next();
     const {site, defaultImage} = useStaticQuery(query)
 
     const {
@@ -27,7 +29,7 @@ function SEO({title, description, image, article, language}: InferProps<typeof S
         <Helmet
             title={seo.title} titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : undefined}
             htmlAttributes={{
-                lang: language,
+                lang: language || 'de',
             }}
         >
             <meta name="description" content={seo.description}/>
@@ -78,7 +80,6 @@ SEO.propTypes = {
     description: PropTypes.string,
     image: PropTypes.any,
     article: PropTypes.bool,
-    language: PropTypes.any
 }
 
 SEO.defaultProps = {
@@ -86,5 +87,4 @@ SEO.defaultProps = {
     description: null,
     image: null,
     article: false,
-    language: 'de'
 }

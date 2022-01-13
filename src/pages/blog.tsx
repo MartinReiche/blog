@@ -7,7 +7,7 @@ import {graphql} from "gatsby";
 import Link from '../components/link';
 
 const BlogPage: React.FC<QueryData> = ({data}) => {
-    const {t, language} = useI18next();
+    const {t} = useI18next();
 
     const postData = data.blog.nodes.map(post => {
         const { path, title } = post.frontmatter;
@@ -16,7 +16,7 @@ const BlogPage: React.FC<QueryData> = ({data}) => {
 
     return (
         <Layout>
-            <Seo title={t('i18n:blog')} language={language}/>
+            <Seo title={t('i18n:blog')} />
             <h1>{t('i18n:blog')}</h1>
             <p>{t('i18n:blog:text')}</p>
 

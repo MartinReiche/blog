@@ -6,10 +6,10 @@ import {useI18next} from "gatsby-plugin-react-i18next";
 import {graphql} from "gatsby";
 
 const SupportPage = () => {
-    const {t, language} = useI18next();
+    const {t} = useI18next();
     return (
         <Layout>
-            <Seo title={t("i18n:support")} language={language}/>
+            <Seo title={t("i18n:support")} />
             <h1>{t('i18n:support')}</h1>
             <p>{t('i18n:support:text')}</p>
         </Layout>

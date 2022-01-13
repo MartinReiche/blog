@@ -15,13 +15,11 @@ import PageNavigation from "../../components/page-navigation";
 import ArticleInfo from "../../components/article-info";
 import PropTypes, {InferProps, string} from "prop-types";
 import {ImageDataLike} from 'gatsby-plugin-image'
-import {useI18next} from "gatsby-plugin-react-i18next";
 
 
 const shortcodes = {CombinedGallery, GridGallery, StepperGallery};
 
 export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTemplate.propTypes>) {
-    const {language} = useI18next();
     const {post, previous, next} = data
     const {title_image, gallery_images, description, title, date} = post.frontmatter;
 
@@ -38,7 +36,6 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                 description={description || post.excerpt}
                 image={title_image}
                 article={true}
-                language={language}
             />
             <Box sx={{
                 marginTop: (theme) => theme.spacing(5)
