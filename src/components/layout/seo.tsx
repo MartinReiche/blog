@@ -14,7 +14,6 @@ function SEO({title, description, image, article, language}: InferProps<typeof S
         siteUrl,
         twitterUsername,
     } = site.siteMetadata
-
     image = image || defaultImage;
 
     const seo = {
