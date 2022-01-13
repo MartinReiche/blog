@@ -18,6 +18,7 @@ module.exports = {
       summary: `Long range cycle enthusiast in search for meaning`
     },
     siteUrl: `${process.env.SITE_URL}`,
+    twitterUsername: "@martin_reiche",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -107,7 +108,7 @@ module.exports = {
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/logo.png`, // This path is relative to the root of the site.
+        icon: `src/images/logo.svg`, // This path is relative to the root of the site.
       },
     },
     {

@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React  from "react"
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
@@ -23,9 +23,9 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
     const {post, previous, next} = data
     const {title_image, gallery_images, description, title, date} = post.frontmatter;
 
-    const image = title_image ? getImage(title_image as ImageDataLike) : null;
-    const galleryImages = gallery_images ? gallery_images.map(image => {
-        return getImage(image as ImageDataLike);
+    const image = title_image ? getImage(title_image) : null;
+    const galleryImages = gallery_images ? gallery_images.map((image: ImageDataLike) => {
+        return getImage(image);
     }) : null;
 
     return (
@@ -33,6 +33,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
             <Seo
                 title={title}
                 description={description || post.excerpt}
+                image={title_image}
             />
             <Box sx={{
                 marginTop: (theme) => theme.spacing(5)
@@ -87,8 +88,8 @@ const FrontMatter = PropTypes.shape({
     description: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired,
     lang: PropTypes.string.isRequired,
-    title_image: PropTypes.object,
-    gallery_images: PropTypes.arrayOf(PropTypes.object)
+    title_image: PropTypes.any,
+    gallery_images: PropTypes.any
 });
 
 BlogPostTemplate.propTypes = {

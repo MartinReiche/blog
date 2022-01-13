@@ -21,7 +21,7 @@ export default function ArticleInfo({date}: InferProps<typeof ArticleInfo.propTy
         >
             <Link to={"/about/"}>
                 <Box sx={{display: 'flex', alignItems: 'flex-end'}}>
-                    <Avatar sx={{width: 50, height: 50, marginRight: 1}}>
+                    <Avatar sx={{width: 50, height: 50, marginRight: 1}} imgProps={{}}>
                         <StaticImage src={'../../images/portrait_sm.png'} alt={'Martin Reiche'}/>
                     </Avatar>
                     <Box>

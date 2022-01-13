@@ -51,6 +51,7 @@ export default function ShareButtons() {
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
+                    aria-label="Share on Social Media"
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
                 >
