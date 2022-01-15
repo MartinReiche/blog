@@ -5,17 +5,12 @@ date: "2021-01-09T12:00:00Z"
 path: "/blog/20210109/"
 lang: "de"
 type: "blog"
-title_image:
-    - src: "./img/sunset-900x600.jpg"
+title_image: "./img/sunset-900x600.jpg"
 gallery_images:
-    - src: "./img/sunset-1200x900.jpg"
-      title: "Sunset"
-    - src: "./img/qualle-1200x900.jpg"
-      title: "Jellyfish!"
-    - src: "./img/jane-1200x900.jpg"
-      title: "Jane B Metpo"
-    - src: "./img/water-1200x900.jpg"
-      title: "Water"
+    - "./img/sunset-1200x900.jpg"
+    - "./img/qualle-1200x900.jpg"
+    - "./img/jane-1200x900.jpg"
+    - "./img/water-1200x900.jpg"
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus purus at enim tempor pretium.
@@ -31,7 +26,12 @@ Etiam et elit vitae lorem bibendum venenatis malesuada id turpis. Curabitur volu
 Mauris et sagittis ex, eu molestie tortor. Vivamus molestie malesuada ipsum, quis imperdiet quam mattis et.
 
 <StepperGallery
-    images={props.galleryImages}
+    images={[
+        {src: props.galleryImages[0], title: "Schwarzwald im Winter", rows: 2, cols: 4},
+        {src: props.galleryImages[1], title: "Schweinehunde!", rows: 1, cols: 2},
+        {src: props.galleryImages[2], title: "Berge, Berge, Kindersärge", rows: 1, cols: 2},
+        {src: props.galleryImages[3], title: "Treppen!", rows: 2, cols: 3},
+    ]}
 />
 
 Fusce cursus sit amet est a venenatis. Maecenas ut nibh consectetur est tristique vestibulum tempus sagittis mauris.

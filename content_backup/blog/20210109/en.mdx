@@ -5,25 +5,12 @@ date: "2021-01-09T12:00:00Z"
 path: "/blog/20210109/"
 lang: "en"
 type: "blog"
-title_image:
-    - src: "./img/sunset-900x600.jpg"
+title_image: "./img/sunset-900x600.jpg"
 gallery_images:
-    - src: "./img/sunset-1200x900.jpg"
-      title: "Sunset"
-      rows: 2
-      cols: 2
-    - src: "./img/qualle-1200x900.jpg"
-      title: "Jellyfish!"
-      rows: 1
-      cols: 1
-    - src: "./img/jane-1200x900.jpg"
-      title: "Jane B Metpo"
-      rows: 1
-      cols: 1
-    - src: "./img/water-1200x900.jpg"
-      title: "Water"
-      rows: 2
-      cols: 2
+    - "./img/sunset-1200x900.jpg"
+    - "./img/qualle-1200x900.jpg"
+    - "./img/jane-1200x900.jpg"
+    - "./img/water-1200x900.jpg"
 ---
 
 Fusce cursus sit amet est a venenatis. Maecenas ut nibh consectetur est tristique vestibulum tempus sagittis mauris. 
@@ -39,7 +26,12 @@ ac varius turpis consectetur. Sed ut tincidunt sapien, sed elementum mi. Duis fi
 tincidunt non. Integer at neque sagittis, bibendum diam vel, rutrum nulla.
 
 <CombinedGallery
-    images={props.galleryImages}
+    images={[
+        {src: props.galleryImages[0], title: "Black Forest in Winter", rows: 2, cols: 2},
+        {src: props.galleryImages[1], title: "Pigs! Dogs!", rows: 1, cols: 1},
+        {src: props.galleryImages[2], title: "Mountains", rows: 1, cols: 1},
+        {src: props.galleryImages[3], title: "Stairs!", rows: 2, cols: 2},
+    ]}
     options={{cols:2}}
 />
 

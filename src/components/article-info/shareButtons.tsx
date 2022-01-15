@@ -45,8 +45,6 @@ export default function ShareButtons({title, description}: InferProps<typeof Sha
         url: `${siteUrl}${pathname}`,
     }
 
-    console.log(share)
-
     return (
         <React.Fragment>
             <Box sx={{display: {xs: 'none', sm: "block"}}}>

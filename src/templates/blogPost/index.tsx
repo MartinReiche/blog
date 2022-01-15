@@ -3,38 +3,28 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import {GatsbyImage, getImage} from "gatsby-plugin-image"
-// @ts-ignore
-import {MDXProvider} from "@mdx-js/react"
 import {MDXRenderer} from "gatsby-plugin-mdx";
 
 import Layout from "../../components/layout"
 import Seo from "../../components/layout/seo"
-import {CombinedGallery, GridGallery, StepperGallery} from "../../components/gallery"
 import {graphql} from "gatsby";
 import PageNavigation from "../../components/page-navigation";
 import ArticleInfo from "../../components/article-info";
+import MDXProvider from "../../components/mdx-provider";
 import PropTypes, {InferProps, string} from "prop-types";
-import {ImageDataLike} from 'gatsby-plugin-image'
-
-
-const shortcodes = {CombinedGallery, GridGallery, StepperGallery};
 
 export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTemplate.propTypes>) {
     const {post, previous, next} = data
     const {title_image, gallery_images, description, title, date} = post.frontmatter;
 
-    const image = title_image ? getImage(title_image) : null;
-    const galleryImages = gallery_images ? gallery_images.map((image: ImageDataLike) => {
-        return getImage(image);
-    }) : null;
-
+    const image = title_image ? getImage(title_image.src) : null;
 
     return (
         <Layout>
             <Seo
                 title={title}
                 description={description || post.excerpt}
-                image={title_image}
+                image={image}
                 article={true}
             />
             <Box sx={{
@@ -62,8 +52,8 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                     {!image && <Divider/>}
                     <section itemProp="articleBody">
                         <Box sx={{textAlign: 'justify'}}>
-                            <MDXProvider components={shortcodes}>
-                                <MDXRenderer galleryImages={galleryImages}>
+                            <MDXProvider>
+                                <MDXRenderer galleryImages={gallery_images} test={"Test Props privided in MDXRenderer"}>
                                     {post.body}
                                 </MDXRenderer>
                             </MDXProvider>
@@ -84,14 +74,19 @@ const AdjacentBlog = PropTypes.shape({
     }).isRequired
 });
 
+const Image = PropTypes.shape({
+    title: string,
+    src: PropTypes.any
+})
+
 const FrontMatter = PropTypes.shape({
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired,
     lang: PropTypes.string.isRequired,
-    title_image: PropTypes.any,
-    gallery_images: PropTypes.any
+    title_image: Image,
+    gallery_images: PropTypes.arrayOf(Image)
 });
 
 BlogPostTemplate.propTypes = {
@@ -125,17 +120,23 @@ export const pageQuery = graphql`
         path
         lang
         title_image {
-          childImageSharp {
-            gatsbyImageData(
-              width: 900
-              placeholder: BLURRED
-              formats: [AUTO, WEBP, AVIF]
-            )
-          }
+          title
+          src {
+            childImageSharp {
+              gatsbyImageData(
+                width: 900
+                placeholder: BLURRED
+                formats: [AUTO, WEBP, AVIF]
+              )
+            }          
+          }  
         }
         gallery_images {
-          childImageSharp {
-            gatsbyImageData
+          title
+          src {
+            childImageSharp {
+              gatsbyImageData
+            }          
           }
         }
       }

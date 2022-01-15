@@ -17,6 +17,9 @@ export const CombinedGallery = ({images, options}: GalleryProps) => {
         setStepperOpen(false);
     }
 
+    // this is here because of gatsby-plugin-feed
+    if (!images) return null;
+
     return (
         <React.Fragment>
             <GridGallery images={images} options={options} onClick={handleImageClick}/>
@@ -50,6 +53,7 @@ export const CombinedGallery = ({images, options}: GalleryProps) => {
 
 export * from './gridGallery';
 export * from './stepperGallery';
+export * from './test'
 
 type GalleryProps = {
     images: Image[]

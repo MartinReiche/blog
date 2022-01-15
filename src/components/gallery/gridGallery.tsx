@@ -1,9 +1,12 @@
 import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import {GatsbyImage} from "gatsby-plugin-image";
+import {GatsbyImage, getImage, IGatsbyImageData} from "gatsby-plugin-image";
 
 export const GridGallery = ({images, options, onClick}: ImageGridProps) => {
+
+    // this is here because of gatsby-plugin-feed
+    if (!images) return null;
 
     return (
         <ImageList
@@ -20,7 +23,7 @@ export const GridGallery = ({images, options, onClick}: ImageGridProps) => {
                     onClick={() => {if (onClick) onClick(index)}}
                     sx={{ cursor: onClick ? 'pointer' : 'default' }}
                 >
-                    <GatsbyImage alt={item.title} image={item.src}/>
+                    <GatsbyImage alt={item.title} image={getImage(item.src) as IGatsbyImageData}/>
                 </ImageListItem>
             ))}
         </ImageList>

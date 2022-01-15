@@ -66,12 +66,15 @@ export const query = graphql`
         lang
         description
         title_image {
-          childImageSharp {
-            gatsbyImageData(
-              width: 900
-              placeholder: BLURRED
-              formats: [AUTO, WEBP, AVIF]
-            )
+          title
+          src {
+            childImageSharp {
+              gatsbyImageData(
+                width: 900
+                placeholder: BLURRED
+                formats: [AUTO, WEBP, AVIF]
+              )
+            }
           }
         }
       }

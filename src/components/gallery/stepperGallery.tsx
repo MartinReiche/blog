@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes, {InferProps} from 'prop-types';
 import {useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
@@ -9,18 +10,21 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 // @ts-ignore
 import SwipeableViews from 'react-swipeable-views';
 // @ts-ignore
-import { GatsbyImage } from "gatsby-plugin-image";
+import {GatsbyImage, getImage, IGatsbyImageData} from "gatsby-plugin-image";
 import {useI18next} from "gatsby-plugin-react-i18next";
 
-export const StepperGallery = ({images, imageIndex = 0, onClose, maxHeight}: ImageStepperProps) => {
+export function StepperGallery({images, imageIndex = 0, onClose, maxHeight}: InferProps<typeof StepperGallery.propTypes>) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const {t} = useI18next();
 
     // sets the active step when changed from outside
     React.useEffect(() => {
-        setActiveStep(imageIndex);
+        setActiveStep(imageIndex || 0);
     }, [imageIndex]);
+
+    // this is here because of gatsby-plugin-feed
+    if (!images) return null;
 
     const maxSteps = images.length;
 
@@ -42,29 +46,32 @@ export const StepperGallery = ({images, imageIndex = 0, onClose, maxHeight}: Ima
 
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
-            <Box sx={{ flexGrow: 1}}>
+            <Box sx={{flexGrow: 1}}>
                 <SwipeableViews
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                     index={activeStep}
                     onChangeIndex={handleStepChange}
                     enableMouseEvents
                 >
-                    {images.map((step, index) => (
-                        <div key={index}>
-                            {Math.abs(activeStep - index) <= 2 ? (
-                                <Box
-                                    sx={{
-                                        display: 'block',
-                                        overflow: 'hidden',
-                                        width: '100%',
-                                        maxHeight: maxHeight || undefined
-                                    }}
-                                >
-                                    <GatsbyImage alt={step.title} image={step.src} />
-                                </Box>
-                            ) : null}
-                        </div>
-                    ))}
+                    {images.map((step, index) => {
+                        if (!step) return null;
+                        return (
+                            <div key={index}>
+                                {Math.abs(activeStep - index) <= 2 ? (
+                                    <Box
+                                        sx={{
+                                            display: 'block',
+                                            overflow: 'hidden',
+                                            width: '100%',
+                                            maxHeight: maxHeight || undefined
+                                        }}
+                                    >
+                                        <GatsbyImage alt={step.title} image={getImage(step.src) as IGatsbyImageData}/>
+                                    </Box>
+                                ) : null}
+                            </div>
+                        )
+                    })}
                 </SwipeableViews>
                 <MobileStepper
                     steps={maxSteps}
@@ -102,14 +109,16 @@ export const StepperGallery = ({images, imageIndex = 0, onClose, maxHeight}: Ima
 
 export default StepperGallery;
 
-type ImageStepperProps = {
-    images: {
-        title: string
-        src: any
-        rows?: number
-        cols?: number
-    }[]
-    imageIndex?: number
-    onClose?: (event: MouseEvent | TouchEvent) => void
-    maxHeight?: string
+StepperGallery.propTypes = {
+    images: PropTypes.arrayOf(PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        src: PropTypes.any.isRequired
+    })).isRequired,
+    imageIndex: PropTypes.number,
+    onClose: PropTypes.func,
+    maxHeight: PropTypes.string
+}
+
+StepperGallery.defaultProps = {
+    imageIndex: 0
 }
