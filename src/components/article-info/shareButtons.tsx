@@ -18,12 +18,14 @@ import ShareIcon from "@mui/icons-material/Share"
 import IconButton from "@mui/material/IconButton";
 import {useLocation} from "@reach/router"
 import {graphql, useStaticQuery} from "gatsby";
+import {useI18next} from "gatsby-plugin-react-i18next";
 
 
 export default function ShareButtons({title, description}: InferProps<typeof ShareButtons.propTypes>) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const {pathname} = useLocation();
     const {site} = useStaticQuery(query);
+    const {language} = useI18next();
 
     const open = Boolean(anchorEl);
     const handleClick = (event: any) => {
@@ -41,7 +43,7 @@ export default function ShareButtons({title, description}: InferProps<typeof Sha
 
     const share = {
         title: title || defaultTitle,
-        description: description || defaultDescription,
+        description: description || defaultDescription[language],
         url: `${siteUrl}${pathname}`,
     }
 
@@ -165,7 +167,10 @@ const query = graphql`
     site {
       siteMetadata {
         defaultTitle: title
-        defaultDescription: description
+        defaultDescription: description {
+          de
+          en
+        }
         siteUrl
       }
     }

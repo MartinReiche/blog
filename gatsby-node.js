@@ -67,6 +67,11 @@ exports.createSchemaCustomization = ({actions}) => {
       siteUrl: String,
       twitterUsername: String,
       image: String
+      description: Description
+    }
+    type Description {
+      de: String
+      en: String
     }
     type Author {
       name: String
@@ -85,8 +90,12 @@ exports.createSchemaCustomization = ({actions}) => {
       path: String
       lang: String
       type: String
-      title_image: File @fileByRelativePath
-      gallery_images: [File] @fileByRelativePath
+      title_image: Image
+      gallery_images: [Image] 
+    }
+    type Image {
+      src: File @fileByRelativePath
+      title: String
     }
   `)
 }

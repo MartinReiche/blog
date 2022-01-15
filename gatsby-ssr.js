@@ -1,7 +1,8 @@
-/**
- * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/ssr-apis/
- */
+// ./src/wrap-root-element.js
+import React from 'react'
+import MDXProvider from "./src/components/mdx-provider"
 
-// You can delete this file if you're not using it
+// This is needed for gatsby-plugin-feed to work with MDX Components
+export const wrapRootElement = ({ element }) => (
+  <MDXProvider>{element}</MDXProvider>
+)

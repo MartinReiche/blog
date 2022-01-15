@@ -12,7 +12,6 @@ function SEO({title, description, image, article}: InferProps<typeof SEO.propTyp
 
     const {
         defaultTitle,
-        defaultDescription,
         siteUrl,
         twitterUsername,
     } = site.siteMetadata
@@ -20,7 +19,7 @@ function SEO({title, description, image, article}: InferProps<typeof SEO.propTyp
 
     const seo = {
         title: title || defaultTitle,
-        description: description || defaultDescription,
+        description: description || site.siteMetadata.description[language],
         image: `${siteUrl}${image?.childImageSharp.gatsbyImageData.images.fallback.src}`,
         url: `${siteUrl}${pathname}`,
     }
@@ -61,7 +60,10 @@ const query = graphql`
     site {
       siteMetadata {
         defaultTitle: title
-        defaultDescription: description
+        description {
+          de
+          en
+        }
         siteUrl
         twitterUsername
       }
