@@ -2,7 +2,7 @@ import {getApps, getApp, initializeApp} from 'firebase/app';
 import {getFirestore} from 'firebase/firestore';
 import {getAuth} from 'firebase/auth';
 
-export function initFirebase() {
+export function getFirebase() {
     if (getApps().length === 0) {
         // Init Firebase
         const app = initializeApp({
@@ -21,4 +21,4 @@ export function initFirebase() {
     }
 }
 
-export default initFirebase;
+export default getFirebase;

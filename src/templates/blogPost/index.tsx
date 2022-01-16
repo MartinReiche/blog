@@ -62,7 +62,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                             </MDXProvider>
                         </Box>
                     </section>
-                    <Comments commentId={post.slug}/>
+                    <Comments articleId={post.slug.replace(/\//g,"-")} collectionName="blog"/>
                     <Divider/>
                 </article>
             </Box>

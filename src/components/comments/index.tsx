@@ -1,21 +1,35 @@
 import * as React from "react";
 import PropTypes, {InferProps} from "prop-types";
 import Button from "@mui/material/Button";
-import {Trans} from "gatsby-plugin-react-i18next";
+import {useTranslation} from "gatsby-plugin-react-i18next";
+import CommentList from "./commentList";
 
-export default function Comments({commentId}: InferProps<typeof Comments.propTypes>) {
 
-    const handleClick = () => {
-        console.log(commentId)
+export default function Comments({articleId, collectionName}: InferProps<typeof Comments.propTypes>) {
+    const {t} = useTranslation();
+    const [open, setOpenState] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpenState(true);
     }
 
     return (
-        <Button onClick={handleClick} sx={{marginBottom: 2}} size="small">
-            <Trans>i18n:comments</Trans>
-        </Button>
+        <React.Fragment>
+            {open ? (
+                <CommentList articleId={articleId} collectionName={collectionName}/>
+            ) : (
+                <Button onClick={handleClickOpen} sx={{marginBottom: 2}} size="small">
+                    {t("i18n:comments")}
+                </Button>
+            )}
+
+
+        </React.Fragment>
+
     )
 };
 
 Comments.propTypes = {
-    commentId: PropTypes.string.isRequired
+    articleId: PropTypes.string.isRequired,
+    collectionName: PropTypes.string.isRequired
 }
