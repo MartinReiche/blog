@@ -15,7 +15,7 @@ export const ChangeLocale = () => {
             onClick={handleLanguageChange}
             sx={{ color: 'secondary.light'}}
         >
-            {language === 'de' ? 'english' : 'deutsch'}
+            {language === 'de' ? 'en' : 'de'}
         </Button>
     );
 };
