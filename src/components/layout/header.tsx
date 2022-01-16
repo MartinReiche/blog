@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import {useI18next} from "gatsby-plugin-react-i18next";
+import {useTranslation} from "gatsby-plugin-react-i18next";
 import Link from '../link';
 import {ChangeLocale} from "./ChangeLocale";
 // @ts-ignore because this is handled by gatsby-plugin-react-svg
@@ -23,7 +23,7 @@ const pages = [
 
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const {t} = useI18next();
+    const {t} = useTranslation();
 
     const handleOpenNavMenu = (event: any) => {
         setAnchorElNav(event.currentTarget);

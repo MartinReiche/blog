@@ -5,13 +5,13 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import {useI18next} from "gatsby-plugin-react-i18next";
+import {useTranslation} from "gatsby-plugin-react-i18next";
 import Link from '../link';
 
 import {graphql, useStaticQuery} from "gatsby";
 
 const Footer = () => {
-    const {t} = useI18next();
+    const {t} = useTranslation();
     const data = useStaticQuery(graphql`
     query HeaderQuery {
       site {

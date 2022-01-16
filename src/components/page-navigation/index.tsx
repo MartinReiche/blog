@@ -5,10 +5,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import {useI18next} from "gatsby-plugin-react-i18next";
+import {useTranslation} from "gatsby-plugin-react-i18next";
 
 export default function PageNavigation({previous, next}: InferProps<typeof PageNavigation.propTypes>) {
-    const {t} = useI18next();
+    const {t} = useTranslation();
     return (
         <Box sx={{ marginTop: 2, marginBottom: 2, display: 'flex', justifyContent: 'space-between'}}>
             <Box>

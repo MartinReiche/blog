@@ -11,12 +11,12 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 // @ts-ignore
 import {GatsbyImage, getImage, IGatsbyImageData} from "gatsby-plugin-image";
-import {useI18next} from "gatsby-plugin-react-i18next";
+import {useTranslation} from "gatsby-plugin-react-i18next";
 
 export function StepperGallery({images, imageIndex = 0, onClose, maxHeight}: InferProps<typeof StepperGallery.propTypes>) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
-    const {t} = useI18next();
+    const {t} = useTranslation();
 
     // sets the active step when changed from outside
     React.useEffect(() => {
