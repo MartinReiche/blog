@@ -20,7 +20,6 @@ import {useLocation} from "@reach/router"
 import {graphql, useStaticQuery} from "gatsby";
 import {useI18next} from "gatsby-plugin-react-i18next";
 
-
 export default function ShareButtons({title, description}: InferProps<typeof ShareButtons.propTypes>) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const {pathname} = useLocation();
@@ -49,32 +48,32 @@ export default function ShareButtons({title, description}: InferProps<typeof Sha
 
     return (
         <React.Fragment>
-            <Box sx={{display: {xs: 'none', sm: "block"}}}>
+            <Box sx={{display: {xs: 'none', sm: "flex"}}}>
                 <TwitterShareButton
                     url={share.url}
                     title={share.title}
-                    style={{padding: '2px'}}
+                    style={{padding: '2px', display: 'flex', alignItems: 'center'}}
                 >
                     <TwitterIcon size={30} round={true}/>
                 </TwitterShareButton>
                 <FacebookShareButton
                     url={share.url}
                     quote={share.title}
-                    style={{padding: '2px'}}
+                    style={{padding: '2px', display: 'flex', alignItems: 'center'}}
                 >
                     <FacebookIcon size={30} round={true}/>
                 </FacebookShareButton>
                 <TelegramShareButton
                     url={share.url}
                     title={share.title}
-                    style={{padding: '2px'}}
+                    style={{padding: '2px', display: 'flex', alignItems: 'center'}}
                 >
                     <TelegramIcon size={30} round={true}/>
                 </TelegramShareButton>
                 <WhatsappShareButton
                     url={share.url}
                     title={share.title}
-                    style={{padding: '2px'}}
+                    style={{padding: '2px', display: 'flex', alignItems: 'center'}}
                 >
                     <WhatsappIcon size={30} round={true}/>
                 </WhatsappShareButton>
@@ -82,7 +81,7 @@ export default function ShareButtons({title, description}: InferProps<typeof Sha
                     url={share.url}
                     subject={share.title}
                     body={share.description}
-                    style={{padding: '2px'}}
+                    style={{padding: '2px', display: 'flex', alignItems: 'center'}}
                 >
                     <EmailIcon size={30} round={true}/>
                 </EmailShareButton>

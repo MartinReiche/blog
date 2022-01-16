@@ -2,13 +2,12 @@
 import React from 'react'
 // @ts-ignore
 import { MDXProvider as Provider } from '@mdx-js/react'
-import {CombinedGallery, GridGallery, StepperGallery, TestComponent} from "../gallery"
+import {CombinedGallery, GridGallery, StepperGallery} from "../gallery"
 
 const shortcodes = {
     CombinedGallery,
     GridGallery,
     StepperGallery,
-    TestComponent
 };
 
 export const MDXProvider: React.FC = ({ children }) => (

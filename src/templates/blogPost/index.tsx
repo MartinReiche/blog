@@ -1,4 +1,4 @@
-import * as React  from "react"
+import * as React from "react"
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
@@ -16,6 +16,7 @@ import PropTypes, {InferProps, string} from "prop-types";
 export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTemplate.propTypes>) {
     const {post, previous, next} = data
     const {title_image, gallery_images, description, title, date} = post.frontmatter;
+
 
     const image = title_image ? getImage(title_image.src) : null;
 
@@ -37,6 +38,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                 >
                     <header>
                         <PageNavigation previous={previous} next={next}/>
+
                         <Typography variant="h2" component="h1" color="primary.dark" sx={{fontWeight: 'fontWeightBold'}}
                                     itemProp="headline">
                             {title}
@@ -46,6 +48,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                                 {description}
                             </Typography>
                         )}
+
                         <ArticleInfo date={date} title={title} description={description} />
                         {image && <GatsbyImage image={image} alt={title}/>}
                     </header>
@@ -91,6 +94,11 @@ const FrontMatter = PropTypes.shape({
 
 BlogPostTemplate.propTypes = {
     data: PropTypes.shape({
+        site: PropTypes.shape({
+            siteMetadata: PropTypes.shape({
+                siteUrl: PropTypes.string.isRequired
+            }).isRequired
+        }).isRequired,
         post: PropTypes.shape({
             excerpt: PropTypes.string.isRequired,
             body: PropTypes.string.isRequired,

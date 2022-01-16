@@ -6,9 +6,15 @@ import {StaticImage} from "gatsby-plugin-image";
 import Typography from "@mui/material/Typography";
 import PropTypes, {InferProps} from 'prop-types';
 import ShareButtons from "./shareButtons";
-
+import RssFeedIcon from "@mui/icons-material/RssFeed";
+import IconButton from "@mui/material/IconButton";
+import {graphql, useStaticQuery} from "gatsby";
+import {useI18next} from "gatsby-plugin-react-i18next";
 
 export default function ArticleInfo({date, title, description}: InferProps<typeof ArticleInfo.propTypes>) {
+    const {site} = useStaticQuery(query);
+    const {language} = useI18next();
+    const {siteUrl} = site.siteMetadata;
     return (
         <Box
             sx={{
@@ -19,24 +25,37 @@ export default function ArticleInfo({date, title, description}: InferProps<typeo
                 paddingBottom: 2
             }}
         >
-            <Link to={"/about/"}>
-                <Box sx={{display: 'flex', alignItems: 'flex-end'}}>
-                    <Avatar sx={{width: 50, height: 50, marginRight: 1}} imgProps={{}}>
-                        <StaticImage src={'../../images/portrait_sm.png'} alt={'Martin Reiche'}/>
-                    </Avatar>
-                    <Box>
-                        <Typography>
-                            Martin Reiche
-                        </Typography>
-                        {date && (
-                            <Typography variant="caption" color="primary">
-                                {date}
+
+            <Box sx={{ display: 'flex', alignItems: 'flex-end'}}>
+                <Link to={"/about/"}>
+                    <Box sx={{display: 'flex', alignItems: 'flex-end'}}>
+                        <Avatar sx={{width: 50, height: 50, marginRight: 1}} imgProps={{}}>
+                            <StaticImage src={'../../images/portrait_sm.png'} alt={'Martin Reiche'}/>
+                        </Avatar>
+                        <Box>
+                            <Typography>
+                                Martin Reiche
                             </Typography>
-                        )}
+                            {date && (
+                                <Typography variant="caption" color="primary">
+                                    {date}
+                                </Typography>
+                            )}
+                        </Box>
                     </Box>
+
+                </Link>
+                <Box sx={{paddingLeft: 1}}>
+                    <IconButton
+                        color="primary"
+                        href={`${siteUrl}${language === 'en' ? '/en' : ''}/blog/rss.xml`}
+                        aria-label="RSS Feed">
+                        <RssFeedIcon/>
+                    </IconButton>
                 </Box>
-            </Link>
-            <ShareButtons title={title} description={description} />
+            </Box>
+
+            <ShareButtons title={title} description={description}/>
         </Box>
     )
 }
@@ -44,5 +63,15 @@ export default function ArticleInfo({date, title, description}: InferProps<typeo
 ArticleInfo.propTypes = {
     date: PropTypes.string,
     title: PropTypes.string,
-    description: PropTypes.string
+    description: PropTypes.string,
 }
+
+const query = graphql`
+  query ArticleInfo {
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
+  }
+`
