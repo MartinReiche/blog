@@ -23,7 +23,6 @@ export default function CommentList({articleId, collectionName}: InferProps<type
     React.useEffect(() => {
         const {db, auth} = getFirebase();
         const docRef = doc(db, collectionName, articleId);
-        console.log(auth.currentUser)
         if (auth.currentUser) {
             setCurrentUserID(auth.currentUser.uid)
         }
@@ -83,8 +82,6 @@ export default function CommentList({articleId, collectionName}: InferProps<type
                 </Box>
             )}
         </React.Fragment>
-
-
     )
 
 }

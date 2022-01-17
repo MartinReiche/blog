@@ -10,6 +10,9 @@ service cloud.firestore {
         allow read: if true;
         match /comments/{document} {
             allow read: if resource.data.visible == true;
+            allow create: if true;
+            allow update: if resource.data.authorID == request.auth.uid;
+            allow delete: if isAdmin();
         }
     }
     match /requests/{document=**} {
