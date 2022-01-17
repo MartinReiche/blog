@@ -54,7 +54,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                     </header>
                     {!image && <Divider/>}
                     <section itemProp="articleBody">
-                        <Box sx={{textAlign: 'justify'}}>
+                        <Box>
                             <MDXProvider>
                                 <MDXRenderer galleryImages={gallery_images} test={"Test Props privided in MDXRenderer"}>
                                     {post.body}
