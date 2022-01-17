@@ -6,6 +6,8 @@ import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
 export function getFirebase() {
     if (getApps().length === 0) {
         // Init Firebase
+        console.log("Initializing Firebase with:", process.env.GATSBY_FIREBASE_API_KEY);
+
         const app = initializeApp({
             apiKey: process.env.GATSBY_FIREBASE_API_KEY,
             authDomain: process.env.GATSBY_FIREBASE_AUTH_DOMAIN,
