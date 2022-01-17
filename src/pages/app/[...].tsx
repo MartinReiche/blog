@@ -1,20 +1,16 @@
-import React from "react";
-import {Router} from "@reach/router";
-import Login from "../../components/login";
+import * as React from "react"
+import { Router } from "@reach/router"
+import Login from "../../components/login"
 import {graphql} from "gatsby";
 
-const App = () => {
-
-    return (
-        <React.Fragment>
-            <Router>
-                <Login path="/app/login"/>
-            </Router>
-        </React.Fragment>
-    )
-}
-
-export default App
+const App = () => (
+  <React.Fragment>
+    <Router>
+      <Login path="/app/login" />
+      <Login path="/:lang/app/login" />
+    </Router>
+  </React.Fragment>
+)
 
 export const query = graphql`
   query AppPageQuery($language: String!) {
@@ -30,3 +26,4 @@ export const query = graphql`
   }
 `;
 
+export default App
