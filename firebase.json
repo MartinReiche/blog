@@ -12,7 +12,15 @@
     ],
     "rewrites": [
       {
-        "source": "**/app/**",
+        "source": "/app/**",
+        "destination": "/app/index.html"
+      },
+      {
+        "source": "/en/app/**",
+        "destination": "/en/app/index.html"
+      },
+      {
+        "source": "/de/app/**",
         "destination": "/app/index.html"
       }
     ],
