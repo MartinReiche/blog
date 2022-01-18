@@ -7,11 +7,13 @@ type User = {
     isAdmin: boolean
     uid?: string
     name?: string
+    isLoading: boolean
 }
 
 const defaultUser: User = {
     isAdmin: false,
-    isAuthenticated: false
+    isAuthenticated: false,
+    isLoading: true
 }
 
 const AuthContext = React.createContext(defaultUser);
@@ -21,7 +23,7 @@ export function AuthProvider({children}: InferProps<typeof AuthProvider.propType
     const [user, setUser] = React.useState(defaultUser);
 
     React.useEffect(() => {
-        const { auth } = getFirebase();
+        const {auth} = getFirebase();
 
         const cancelAuthListener = auth
             .onAuthStateChanged(async function(user) {
@@ -31,7 +33,8 @@ export function AuthProvider({children}: InferProps<typeof AuthProvider.propType
                         isAuthenticated: true,
                         isAdmin: !!claims.admin || false,
                         uid: claims.user_id as string,
-                        name: claims.name as string || ''
+                        name: claims.name as string || '',
+                        isLoading: false
                     });
                 } else {
                     setUser(defaultUser);
