@@ -6,7 +6,7 @@ type User = {
     isAuthenticated: boolean
     isAdmin: boolean
     uid?: string
-    name?: string
+    displayName?: string
     isLoading: boolean
 }
 
@@ -28,16 +28,16 @@ export function AuthProvider({children}: InferProps<typeof AuthProvider.propType
         const cancelAuthListener = auth
             .onAuthStateChanged(async function(user) {
                 if (user) {
-                    const { claims } = await user.getIdTokenResult()
+                    const { claims } = await user.getIdTokenResult();
                     setUser({
                         isAuthenticated: true,
                         isAdmin: !!claims.admin || false,
-                        uid: claims.user_id as string,
-                        name: claims.name as string || '',
+                        uid: user.uid,
+                        displayName: user.displayName || '',
                         isLoading: false
                     });
                 } else {
-                    setUser(defaultUser);
+                    setUser({ ...defaultUser, isLoading: false });
                 }
             });
         return function cleanup() {
