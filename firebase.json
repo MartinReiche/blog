@@ -23,7 +23,8 @@
         "destination": "/app/[...]/index.html"
       },
       {
-
+        "source": "/en/app/**",
+        "destination": "/en/app/[...]/index.html"
       }
     ],
     "headers": [

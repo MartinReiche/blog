@@ -5,9 +5,13 @@ import Layout from "../components/layout"
 import Seo from "../components/layout/seo"
 import {graphql} from "gatsby";
 import Link from '../components/link';
+import {useAuth} from "../components/auth-provider";
 
 const BlogPage: React.FC<QueryData> = ({data}) => {
     const {t} = useTranslation();
+    const user = useAuth();
+
+    console.log(user)
 
     const postData = data.blog.nodes.map(post => {
         const { path, title } = post.frontmatter;

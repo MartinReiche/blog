@@ -1,11 +1,14 @@
 import * as React from "react"
 import { Router } from "@reach/router"
 import Login from "../../components/login"
+import AdminRoute from "../../components/admin-route";
+import NewComments from "../../components/new-comments";
 import {graphql} from "gatsby";
 
-const App = () => (
+const Path = () => (
   <React.Fragment>
     <Router>
+        <AdminRoute component={NewComments} path="/app/new-comments" />
       <Login path="/app/login" />
       <Login path="/:lang/app/login" />
     </Router>
@@ -26,4 +29,4 @@ export const query = graphql`
   }
 `;
 
-export default App
+export default Path
