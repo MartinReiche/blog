@@ -1,18 +1,17 @@
 import * as React from "react"
 import {Router} from "@reach/router"
 import Login from "../../components/login"
-import AdminRoute from "../../components/route-gates/admin-route";
-import NonAdminRoute from "../../components/route-gates/non-admin-route";
-import NewComments from "../../components/profile";
+import AdminGate from "../../components/route-gates/admin-gate";
+import Dashboard from "../../components/dashboard";
 import {graphql} from "gatsby";
 
 const Path = () => (
     <React.Fragment>
         <Router>
-            <AdminRoute component={NewComments} path="/app/profile/" redirectTo="/app/login"/>
-            <AdminRoute component={NewComments} path="/:lang/app/profile/" redirectTo="/:lang/app/login"/>
-            <NonAdminRoute component={Login} path="/app/login" redirectTo="/app/profile" />
-            <NonAdminRoute component={Login} path="/:lang/app/login" redirectTo="/:lang/app/profile" />
+            <AdminGate requireAdmin={true} component={Dashboard} path="/app/dashboard/" redirectTo="/app/login/"/>
+            <AdminGate requireAdmin={true} component={Dashboard} path="/en/app/dashboard/" redirectTo="/en/app/login/"/>
+            <AdminGate requireAdmin={false} component={Login} path="/app/login/" redirectTo="/app/dashboard/" />
+            <AdminGate requireAdmin={false} component={Login} path="/en/app/login/" redirectTo="/en/app/dashboard/" />
         </Router>
     </React.Fragment>
 )

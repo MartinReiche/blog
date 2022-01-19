@@ -4,12 +4,12 @@ import {navigate} from "gatsby";
 import {useAuth} from "../auth-provider";
 import Loading from "../loading";
 
-function AdminRoute({component: Component, location, redirectTo,...rest}: InferProps<typeof AdminRoute.propTypes>) {
+function AdminGate({component: Component, location, redirectTo, requireAdmin, ...rest}: InferProps<typeof AdminGate.propTypes>) {
     const user = useAuth();
 
     if (user.isLoading) {
-        return <Loading open={true} />
-    } else if (!user.isAdmin) {
+        return <Loading open={true}/>
+    } else if (requireAdmin ? !user.isAdmin : user.isAdmin) {
         navigate(redirectTo);
         return null;
     }
@@ -17,10 +17,11 @@ function AdminRoute({component: Component, location, redirectTo,...rest}: InferP
     return <Component {...rest} />
 }
 
-export default AdminRoute
+export default AdminGate
 
-AdminRoute.propTypes = {
+AdminGate.propTypes = {
     component: PropTypes.elementType.isRequired,
+    requireAdmin: PropTypes.bool.isRequired,
     location: PropTypes.shape({
             pathname: PropTypes.string.isRequired
         }

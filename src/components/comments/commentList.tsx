@@ -17,15 +17,11 @@ import Box from "@mui/material/Box";
 export default function CommentList({articleId, collectionName}: InferProps<typeof CommentList.propTypes>) {
     const [comments, setComments] = React.useState([] as DocumentData[]);
     const [queryLimit, setQueryLimit] = React.useState(10);
-    const [userID, setCurrentUserID] = React.useState('');
     const {t} = useTranslation();
 
     React.useEffect(() => {
-        const {db, auth} = getFirebase();
+        const {db} = getFirebase();
         const docRef = doc(db, collectionName, articleId);
-        if (auth.currentUser) {
-            setCurrentUserID(auth.currentUser.uid)
-        }
 
         const q = query(
             collection(docRef, "comments"),
