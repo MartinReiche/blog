@@ -13,10 +13,7 @@ import Link from '../link';
 import {ChangeLocale} from "./ChangeLocale";
 // @ts-ignore because this is handled by gatsby-plugin-react-svg
 import Logo from "../../images/logo.svg";
-import {useAuth} from "../auth-provider";
-import {Match} from "@reach/router"
-import {Link as GatsbyLink} from 'gatsby-theme-material-ui';
-import {getAuth} from 'firebase/auth';
+import DashboardNavigation from "./dashboardNavigation";
 
 const pages = [
     {label: 'i18n:blog', path: '/blog/'},
@@ -28,8 +25,6 @@ const pages = [
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const {t} = useTranslation();
-    const user = useAuth();
-
 
     const handleOpenNavMenu = (event: any) => {
         setAnchorElNav(event.currentTarget);
@@ -38,10 +33,6 @@ const Header = () => {
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
-
-    const handleLogoutClick = () => {
-        getAuth().signOut();
-    }
 
     return (
         <AppBar position="static" color="primary">
@@ -106,25 +97,7 @@ const Header = () => {
                             </Link>
                         ))}
                     </Box>
-                    {user.isAdmin && (
-                        <Match path="/app/dashboard/">
-                            {props => props.match
-                                ? (
-                                    <Button
-                                        sx={{my: 2, color: 'secondary.light', display: 'block'}}
-                                        onClick={handleLogoutClick}
-                                    >
-                                        Logout
-                                    </Button>
-                                )
-                                : (<GatsbyLink to="/app/dashboard/">
-                                        <Button sx={{my: 2, color: 'secondary.light', display: 'block'}}>
-                                            Dashboard
-                                        </Button>
-                                    </GatsbyLink>
-                                )}
-                        </Match>
-                    )}
+                    <DashboardNavigation/>
                     <ChangeLocale/>
                 </Toolbar>
             </Container>

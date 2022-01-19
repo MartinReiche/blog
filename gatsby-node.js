@@ -1,5 +1,22 @@
 const path = require(`path`)
 
+// workaround for i18n prefixes on catchall client-only routes
+function langPrefix(page) {
+  return page.context.language === page.context.i18n.defaultLanguage &&
+  !page.context.i18n.generateDefaultLanguagePage
+    ? ''
+    : `/${page.context.language}`
+}
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage } = actions
+  // Removing the ^ skips an optional /:lang prefix
+  if (page.path.match(/\/app/)) {
+    // adding lang if it's not the default page.
+    page.matchPath = `${langPrefix(page)}/app/*`
+    createPage(page)
+  }
+}
+
 exports.createPages = async ({graphql, actions, reporter}) => {
 
   // Define a template for blog post

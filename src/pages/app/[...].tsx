@@ -7,11 +7,13 @@ import {graphql} from "gatsby";
 
 const Path = () => (
     <React.Fragment>
-        <Router>
-            <AdminGate requireAdmin={true} component={Dashboard} path="/app/dashboard/" redirectTo="/app/login/"/>
-            <AdminGate requireAdmin={true} component={Dashboard} path="/en/app/dashboard/" redirectTo="/en/app/login/"/>
-            <AdminGate requireAdmin={false} component={Login} path="/app/login/" redirectTo="/app/dashboard/" />
-            <AdminGate requireAdmin={false} component={Login} path="/en/app/login/" redirectTo="/en/app/dashboard/" />
+        <Router basepath="/app">
+            <AdminGate requireAdmin={true} component={Dashboard} path="/dashboard" redirectTo="/app/login"/>
+            <AdminGate requireAdmin={false} component={Login} path="/login" redirectTo="/app/dashboard" />
+        </Router>
+        <Router basepath="/:lang/app">
+            <AdminGate requireAdmin={true} component={Dashboard} path="/dashboard" redirectTo="/en/app/login"/>
+            <AdminGate requireAdmin={false} component={Login} path="/login" redirectTo="/en/app/dashboard" />
         </Router>
     </React.Fragment>
 )
