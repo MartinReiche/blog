@@ -1,3 +1,5 @@
+rules_version = '2';
+
 service cloud.firestore {
 
   // Auth utility functions
@@ -9,9 +11,9 @@ service cloud.firestore {
     match /blog/{document} {
         allow read: if true;
         match /comments/{document} {
-            allow read: if resource.data.visible == true;
-            allow create: if true;
-            allow update: if resource.data.authorID == request.auth.uid;
+            allow read: if resource.data.visible == true || isAdmin();
+            allow create: if request.resource.data.keys().hasOnly(['name', 'message', 'userId']) || isAdmin();
+            allow update: if resource.data.userId == request.auth.uid;
             allow delete: if isAdmin();
         }
     }
