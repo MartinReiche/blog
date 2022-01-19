@@ -1,22 +1,22 @@
 import * as React from "react"
+import PropTypes, {InferProps, string} from "prop-types";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import {GatsbyImage, getImage} from "gatsby-plugin-image"
 import {MDXRenderer} from "gatsby-plugin-mdx";
+import {graphql} from "gatsby";
 
 import Layout from "../../components/layout"
 import Seo from "../../components/layout/seo"
-import {graphql} from "gatsby";
 import PageNavigation from "../../components/page-navigation";
 import ArticleInfo from "../../components/article-info";
 import MDXProvider from "../../components/mdx-provider";
-import PropTypes, {InferProps, string} from "prop-types";
+import Comments from "../../components/comments";
 
 export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTemplate.propTypes>) {
     const {post, previous, next} = data
     const {title_image, gallery_images, description, title, date} = post.frontmatter;
-
 
     const image = title_image ? getImage(title_image.src) : null;
 
@@ -54,7 +54,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                     </header>
                     {!image && <Divider/>}
                     <section itemProp="articleBody">
-                        <Box sx={{textAlign: 'justify'}}>
+                        <Box>
                             <MDXProvider>
                                 <MDXRenderer galleryImages={gallery_images} test={"Test Props privided in MDXRenderer"}>
                                     {post.body}
@@ -62,6 +62,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                             </MDXProvider>
                         </Box>
                     </section>
+                    <Comments articleId={post.slug.replace(/\//g,"-")} collectionName="blog"/>
                     <Divider/>
                 </article>
             </Box>
@@ -94,15 +95,11 @@ const FrontMatter = PropTypes.shape({
 
 BlogPostTemplate.propTypes = {
     data: PropTypes.shape({
-        site: PropTypes.shape({
-            siteMetadata: PropTypes.shape({
-                siteUrl: PropTypes.string.isRequired
-            }).isRequired
-        }).isRequired,
         post: PropTypes.shape({
             excerpt: PropTypes.string.isRequired,
             body: PropTypes.string.isRequired,
-            frontmatter: FrontMatter.isRequired
+            frontmatter: FrontMatter.isRequired,
+            slug: PropTypes.string.isRequired
         }).isRequired,
         next: AdjacentBlog,
         previous: AdjacentBlog
@@ -121,6 +118,7 @@ export const pageQuery = graphql`
       id
       excerpt(pruneLength: 160)
       body
+      slug
       frontmatter {
         title
         date(formatString: "dddd, Do MMMM YYYY", locale: $language)

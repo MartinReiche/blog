@@ -2,11 +2,11 @@ import * as React from "react"
 
 import Layout from "../components/layout"
 import Seo from "../components/layout/seo"
-import {useI18next} from "gatsby-plugin-react-i18next";
+import {useTranslation} from "gatsby-plugin-react-i18next";
 import {graphql} from "gatsby";
 
 const IndexPage = () => {
-    const {t} = useI18next();
+    const {t} = useTranslation();
     return (
         <Layout>
             <Seo title="Home" />

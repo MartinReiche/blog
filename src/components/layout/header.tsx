@@ -8,22 +8,23 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import {useI18next} from "gatsby-plugin-react-i18next";
+import {useTranslation} from "gatsby-plugin-react-i18next";
 import Link from '../link';
 import {ChangeLocale} from "./ChangeLocale";
 // @ts-ignore because this is handled by gatsby-plugin-react-svg
-import Logo from "../../images/logo.svg"
+import Logo from "../../images/logo.svg";
+import DashboardNavigation from "./dashboardNavigation";
 
 const pages = [
     {label: 'i18n:blog', path: '/blog/'},
-    {label: 'i18n:podcast', path: '/podcast/'},
+    // {label: 'i18n:podcast', path: '/podcast/'},
     {label: 'i18n:about', path: '/about/'},
     {label: 'i18n:support', path: '/support/'}
 ];
 
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const {t} = useI18next();
+    const {t} = useTranslation();
 
     const handleOpenNavMenu = (event: any) => {
         setAnchorElNav(event.currentTarget);
@@ -37,9 +38,9 @@ const Header = () => {
         <AppBar position="static" color="primary">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Box sx={{ marginRight: 5, display: {xs: 'none', md: 'flex'}}}>
-                        <Link to="/" aria-label="Home" style={{ display: 'flex'}}>
-                            <Logo style={{ width: 50, height: 50}}/>
+                    <Box sx={{marginRight: 5, display: {xs: 'none', md: 'flex'}}}>
+                        <Link to="/" aria-label="Home" style={{display: 'flex'}}>
+                            <Logo style={{width: 50, height: 50}}/>
                         </Link>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -81,15 +82,14 @@ const Header = () => {
                         </Menu>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-                        <Link to="/" aria-label="Home" style={{ display: 'flex' }}>
-                            <Logo style={{ width: 42, height: 42}}/>
+                        <Link to="/" aria-label="Home" style={{display: 'flex'}}>
+                            <Logo style={{width: 42, height: 42}}/>
                         </Link>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
                             <Link to={page.path} key={page.label}>
                                 <Button
-                                    onClick={handleCloseNavMenu}
                                     sx={{my: 2, color: 'secondary.light', display: 'block'}}
                                 >
                                     {t(page.label)}
@@ -97,6 +97,7 @@ const Header = () => {
                             </Link>
                         ))}
                     </Box>
+                    <DashboardNavigation/>
                     <ChangeLocale/>
                 </Toolbar>
             </Container>

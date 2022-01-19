@@ -6,15 +6,11 @@ import {StaticImage} from "gatsby-plugin-image";
 import Typography from "@mui/material/Typography";
 import PropTypes, {InferProps} from 'prop-types';
 import ShareButtons from "./shareButtons";
-import RssFeedIcon from "@mui/icons-material/RssFeed";
-import IconButton from "@mui/material/IconButton";
 import {graphql, useStaticQuery} from "gatsby";
-import {useI18next} from "gatsby-plugin-react-i18next";
 
 export default function ArticleInfo({date, title, description}: InferProps<typeof ArticleInfo.propTypes>) {
     const {site} = useStaticQuery(query);
-    const {language} = useI18next();
-    const {siteUrl} = site.siteMetadata;
+    const {author} = site.siteMetadata;
     return (
         <Box
             sx={{
@@ -34,7 +30,7 @@ export default function ArticleInfo({date, title, description}: InferProps<typeo
                         </Avatar>
                         <Box>
                             <Typography>
-                                Martin Reiche
+                                {author.name}
                             </Typography>
                             {date && (
                                 <Typography variant="caption" color="primary">
@@ -45,14 +41,6 @@ export default function ArticleInfo({date, title, description}: InferProps<typeo
                     </Box>
 
                 </Link>
-                <Box sx={{paddingLeft: 1}}>
-                    <IconButton
-                        color="primary"
-                        href={`${siteUrl}${language === 'en' ? '/en' : ''}/blog/rss.xml`}
-                        aria-label="RSS Feed">
-                        <RssFeedIcon/>
-                    </IconButton>
-                </Box>
             </Box>
 
             <ShareButtons title={title} description={description}/>
@@ -70,7 +58,9 @@ const query = graphql`
   query ArticleInfo {
     site {
       siteMetadata {
-        siteUrl
+        author {
+            name
+        }
       }
     }
   }
