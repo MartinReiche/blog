@@ -12,7 +12,11 @@ import {useTranslation} from "gatsby-plugin-react-i18next";
 import Link from '../link';
 import {ChangeLocale} from "./ChangeLocale";
 // @ts-ignore because this is handled by gatsby-plugin-react-svg
-import Logo from "../../images/logo.svg"
+import Logo from "../../images/logo.svg";
+import {useAuth} from "../auth-provider";
+import {Match} from "@reach/router"
+import {Link as GatsbyLink} from 'gatsby-theme-material-ui';
+import {getAuth} from 'firebase/auth';
 
 const pages = [
     {label: 'i18n:blog', path: '/blog/'},
@@ -24,6 +28,8 @@ const pages = [
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const {t} = useTranslation();
+    const user = useAuth();
+
 
     const handleOpenNavMenu = (event: any) => {
         setAnchorElNav(event.currentTarget);
@@ -33,13 +39,17 @@ const Header = () => {
         setAnchorElNav(null);
     };
 
+    const handleLogoutClick = () => {
+        getAuth().signOut();
+    }
+
     return (
         <AppBar position="static" color="primary">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Box sx={{ marginRight: 5, display: {xs: 'none', md: 'flex'}}}>
-                        <Link to="/" aria-label="Home" style={{ display: 'flex'}}>
-                            <Logo style={{ width: 50, height: 50}}/>
+                    <Box sx={{marginRight: 5, display: {xs: 'none', md: 'flex'}}}>
+                        <Link to="/" aria-label="Home" style={{display: 'flex'}}>
+                            <Logo style={{width: 50, height: 50}}/>
                         </Link>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -81,15 +91,14 @@ const Header = () => {
                         </Menu>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-                        <Link to="/" aria-label="Home" style={{ display: 'flex' }}>
-                            <Logo style={{ width: 42, height: 42}}/>
+                        <Link to="/" aria-label="Home" style={{display: 'flex'}}>
+                            <Logo style={{width: 42, height: 42}}/>
                         </Link>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
                             <Link to={page.path} key={page.label}>
                                 <Button
-                                    onClick={handleCloseNavMenu}
                                     sx={{my: 2, color: 'secondary.light', display: 'block'}}
                                 >
                                     {t(page.label)}
@@ -97,6 +106,25 @@ const Header = () => {
                             </Link>
                         ))}
                     </Box>
+                    {user.isAdmin && (
+                        <Match path="/app/dashboard/">
+                            {props => props.match
+                                ? (
+                                    <Button
+                                        sx={{my: 2, color: 'secondary.light', display: 'block'}}
+                                        onClick={handleLogoutClick}
+                                    >
+                                        Logout
+                                    </Button>
+                                )
+                                : (<GatsbyLink to="/app/dashboard/">
+                                        <Button sx={{my: 2, color: 'secondary.light', display: 'block'}}>
+                                            Dashboard
+                                        </Button>
+                                    </GatsbyLink>
+                                )}
+                        </Match>
+                    )}
                     <ChangeLocale/>
                 </Toolbar>
             </Container>
