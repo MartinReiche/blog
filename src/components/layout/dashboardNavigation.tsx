@@ -10,7 +10,7 @@ import Link from "../link";
 
 export default function DashboardNavigation() {
     const [onDashboard, setOnDashboard] = React.useState(false);
-    const user = useAuth();
+    const {user} = useAuth();
     const {pathname} = useLocation();
 
     React.useEffect(() => {

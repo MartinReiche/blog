@@ -1,6 +1,7 @@
 import * as React from "react";
 import PropTypes, {InferProps} from "prop-types";
 import getFirebase from "../../utils/getFirebase";
+import {Dispatch, SetStateAction} from "react";
 
 type User = {
     isAuthenticated: boolean
@@ -16,7 +17,11 @@ const defaultUser: User = {
     isLoading: true
 }
 
-const AuthContext = React.createContext(defaultUser);
+const AuthContext = React.createContext<{ user: User, setUser: Dispatch<SetStateAction<User>>}>({
+    user: defaultUser,
+    setUser: () => {}
+})
+
 export const useAuth = () => React.useContext(AuthContext);
 
 export function AuthProvider({children}: InferProps<typeof AuthProvider.propTypes>) {
@@ -46,7 +51,7 @@ export function AuthProvider({children}: InferProps<typeof AuthProvider.propType
     },[])
 
     return (
-        <AuthContext.Provider value={user}>
+        <AuthContext.Provider value={{user, setUser}}>
             {children}
         </AuthContext.Provider>
     )
