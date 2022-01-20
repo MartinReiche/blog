@@ -1,50 +1,32 @@
 import * as React from "react";
 import PropTypes, {InferProps} from "prop-types";
-import getFirebase from "../../utils/getFirebase";
-import {collection, doc, onSnapshot, query, where, limit, orderBy} from "firebase/firestore";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 
 
-import {DocumentData} from "@firebase/firestore-types";
 import {useTranslation} from "gatsby-plugin-react-i18next";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
-export default function CommentList({articleId, collectionName}: InferProps<typeof CommentList.propTypes>) {
-    const [comments, setComments] = React.useState([] as DocumentData[]);
+export default function CommentList({comments}: InferProps<typeof CommentList.propTypes>) {
     const [queryLimit, setQueryLimit] = React.useState(10);
     const {t} = useTranslation();
 
-    React.useEffect(() => {
-        const {db} = getFirebase();
-        const docRef = doc(db, collectionName, articleId);
 
-        const q = query(
-            collection(docRef, "comments"),
-            where("visible", "==", true),
-            limit(queryLimit),
-            orderBy("createdAt", "desc")
-        );
-
-        const unsub = onSnapshot(q, (querySnapshot) => {
-            const commentChanges: DocumentData[] = [];
-            querySnapshot.forEach((doc) => {
-                commentChanges.push({id: doc.id, ...doc.data()})
-            });
-            setComments(commentChanges);
-        });
-
-        return function cleanUp() {
-            unsub();
-        }
-    }, [queryLimit])
 
     const handleLoadMoreClick = () => {
         setQueryLimit(queryLimit + 10);
     }
+
+    if (comments.length < 1) return (
+        <Typography>
+            {t("i18n:comments:empty")}
+        </Typography>
+    )
+
 
     return (
         <React.Fragment>
@@ -80,6 +62,11 @@ export default function CommentList({articleId, collectionName}: InferProps<type
 }
 
 CommentList.propTypes = {
-    articleId: PropTypes.string.isRequired,
-    collectionName: PropTypes.string.isRequired
+    comments: PropTypes.arrayOf(
+        PropTypes.shape({
+           id: PropTypes.string.isRequired,
+           author: PropTypes.string.isRequired,
+           message: PropTypes.string.isRequired
+        }).isRequired
+    ).isRequired
 };

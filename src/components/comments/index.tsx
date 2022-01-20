@@ -2,17 +2,57 @@ import * as React from "react";
 import PropTypes, {InferProps} from "prop-types";
 import Button from "@mui/material/Button";
 import {useTranslation} from "gatsby-plugin-react-i18next";
-import CommentList from "./commentList";
-import NewComment from "./newComment";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import {collection, doc, onSnapshot, query, where, limit, orderBy} from "firebase/firestore";
 
+import getFirebase from "../../utils/getFirebase";
+import NewComment from "./newComment";
+import CommentList from "./commentList";
 
-export default function Comments({articleId, collectionName}: InferProps<typeof Comments.propTypes>) {
+type Comment = {
+    id: string,
+    author: string,
+    message: string,
+    createdAt: Date
+}
+
+export default function Comments({documentId, collectionName}: InferProps<typeof Comments.propTypes>) {
     const {t} = useTranslation();
     const [open, setOpenState] = React.useState(false);
+    const [comments, setComments] = React.useState([] as Comment[]);
+    const [queryLimit, setQueryLimit] = React.useState(10);
+
+    React.useEffect(() => {
+        const {db} = getFirebase();
+        const docRef = doc(db, collectionName, documentId);
+
+        const q = query(
+            collection(docRef, "comments"),
+            where("visible", "==", true),
+            limit(queryLimit),
+            orderBy("createdAt", "desc")
+        );
+
+        const unsub = onSnapshot(q, (querySnapshot) => {
+            const commentChanges: Comment[] = [];
+            querySnapshot.forEach((doc) => {
+                commentChanges.push({
+                    id: doc.id,
+                    author: doc.data().author,
+                    message: doc.data().message,
+                    createdAt: doc.data().createdAt.toDate()
+                })
+            });
+            setComments(commentChanges);
+        });
+
+        return function cleanUp() {
+            unsub();
+        }
+    }, [queryLimit])
 
     const handleClickOpen = () => {
         setOpenState(true);
@@ -41,7 +81,7 @@ export default function Comments({articleId, collectionName}: InferProps<typeof 
                     </IconButton>
                 </Box>
                 <NewComment/>
-                <CommentList articleId={articleId} collectionName={collectionName}/>
+                <CommentList comments={comments}/>
             </Box>
         )
     } else {
@@ -61,6 +101,6 @@ export default function Comments({articleId, collectionName}: InferProps<typeof 
 };
 
 Comments.propTypes = {
-    articleId: PropTypes.string.isRequired,
+    documentId: PropTypes.string.isRequired,
     collectionName: PropTypes.string.isRequired
 }

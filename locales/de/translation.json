@@ -14,6 +14,7 @@
   "i18n:back": "Zurück",
   "i18n:comments": "Kommentare",
   "i18n:comments:load": "Weitere Kommentare Laden",
+  "i18n:comments:empty": "Kein Kommentar! Schreib doch Du einen...",
   "i18n:menu": "Menü",
   "i18n:close": "Schließen"
 }
