@@ -13,5 +13,7 @@
   "i18n:next": "Next",
   "i18n:back": "Back",
   "i18n:comments": "Comments",
-  "i18n:comments:load": "Load more comments"
+  "i18n:comments:load": "Load more comments",
+  "i18n:menu": "Menu",
+  "i18n:close": "Close"
 }

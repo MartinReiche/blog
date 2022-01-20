@@ -5,7 +5,6 @@ import {collection, doc, onSnapshot, query, where, limit, orderBy} from "firebas
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
 
@@ -49,9 +48,7 @@ export default function CommentList({articleId, collectionName}: InferProps<type
 
     return (
         <React.Fragment>
-            <Typography variant="h4" component="h2" color="secondary.dark" sx={{fontWeight: 'fontWeightBold'}}>
-                {t("i18n:comments")}
-            </Typography>
+
             <List sx={{width: '100%'}}>
                 {comments.map((comment, index) => (
                     <React.Fragment key={comment.id}>
