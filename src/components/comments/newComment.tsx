@@ -44,7 +44,6 @@ export default function NewComment({collectionName, documentId}: InferProps<type
             const docRef = doc(db, collectionName, documentId);
             const commentsRef = collection(docRef, 'comments');
             setSubmitting(true);
-
             try {
                 if (!user.isAuthenticated) {
                     const auth = getAuth();
@@ -56,13 +55,13 @@ export default function NewComment({collectionName, documentId}: InferProps<type
                     await updateProfile(getAuth().currentUser as User, {
                         displayName: name
                     });
-                    setUser({...user, displayName: name});
                 }
+                setUser({...user, displayName: name});
 
                 await addDoc(commentsRef, {
                     author: name,
-                    userId: user.uid,
                     createdAt: serverTimestamp(),
+                    userId: getAuth().currentUser?.uid,
                     message,
                 })
                 setSubmitting(false);
@@ -71,8 +70,6 @@ export default function NewComment({collectionName, documentId}: InferProps<type
                 setShowNotification(true);
             } catch (e: any) {
                 setSubmitting(false);
-                // implement error handling
-                console.log(e);
                 setNotification("i18n:comments:send-error");
                 setShowNotification(true);
             }
@@ -150,8 +147,8 @@ export default function NewComment({collectionName, documentId}: InferProps<type
                         maxRows={5}
                     />
                 </Grid>
-                <Grid item sx={{justifyContent: 'flex-end', display: 'flex'}}>
-                    <Button color="primary" variant="contained" type="submit" disabled={submitting}>
+                <Grid item>
+                    <Button color="primary" type="submit" disabled={submitting}>
                         {t("i18n:comments:send")}
                     </Button>
                 </Grid>

@@ -31,8 +31,6 @@ export default function CommentList({collectionName, documentId}: InferProps<typ
         const {db} = getFirebase();
         const docRef = doc(db, collectionName, documentId);
 
-
-
         const q = query(
             collection(docRef, "comments"),
             where("visible", "==", true),
