@@ -15,6 +15,13 @@
   "i18n:comments": "Kommentare",
   "i18n:comments:load": "Weitere Kommentare Laden",
   "i18n:comments:empty": "Kein Kommentar! Schreib doch Du einen...",
+  "i18n:comments:name": "Name",
+  "i18n:comments:comment": "Hinterlasse einen Kommentar",
+  "i18n:comments:name-required": "Name ist erforderlich",
+  "i18n:comments:comment-required": "Kommentar ist erforderlich",
+  "i18n:comments:send": "Abschicken",
+  "i18n:comments:send-success": "Vielen Dank! Dein Kommentar wird geprüft. Ich bitte um etwas Geduld.",
+  "i18n:comments:send-error": "Es ist ein Fehler aufgetreten. Versuch es später nochmal oder schreib mir eine Mail!",
   "i18n:menu": "Menü",
   "i18n:close": "Schließen"
 }

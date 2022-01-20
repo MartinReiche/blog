@@ -15,6 +15,13 @@
   "i18n:comments": "Comments",
   "i18n:comments:load": "Load more comments",
   "i18n:comments:empty": "No comment! You write one...",
+  "i18n:comments:name": "Name",
+  "i18n:comments:comment": "Leave a Comment",
+  "i18n:comments:name-required": "Name is required",
+  "i18n:comments:comment-required": "Comment is required",
+  "i18n:comments:send": "Send",
+  "i18n:comments:send-success": "Thank you! Your comment will be reviewed. So please be patient.",
+  "i18n:comments:send-error": "An error has occurred. Try again later or send me a mail!",
   "i18n:menu": "Menu",
   "i18n:close": "Close"
 }
