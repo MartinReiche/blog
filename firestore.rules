@@ -12,7 +12,7 @@ service cloud.firestore {
         allow read: if true;
         match /comments/{document} {
             allow read: if resource.data.visible == true || isAdmin();
-            allow create: if request.resource.data.keys().hasOnly(['name', 'message', 'userId']) || isAdmin();
+            allow create: if request.resource.data.keys().hasOnly(['author', 'message', 'userId', 'createdAt']) || isAdmin();
             allow update: if resource.data.userId == request.auth.uid;
             allow delete: if isAdmin();
         }
