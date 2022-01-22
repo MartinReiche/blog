@@ -16,21 +16,23 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import {Timestamp} from "firebase/firestore";
 import {useI18next, useTranslation} from "gatsby-plugin-react-i18next";
 
-export default function CommentCard(
+function CommentCard(
     {
         commentData,
         handleAcceptClick,
         handleRejectClick,
         handleRestoreClick,
         handleDeleteClick,
+        observerRef
     }: InferProps<typeof CommentCard.propTypes>) {
     const {language} = useI18next();
     const {t} = useTranslation();
 
     const {name, pathname, title, message, createdAt} = commentData;
 
+
     return (
-        <Card >
+        <Card ref={observerRef} >
             <CardHeader
                 avatar={
                     <NameAvatar name={name}/>
@@ -115,4 +117,11 @@ CommentCard.propTypes = {
     handleRejectClick: PropTypes.func,
     handleDeleteClick: PropTypes.func,
     handleRestoreClick: PropTypes.func,
+    observerRef: PropTypes.any,
 }
+
+const CommentCardWithRef = React.forwardRef(
+    (props: InferProps<typeof CommentCard.propTypes>, ref) => <CommentCard observerRef={ref} {...props} />
+)
+
+export default CommentCardWithRef;

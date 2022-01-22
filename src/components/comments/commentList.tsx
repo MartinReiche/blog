@@ -95,18 +95,18 @@ export default function CommentList({pathname, title}: InferProps<typeof Comment
         }
     }
 
+
     return (
         <React.Fragment>
             {!!comments.length && (
                 <Stack spacing={2}>
                     {comments.map((comment, i) => (
-                        <React.Fragment key={comment.id}>
-                            <CommentCard
-                                commentData={comment}
-                                handleRejectClick={user.isAdmin ? handleRejectClick : undefined}
-                            />
-                            {comments.length-2 == i && <Box ref={ref}/>}
-                        </React.Fragment>
+                        <CommentCard
+                            observerRef={comments.length-1 === i ? ref : undefined}
+                            key={comment.id}
+                            commentData={comment}
+                            handleRejectClick={user.isAdmin ? handleRejectClick : undefined}
+                        />
                     ))}
                 </Stack>
             )}
