@@ -46,7 +46,6 @@ export default function CommentList({pathname, title}: InferProps<typeof Comment
 
     React.useEffect(() => {
         if (inView && comments.length === queryLimit) {
-            console.log(`Reloading ${RELOAD_COMMENTS} comments!`)
             setQueryLimit(queryLimit + RELOAD_COMMENTS);
         }
     }, [inView])
