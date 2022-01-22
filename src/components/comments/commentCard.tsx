@@ -22,15 +22,15 @@ export default function CommentCard(
         handleAcceptClick,
         handleRejectClick,
         handleRestoreClick,
-        handleDeleteClick
+        handleDeleteClick,
     }: InferProps<typeof CommentCard.propTypes>) {
     const {language} = useI18next();
     const {t} = useTranslation();
 
-    const { name, pathname, title, message, createdAt } = commentData;
+    const {name, pathname, title, message, createdAt} = commentData;
 
     return (
-        <Card>
+        <Card >
             <CardHeader
                 avatar={
                     <NameAvatar name={name}/>
@@ -47,10 +47,10 @@ export default function CommentCard(
                 }
                 subheader={createdAt.toDate().toLocaleDateString(
                     language === 'de' ? 'de-DE' : 'en-US',
-                    { year: 'numeric', month: 'long', day: 'numeric'}
+                    {year: 'numeric', month: 'long', day: 'numeric'}
                 )}
                 action={
-                    <Box sx={{display: { xs: 'block', sm: 'flex'}}}>
+                    <Box sx={{display: {xs: 'block', sm: 'flex'}}}>
                         {handleAcceptClick && (
                             <IconButton
                                 color="success"
@@ -64,7 +64,7 @@ export default function CommentCard(
                                 color="success"
                                 aria-label="accept comment"
                                 onClick={() => handleRestoreClick(commentData)}>
-                                <RestoreIcon />
+                                <RestoreIcon/>
                             </IconButton>
                         )}
                         {handleRejectClick && (
@@ -85,7 +85,7 @@ export default function CommentCard(
                                 description={t("i18n:comments:delete-description")}
                             >
                                 <IconButton color="error" aria-label="reject comment">
-                                    <DeleteIcon />
+                                    <DeleteIcon/>
                                 </IconButton>
                             </ConfirmationDialog>
                         )}
@@ -114,5 +114,5 @@ CommentCard.propTypes = {
     handleAcceptClick: PropTypes.func,
     handleRejectClick: PropTypes.func,
     handleDeleteClick: PropTypes.func,
-    handleRestoreClick: PropTypes.func
+    handleRestoreClick: PropTypes.func,
 }

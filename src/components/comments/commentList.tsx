@@ -19,6 +19,10 @@ import {
 import CommentCard from './commentCard';
 import Stack from "@mui/material/Stack";
 import {useAuth} from "../auth-provider";
+import {useInView} from 'react-intersection-observer';
+
+const LOAD_INITIAL_COMMETS = 5;
+const RELOAD_COMMENTS = 5;
 
 type Comment = {
     id: string,
@@ -31,11 +35,24 @@ type Comment = {
 
 export default function CommentList({pathname, title}: InferProps<typeof CommentList.propTypes>) {
     const {user} = useAuth();
-    const [queryLimit, setQueryLimit] = React.useState(10);
+    const [queryLimit, setQueryLimit] = React.useState(LOAD_INITIAL_COMMETS);
     const [loading, setLoading] = React.useState(true);
     const [comments, setComments] = React.useState([] as Comment[]);
+    const {ref, inView} = useInView({
+        /* Optional options */
+        threshold: 0,
+        delay: 500
+    });
 
     React.useEffect(() => {
+        if (inView && comments.length === queryLimit) {
+            console.log(`Reloading ${RELOAD_COMMENTS} comments!`)
+            setQueryLimit(queryLimit + RELOAD_COMMENTS);
+        }
+    }, [inView])
+
+    React.useEffect(() => {
+        setLoading(true);
         const {db} = getFirebase();
         const q = query(
             collection(db, "comments"),
@@ -62,7 +79,6 @@ export default function CommentList({pathname, title}: InferProps<typeof Comment
     }, [queryLimit])
 
     const handleRejectClick = async (commentData: Comment) => {
-        console.log("reject")
         const {db} = getFirebase();
         try {
             await addDoc(collection(db, 'rejectedComments'), {
@@ -74,32 +90,30 @@ export default function CommentList({pathname, title}: InferProps<typeof Comment
                 createdAt: commentData.createdAt
             });
             await deleteDoc(doc(db, 'comments', commentData.id));
-        } catch(e: any) {
+        } catch (e: any) {
             console.log(e)
         }
     }
 
-    const handleLoadMoreClick = () => {
-        setQueryLimit(queryLimit + 10);
-    }
-
-
     return (
         <React.Fragment>
+            {!!comments.length && (
+                <Stack spacing={2}>
+                    {comments.map((comment, i) => (
+                        <React.Fragment key={comment.id}>
+                            <CommentCard
+                                commentData={comment}
+                                handleRejectClick={user.isAdmin ? handleRejectClick : undefined}
+                            />
+                            {comments.length-2 == i && <Box ref={ref}/>}
+                        </React.Fragment>
+                    ))}
+                </Stack>
+            )}
             {loading && (
                 <Box sx={{display: "flex", justifyContent: "center", padding: 4}}>
                     <CircularProgress color="primary"/>
                 </Box>
-            )}
-            {!loading && !!comments.length && (
-                <Stack spacing={2}>
-                    {comments.map(comment => (
-                        <CommentCard
-                            key={comment.id}
-                            commentData={comment}
-                            handleRejectClick={user.isAdmin ? handleRejectClick : undefined}/>
-                    ))}
-                </Stack>
             )}
         </React.Fragment>
 
