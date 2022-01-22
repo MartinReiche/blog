@@ -4,7 +4,18 @@ import PropTypes, {InferProps} from "prop-types";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import getFirebase from "../../utils/getFirebase";
-import {collection, limit, onSnapshot, orderBy, query, where, Timestamp} from "firebase/firestore";
+import {
+    collection,
+    limit,
+    onSnapshot,
+    orderBy,
+    query,
+    where,
+    Timestamp,
+    addDoc,
+    deleteDoc,
+    doc
+} from "firebase/firestore";
 import CommentCard from './commentCard';
 import Stack from "@mui/material/Stack";
 import {useAuth} from "../auth-provider";
@@ -18,7 +29,7 @@ type Comment = {
     createdAt: Timestamp
 }
 
-export default function CommentList({pathname}: InferProps<typeof CommentList.propTypes>) {
+export default function CommentList({pathname, title}: InferProps<typeof CommentList.propTypes>) {
     const {user} = useAuth();
     const [queryLimit, setQueryLimit] = React.useState(10);
     const [loading, setLoading] = React.useState(true);
@@ -50,8 +61,22 @@ export default function CommentList({pathname}: InferProps<typeof CommentList.pr
         }
     }, [queryLimit])
 
-    const handleRejectClick = () => {
+    const handleRejectClick = async (commentData: Comment) => {
         console.log("reject")
+        const {db} = getFirebase();
+        try {
+            await addDoc(collection(db, 'rejectedComments'), {
+                uid: commentData.uid,
+                title: title,
+                pathname: commentData.pathname,
+                name: commentData.name,
+                message: commentData.message,
+                createdAt: commentData.createdAt
+            });
+            await deleteDoc(doc(db, 'comments', commentData.id));
+        } catch(e: any) {
+            console.log(e)
+        }
     }
 
     const handleLoadMoreClick = () => {
@@ -82,5 +107,6 @@ export default function CommentList({pathname}: InferProps<typeof CommentList.pr
 }
 
 CommentList.propTypes = {
-    pathname: PropTypes.string.isRequired
+    pathname: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
 };
