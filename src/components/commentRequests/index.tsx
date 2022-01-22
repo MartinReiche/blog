@@ -15,12 +15,13 @@ import {Link} from 'gatsby-theme-material-ui';
 import {ConfirmationDialog} from "../dialogs";
 import getFirebase from "../../utils/getFirebase";
 import {deleteDoc, doc, collection, addDoc, Timestamp} from 'firebase/firestore';
-import {useI18next} from "gatsby-plugin-react-i18next";
+import {useI18next, useTranslation} from "gatsby-plugin-react-i18next";
 
 export default function CommentRequest(
     { commentData }: InferProps<typeof CommentRequest.propTypes>
 ) {
     const {language} = useI18next();
+    const {t} = useTranslation();
     const { name, pathname, title, message, createdAt } = commentData;
     const handleRejectClick = async () => {
         const {db} = getFirebase();
@@ -82,7 +83,11 @@ export default function CommentRequest(
                 <IconButton color="success" aria-label="accept comment" onClick={handleAcceptClick}>
                     <CheckIcon/>
                 </IconButton>
-                <ConfirmationDialog onClickOk={handleRejectClick}>
+                <ConfirmationDialog
+                    onClickOk={handleRejectClick}
+                    title={t("i18n:comments:delete-title")}
+                    description={t("i18n:comments:delete-description")}
+                >
                     <IconButton color="warning" aria-label="reject comment">
                         <CancelIcon/>
                     </IconButton>

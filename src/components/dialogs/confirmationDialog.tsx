@@ -7,9 +7,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
+import {useTranslation} from 'gatsby-plugin-react-i18next';
 
-export function ConfirmationDialog({ children, onClickOk }: InferProps<typeof ConfirmationDialog.propTypes>) {
+export function ConfirmationDialog({ children, onClickOk, title, description }: InferProps<typeof ConfirmationDialog.propTypes>) {
     const [open, setOpen] = React.useState(false);
+    const {t} = useTranslation();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -37,18 +39,17 @@ export function ConfirmationDialog({ children, onClickOk }: InferProps<typeof Co
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Use Google's location service?"}
+                    {title}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Let Google help apps determine location. This means sending anonymous
-                        location data to Google, even when no apps are running.
+                        {description}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Disagree</Button>
+                    <Button onClick={handleClose}>{t("i18n:cancel")}</Button>
                     <Button onClick={handleCallback} autoFocus>
-                        Agree
+                        {t("i18n:ok")}
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -58,5 +59,7 @@ export function ConfirmationDialog({ children, onClickOk }: InferProps<typeof Co
 
 ConfirmationDialog.propTypes = {
     children: PropTypes.element.isRequired,
-    onClickOk: PropTypes.func.isRequired
+    onClickOk: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
 }

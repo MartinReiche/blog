@@ -10,8 +10,6 @@
   "i18n:support:text": "In Case you want to support me...",
   "i18n:impressum": "Impressum",
   "i18n:impressum:text": "Text for the Impressum",
-  "i18n:next": "Next",
-  "i18n:back": "Back",
   "i18n:comments": "Comments",
   "i18n:comments:load": "Load more comments",
   "i18n:comments:empty": "No comment! You write one...",
@@ -22,6 +20,12 @@
   "i18n:comments:send": "Send",
   "i18n:comments:send-success": "Thank you! Your comment will be reviewed. So please be patient.",
   "i18n:comments:send-error": "An error has occurred. Try again later or send me a mail!",
+  "i18n:comments:delete-title": "Reject Comment",
+  "i18n:comments:delete-description": "Do you really want to reject this comment?",
   "i18n:menu": "Menu",
-  "i18n:close": "Close"
+  "i18n:close": "Close",
+  "i18n:ok": "OK",
+  "i18n:cancel": "Cancel",
+  "i18n:next": "Next",
+  "i18n:back": "Back"
 }
