@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import getFirebase from "../../utils/getFirebase";
-import {collection, doc, limit, onSnapshot, orderBy, query, where} from "firebase/firestore";
+import {collection, doc, limit, onSnapshot, orderBy, query} from "firebase/firestore";
 
 type Comment = {
     id: string,
@@ -33,9 +33,8 @@ export default function CommentList({collectionName, documentId}: InferProps<typ
 
         const q = query(
             collection(docRef, "comments"),
-            where("visible", "==", true),
-            limit(queryLimit),
-            orderBy("createdAt", "desc")
+            orderBy("createdAt", "desc"),
+            limit(queryLimit)
         );
 
         const unsub = onSnapshot(q, (querySnapshot) => {

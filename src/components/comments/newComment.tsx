@@ -15,6 +15,7 @@ import {getAuth, signInAnonymously, updateProfile, User} from "firebase/auth";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import CloseIcon from "@mui/icons-material/Close";
+import { useLocation } from "@reach/router";
 
 const validationSchema = yup.object({
     name: yup
@@ -25,12 +26,12 @@ const validationSchema = yup.object({
         .required("i18n:comments:comment-required"),
 });
 
-export default function NewComment({collectionName, documentId}: InferProps<typeof NewComment.propTypes>) {
+export default function NewComment({collectionName, documentId, title}: InferProps<typeof NewComment.propTypes>) {
     const {t} = useTranslation();
+    const {pathname} = useLocation();
     const [submitting, setSubmitting] = React.useState(false);
     const [showNotification, setShowNotification] = React.useState(false);
     const [notification, setNotification] = React.useState('');
-
     const {user, setUser} = useAuth();
 
     const formik = useFormik({
@@ -42,7 +43,7 @@ export default function NewComment({collectionName, documentId}: InferProps<type
         onSubmit: async ({name, message}, {setFieldValue}) => {
             const {db} = getFirebase();
             const docRef = doc(db, collectionName, documentId);
-            const commentsRef = collection(docRef, 'comments');
+            const commentsRef = collection(docRef, 'commentRequests');
             setSubmitting(true);
             try {
                 if (!user.isAuthenticated) {
@@ -62,6 +63,8 @@ export default function NewComment({collectionName, documentId}: InferProps<type
                     author: name,
                     createdAt: serverTimestamp(),
                     userId: getAuth().currentUser?.uid,
+                    path: pathname,
+                    title: title,
                     message,
                 })
                 setSubmitting(false);
@@ -159,5 +162,6 @@ export default function NewComment({collectionName, documentId}: InferProps<type
 
 NewComment.propTypes = {
     collectionName: PropTypes.string.isRequired,
-    documentId: PropTypes.string.isRequired
+    documentId: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
 }

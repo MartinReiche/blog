@@ -10,9 +10,7 @@ import NewComment from "./newComment";
 import CommentList from "./commentList";
 import {Divider} from "@mui/material";
 
-
-
-export default function Comments({documentId, collectionName}: InferProps<typeof Comments.propTypes>) {
+export default function Comments({documentId, collectionName, title}: InferProps<typeof Comments.propTypes>) {
     const {t} = useTranslation();
     const [open, setOpenState] = React.useState(false);
 
@@ -42,7 +40,7 @@ export default function Comments({documentId, collectionName}: InferProps<typeof
                         <CloseIcon/>
                     </IconButton>
                 </Box>
-                <NewComment collectionName={collectionName} documentId={documentId} />
+                <NewComment collectionName={collectionName} documentId={documentId} title={title}/>
                 <Divider />
                 <CommentList collectionName={collectionName} documentId={documentId} />
             </Box>
@@ -65,5 +63,6 @@ export default function Comments({documentId, collectionName}: InferProps<typeof
 
 Comments.propTypes = {
     documentId: PropTypes.string.isRequired,
-    collectionName: PropTypes.string.isRequired
+    collectionName: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
 }
