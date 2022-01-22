@@ -24,7 +24,7 @@ function stringToColor(string: string) {
 
 function getInitials(name: string) {
   const initials = name.split(' ').map(part => part[0])
-  if (initials.length > 3) return initials[0] + initials[initials.length-1];
+  if (initials.length > 2) return initials[0] + initials[initials.length-1];
   return initials;
 }
 

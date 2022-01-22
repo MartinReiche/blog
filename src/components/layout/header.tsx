@@ -79,6 +79,7 @@ const Header = () => {
                                     </MenuItem>
                                 </Link>
                             ))}
+                            <DashboardNavigation type="menu"/>
                         </Menu>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -97,7 +98,9 @@ const Header = () => {
                             </Link>
                         ))}
                     </Box>
-                    <DashboardNavigation/>
+                    <Box sx={{ display: { xs: 'none', md: 'block'}}}>
+                        <DashboardNavigation type="button"/>
+                    </Box>
                     <ChangeLocale/>
                 </Toolbar>
             </Container>
