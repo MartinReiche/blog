@@ -7,35 +7,43 @@ service cloud.firestore {
       return request.auth.token.admin == true
     }
 
-    // Enable admin to perform collectionGroup queries on comment requests
-    match /{path=**}/commentRequests/{doc} {
-      allow read: if isAdmin();
+    match /commentRequests/{document} {
+        allow read: if isAdmin()
+        allow create:
+            if request.resource.data.keys().hasOnly(['name', 'message', 'uid', 'pathname', 'title', 'createdAt'])
+            && request.resource.data.name is string
+            && request.resource.data.message is string
+            && request.resource.data.uid is string
+            && request.resource.data.pathname is string
+            && request.resource.data.title is string
+            && request.resource.data.createdAt is timestamp
+        allow delete: if isAdmin()
     }
 
-    match /blog/{document} {
-        match /commentRequests/{document} {
-            allow create:
-                if request.resource.data.keys().hasOnly(['author', 'message', 'userId', 'path', 'title', 'createdAt'])
-                && request.resource.data.author is string
-                && request.resource.data.message is string
-                && request.resource.data.userId is string
-                && request.resource.data.path is string
-                && request.resource.data.title is string
-                && request.resource.data.createdAt is timestamp
-            allow delete: if isAdmin()
-        }
-        match /comments/{document} {
-            allow read: if true
-            allow create:
-                if request.resource.data.keys().hasOnly(['author', 'message', 'userId', 'path', 'createdAt'])
-                && isAdmin()
-                && request.resource.data.author is string
-                && request.resource.data.message is string
-                && request.resource.data.userId is string
-                && request.resource.data.path is string
-                && request.resource.data.createdAt is timestamp
-            allow delete: if isAdmin()
-        }
+    match /rejectedComments/{document} {
+        allow read: if isAdmin()
+        allow create:
+            if request.resource.data.keys().hasOnly(['name', 'message', 'uid', 'pathname', 'title', 'createdAt'])
+            && isAdmin()
+            && request.resource.data.name is string
+            && request.resource.data.message is string
+            && request.resource.data.uid is string
+            && request.resource.data.pathname is string
+            && request.resource.data.title is string
+            && request.resource.data.createdAt is timestamp
+    }
+
+    match /comments/{document} {
+        allow read: if true
+        allow create:
+            if request.resource.data.keys().hasOnly(['name', 'message', 'uid', 'pathname', 'createdAt'])
+            && isAdmin()
+            && request.resource.data.name is string
+            && request.resource.data.message is string
+            && request.resource.data.uid is string
+            && request.resource.data.pathname is string
+            && request.resource.data.createdAt is timestamp
+        allow delete: if isAdmin()
     }
   }
 }

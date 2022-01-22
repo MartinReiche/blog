@@ -4,36 +4,33 @@ import Typography from '@mui/material/Typography';
 import Layout from "../layout";
 import getFirebase from "../../utils/getFirebase";
 
-
-import {collectionGroup, query, limit, orderBy, onSnapshot} from "firebase/firestore";
+import {collection, query, limit, orderBy, onSnapshot, Timestamp} from "firebase/firestore";
 import CommentRequest from "../commentRequests";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import {useI18next, useTranslation} from "gatsby-plugin-react-i18next";
-
+import {useTranslation} from "gatsby-plugin-react-i18next";
 
 type CommentRequest = {
     id: string,
-    author: string,
+    uid: string,
+    name: string,
     message: string,
-    path: string,
+    pathname: string,
     title: string,
-    createdAt: string
+    createdAt: Timestamp
 }
 
 export default function Dashboard() {
     const [commentRequests, setCommentRequests] = React.useState<CommentRequest[]>([]);
     const [loading, setLoading] = React.useState(true);
-    const {language} = useI18next();
     const {t} = useTranslation();
-    const dateStringOptions = {year: 'numeric', month: 'long', day: 'numeric'};
 
     React.useEffect(() => {
 
         const {db} = getFirebase();
         const q = query(
-            collectionGroup(db, 'commentRequests'),
+            collection(db, 'commentRequests'),
             orderBy("createdAt", "desc"),
             limit(20),
         );
@@ -42,14 +39,8 @@ export default function Dashboard() {
             const commentRequestChanges: CommentRequest[] = [];
             querySnapshot.forEach((doc) => {
                 commentRequestChanges.push({
-                    id: doc.id,
-                    author: doc.data().author,
-                    message: doc.data().message,
-                    path: doc.data().path,
-                    title: doc.data().title,
-                    createdAt: doc.data()
-                        .createdAt?.toDate()
-                        .toLocaleDateString(language === 'de' ? 'de-DE' : 'en-US', dateStringOptions)
+                    ...doc.data() as CommentRequest,
+                    id: doc.id
                 })
             });
             setCommentRequests(commentRequestChanges);
@@ -73,14 +64,7 @@ export default function Dashboard() {
             ) : (
                 <Stack spacing={2} sx={{marginTop: 4, marginBottom: 4}}>
                     {commentRequests.map((commentRequest, i) => (
-                        <CommentRequest
-                            key={i}
-                            name={commentRequest.author}
-                            message={commentRequest.message}
-                            createdAt={commentRequest.createdAt}
-                            path={commentRequest.path}
-                            linkTitle={commentRequest.title}
-                        />
+                        <CommentRequest key={i} commentData={commentRequest} />
                     ))}
                 </Stack>
             )}

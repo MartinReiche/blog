@@ -12,16 +12,16 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import getFirebase from "../../utils/getFirebase";
-import {collection, doc, limit, onSnapshot, orderBy, query} from "firebase/firestore";
+import {collection, limit, onSnapshot, orderBy, query, where, Timestamp} from "firebase/firestore";
 
 type Comment = {
     id: string,
-    author: string,
+    name: string,
     message: string,
-    createdAt: Date
+    createdAt: Timestamp
 }
 
-export default function CommentList({collectionName, documentId}: InferProps<typeof CommentList.propTypes>) {
+export default function CommentList({pathname}: InferProps<typeof CommentList.propTypes>) {
     const {t} = useTranslation();
     const [queryLimit, setQueryLimit] = React.useState(10);
     const [loading, setLoading] = React.useState(true);
@@ -29,10 +29,10 @@ export default function CommentList({collectionName, documentId}: InferProps<typ
 
     React.useEffect(() => {
         const {db} = getFirebase();
-        const docRef = doc(db, collectionName, documentId);
 
         const q = query(
-            collection(docRef, "comments"),
+            collection(db, "comments"),
+            where("pathname", '==', pathname),
             orderBy("createdAt", "desc"),
             limit(queryLimit)
         );
@@ -41,10 +41,8 @@ export default function CommentList({collectionName, documentId}: InferProps<typ
             const commentChanges: Comment[] = [];
             querySnapshot.forEach((doc) => {
                 commentChanges.push({
-                    id: doc.id,
-                    author: doc.data().author,
-                    message: doc.data().message,
-                    createdAt: doc.data().createdAt?.toDate()
+                    ...doc.data() as Comment,
+                    id: doc.id
                 })
             });
             setComments(commentChanges);
@@ -83,7 +81,7 @@ export default function CommentList({collectionName, documentId}: InferProps<typ
                     <React.Fragment key={comment.id}>
                         <ListItem alignItems="flex-start">
                             <ListItemText
-                                primary={comment.author}
+                                primary={comment.name}
                                 secondary={
                                     <React.Fragment>
                                         {comment.message}
@@ -109,6 +107,5 @@ export default function CommentList({collectionName, documentId}: InferProps<typ
 }
 
 CommentList.propTypes = {
-    documentId: PropTypes.string.isRequired,
-    collectionName: PropTypes.string.isRequired
+    pathname: PropTypes.string.isRequired
 };

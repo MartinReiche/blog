@@ -10,12 +10,11 @@ import * as yup from 'yup';
 import getFirebase from "../../utils/getFirebase";
 import {useAuth} from "../auth-provider";
 import {useTranslation} from "gatsby-plugin-react-i18next";
-import {doc, collection, addDoc, serverTimestamp} from "firebase/firestore";
+import {collection, addDoc, serverTimestamp} from "firebase/firestore";
 import {getAuth, signInAnonymously, updateProfile, User} from "firebase/auth";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import CloseIcon from "@mui/icons-material/Close";
-import { useLocation } from "@reach/router";
 
 const validationSchema = yup.object({
     name: yup
@@ -26,9 +25,8 @@ const validationSchema = yup.object({
         .required("i18n:comments:comment-required"),
 });
 
-export default function NewComment({collectionName, documentId, title}: InferProps<typeof NewComment.propTypes>) {
+export default function NewComment({pathname, title}: InferProps<typeof NewComment.propTypes>) {
     const {t} = useTranslation();
-    const {pathname} = useLocation();
     const [submitting, setSubmitting] = React.useState(false);
     const [showNotification, setShowNotification] = React.useState(false);
     const [notification, setNotification] = React.useState('');
@@ -42,8 +40,6 @@ export default function NewComment({collectionName, documentId, title}: InferPro
         validationSchema: validationSchema,
         onSubmit: async ({name, message}, {setFieldValue}) => {
             const {db} = getFirebase();
-            const docRef = doc(db, collectionName, documentId);
-            const commentsRef = collection(docRef, 'commentRequests');
             setSubmitting(true);
             try {
                 if (!user.isAuthenticated) {
@@ -59,13 +55,13 @@ export default function NewComment({collectionName, documentId, title}: InferPro
                 }
                 setUser({...user, displayName: name});
 
-                await addDoc(commentsRef, {
-                    author: name,
-                    createdAt: serverTimestamp(),
-                    userId: getAuth().currentUser?.uid,
-                    path: pathname,
-                    title: title,
+                await addDoc(collection(db, 'commentRequests'), {
+                    name,
+                    pathname,
                     message,
+                    title,
+                    createdAt: serverTimestamp(),
+                    uid: getAuth().currentUser?.uid,
                 })
                 setSubmitting(false);
                 setFieldValue('message', '', false);
@@ -88,7 +84,6 @@ export default function NewComment({collectionName, documentId, title}: InferPro
     const handleCloseNotification = () => {
         setShowNotification(false);
     }
-
 
     return (
         <React.Fragment>
@@ -161,7 +156,6 @@ export default function NewComment({collectionName, documentId, title}: InferPro
 }
 
 NewComment.propTypes = {
-    collectionName: PropTypes.string.isRequired,
-    documentId: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired
 }

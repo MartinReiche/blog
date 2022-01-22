@@ -9,9 +9,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import NewComment from "./newComment";
 import CommentList from "./commentList";
 import {Divider} from "@mui/material";
+import {useLocation} from "@reach/router";
 
-export default function Comments({documentId, collectionName, title}: InferProps<typeof Comments.propTypes>) {
+
+export default function Comments({title}: InferProps<typeof Comments.propTypes>) {
     const {t} = useTranslation();
+    const {pathname} = useLocation();
+
     const [open, setOpenState] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -40,9 +44,9 @@ export default function Comments({documentId, collectionName, title}: InferProps
                         <CloseIcon/>
                     </IconButton>
                 </Box>
-                <NewComment collectionName={collectionName} documentId={documentId} title={title}/>
+                <NewComment pathname={pathname} title={title} />
                 <Divider />
-                <CommentList collectionName={collectionName} documentId={documentId} />
+                <CommentList pathname={pathname} />
             </Box>
         )
     } else {

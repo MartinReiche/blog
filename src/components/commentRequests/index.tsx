@@ -12,17 +12,49 @@ import CheckIcon from '@mui/icons-material/CheckCircle';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {Link} from 'gatsby-theme-material-ui';
+import {ConfirmationDialog} from "../dialogs";
+import getFirebase from "../../utils/getFirebase";
+import {deleteDoc, doc, collection, addDoc, Timestamp} from 'firebase/firestore';
+import {useI18next} from "gatsby-plugin-react-i18next";
 
 export default function CommentRequest(
-    {name, path, linkTitle, message, createdAt}: InferProps<typeof CommentRequest.propTypes>
+    { commentData }: InferProps<typeof CommentRequest.propTypes>
 ) {
-    const handleRejectClick = () => {
-        console.log("handle reject")
+    const {language} = useI18next();
+    const { name, pathname, title, message, createdAt } = commentData;
+    const handleRejectClick = async () => {
+        const {db} = getFirebase();
+        try {
+            await addDoc(collection(db, 'rejectedComments'), {
+                uid: commentData.uid,
+                title: commentData.title,
+                pathname: commentData.pathname,
+                name: commentData.name,
+                message: commentData.message,
+                createdAt: commentData.createdAt
+            });
+            await deleteDoc(doc(db, 'commentRequests', commentData.id));
+        } catch(e: any) {
+            console.log(e)
+        }
     }
 
-    const handleAcceptClick = () => {
-        console.log("handle accept")
+    const handleAcceptClick = async () => {
+        const {db} = getFirebase();
+        try {
+            await addDoc(collection(db, 'comments'), {
+                uid: commentData.uid,
+                pathname: commentData.pathname,
+                name: commentData.name,
+                message: commentData.message,
+                createdAt: commentData.createdAt
+            });
+            await deleteDoc(doc(db, 'commentRequests', commentData.id));
+        } catch(e: any) {
+            console.log(e)
+        }
     }
+
 
     return (
         <Card>
@@ -33,11 +65,13 @@ export default function CommentRequest(
                 title={
                     <Box sx={{display: 'inline-block'}}>
                         {name}{' in '}
-                        <Link underline="none" to={path}>{linkTitle}</Link>
+                        <Link underline="none" to={pathname}>{title}</Link>
                     </Box>
-
                 }
-                subheader={createdAt}
+                subheader={createdAt.toDate().toLocaleDateString(
+                        language === 'de' ? 'de-DE' : 'en-US',
+                        { year: 'numeric', month: 'long', day: 'numeric'}
+                        )}
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
@@ -48,19 +82,24 @@ export default function CommentRequest(
                 <IconButton color="success" aria-label="accept comment" onClick={handleAcceptClick}>
                     <CheckIcon/>
                 </IconButton>
-                <IconButton color="warning" aria-label="reject comment" onClick={handleRejectClick}>
-                    <CancelIcon/>
-                </IconButton>
-
+                <ConfirmationDialog onClickOk={handleRejectClick}>
+                    <IconButton color="warning" aria-label="reject comment">
+                        <CancelIcon/>
+                    </IconButton>
+                </ConfirmationDialog>
             </CardActions>
         </Card>
     );
 }
 
 CommentRequest.propTypes = {
-    name: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired,
-    linkTitle: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired
+    commentData: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        uid: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        pathname: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        message: PropTypes.string.isRequired,
+        createdAt: PropTypes.instanceOf(Timestamp).isRequired,
+    }).isRequired,
 }
