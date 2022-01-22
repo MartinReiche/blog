@@ -30,7 +30,6 @@ function CommentCard(
 
     const {name, pathname, title, message, createdAt} = commentData;
 
-
     return (
         <Card ref={observerRef} >
             <CardHeader
