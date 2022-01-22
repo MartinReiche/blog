@@ -52,18 +52,24 @@ export default function CommentCard(
                 action={
                     <Box sx={{display: { xs: 'block', sm: 'flex'}}}>
                         {handleAcceptClick && (
-                            <IconButton color="success" aria-label="accept comment" onClick={handleAcceptClick}>
+                            <IconButton
+                                color="success"
+                                aria-label="accept comment"
+                                onClick={() => handleAcceptClick(commentData)}>
                                 <CheckIcon/>
                             </IconButton>
                         )}
                         {handleRestoreClick && (
-                            <IconButton color="success" aria-label="accept comment" onClick={handleRestoreClick}>
+                            <IconButton
+                                color="success"
+                                aria-label="accept comment"
+                                onClick={() => handleRestoreClick(commentData)}>
                                 <RestoreIcon />
                             </IconButton>
                         )}
                         {handleRejectClick && (
                             <ConfirmationDialog
-                                onClickOk={handleRejectClick}
+                                onClickOk={() => handleRejectClick(commentData)}
                                 title={t("i18n:comments:reject-title")}
                                 description={t("i18n:comments:reject-description")}
                             >
@@ -74,7 +80,7 @@ export default function CommentCard(
                         )}
                         {handleDeleteClick && (
                             <ConfirmationDialog
-                                onClickOk={handleDeleteClick}
+                                onClickOk={() => handleDeleteClick(commentData)}
                                 title={t("i18n:comments:delete-title")}
                                 description={t("i18n:comments:delete-description")}
                             >

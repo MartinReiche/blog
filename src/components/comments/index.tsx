@@ -44,7 +44,7 @@ export default function Comments({title}: InferProps<typeof Comments.propTypes>)
                     </IconButton>
                 </Box>
                 <NewComment pathname={pathname} title={title} />
-                <CommentList pathname={pathname} />
+                <CommentList pathname={pathname} title={title} />
             </Box>
         )
     } else {
