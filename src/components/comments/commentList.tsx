@@ -1,41 +1,76 @@
 import * as React from "react";
 import PropTypes, {InferProps} from "prop-types";
-import getFirebase from "../../utils/getFirebase";
-import {collection, doc, onSnapshot, query, where, limit, orderBy} from "firebase/firestore";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 
-
-import {DocumentData} from "@firebase/firestore-types";
-import {useTranslation} from "gatsby-plugin-react-i18next";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import getFirebase from "../../utils/getFirebase";
+import {
+    collection,
+    limit,
+    onSnapshot,
+    orderBy,
+    query,
+    where,
+    Timestamp,
+    addDoc,
+    deleteDoc,
+    doc
+} from "firebase/firestore";
+import CommentCard from './commentCard';
+import Stack from "@mui/material/Stack";
+import {useAuth} from "../auth-provider";
+import {useInView} from 'react-intersection-observer';
 
-export default function CommentList({articleId, collectionName}: InferProps<typeof CommentList.propTypes>) {
-    const [comments, setComments] = React.useState([] as DocumentData[]);
-    const [queryLimit, setQueryLimit] = React.useState(10);
-    const {t} = useTranslation();
+const LOAD_INITIAL_COMMETS = 5;
+const RELOAD_COMMENTS = 5;
+
+type Comment = {
+    id: string,
+    uid: string,
+    name: string,
+    message: string,
+    pathname: string,
+    createdAt: Timestamp
+}
+
+export default function CommentList({pathname, title}: InferProps<typeof CommentList.propTypes>) {
+    const {user} = useAuth();
+    const [queryLimit, setQueryLimit] = React.useState(LOAD_INITIAL_COMMETS);
+    const [loading, setLoading] = React.useState(true);
+    const [comments, setComments] = React.useState([] as Comment[]);
+    const {ref, inView} = useInView({
+        /* Optional options */
+        threshold: 0,
+        delay: 500
+    });
 
     React.useEffect(() => {
-        const {db} = getFirebase();
-        const docRef = doc(db, collectionName, articleId);
+        if (inView && comments.length === queryLimit) {
+            console.log(`Reloading ${RELOAD_COMMENTS} comments!`)
+            setQueryLimit(queryLimit + RELOAD_COMMENTS);
+        }
+    }, [inView])
 
+    React.useEffect(() => {
+        setLoading(true);
+        const {db} = getFirebase();
         const q = query(
-            collection(docRef, "comments"),
-            where("visible", "==", true),
-            limit(queryLimit),
-            orderBy("createdAt", "desc")
+            collection(db, "comments"),
+            where("pathname", '==', pathname),
+            orderBy("createdAt", "desc"),
+            limit(queryLimit)
         );
 
         const unsub = onSnapshot(q, (querySnapshot) => {
-            const commentChanges: DocumentData[] = [];
+            const commentChanges: Comment[] = [];
             querySnapshot.forEach((doc) => {
-                commentChanges.push({id: doc.id, ...doc.data()})
+                commentChanges.push({
+                    ...doc.data() as Comment,
+                    id: doc.id
+                })
             });
             setComments(commentChanges);
+            setLoading(false);
         });
 
         return function cleanUp() {
@@ -43,46 +78,49 @@ export default function CommentList({articleId, collectionName}: InferProps<type
         }
     }, [queryLimit])
 
-    const handleLoadMoreClick = () => {
-        setQueryLimit(queryLimit + 10);
+    const handleRejectClick = async (commentData: Comment) => {
+        const {db} = getFirebase();
+        try {
+            await addDoc(collection(db, 'rejectedComments'), {
+                uid: commentData.uid,
+                title: title,
+                pathname: commentData.pathname,
+                name: commentData.name,
+                message: commentData.message,
+                createdAt: commentData.createdAt
+            });
+            await deleteDoc(doc(db, 'comments', commentData.id));
+        } catch (e: any) {
+            console.log(e)
+        }
     }
+
 
     return (
         <React.Fragment>
-            <Typography variant="h4" component="h2" color="secondary.dark" sx={{fontWeight: 'fontWeightBold'}}>
-                {t("i18n:comments")}
-            </Typography>
-            <List sx={{width: '100%'}}>
-                {comments.map((comment, index) => (
-                    <React.Fragment key={comment.id}>
-                        <ListItem alignItems="flex-start">
-                            <ListItemText
-                                primary={comment.author}
-                                secondary={
-                                    <React.Fragment>
-                                        {comment.message}
-                                    </React.Fragment>
-                                }
-                            />
-                        </ListItem>
-                        {comments.length - 1 !== index && (<Divider component="li"/>)}
-                    </React.Fragment>
-
-                ))}
-            </List>
-            {comments.length === queryLimit && (
-                <Box sx={{display: 'flex', justifyContent: 'center', marginBottom: 3}}>
-                    <Button size="small" color="primary" onClick={handleLoadMoreClick}>
-                        {t("i18n:comments:load")}
-                    </Button>
+            {!!comments.length && (
+                <Stack spacing={2}>
+                    {comments.map((comment, i) => (
+                        <CommentCard
+                            observerRef={comments.length-1 === i ? ref : undefined}
+                            key={comment.id}
+                            commentData={comment}
+                            handleRejectClick={user.isAdmin ? handleRejectClick : undefined}
+                        />
+                    ))}
+                </Stack>
+            )}
+            {loading && (
+                <Box sx={{display: "flex", justifyContent: "center", padding: 4}}>
+                    <CircularProgress color="primary"/>
                 </Box>
             )}
         </React.Fragment>
-    )
 
+    )
 }
 
 CommentList.propTypes = {
-    articleId: PropTypes.string.isRequired,
-    collectionName: PropTypes.string.isRequired
+    pathname: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
 };

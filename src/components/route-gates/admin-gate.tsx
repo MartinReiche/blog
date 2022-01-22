@@ -5,7 +5,7 @@ import {useAuth} from "../auth-provider";
 import Loading from "../loading";
 
 function AdminGate({component: Component, location, redirectTo, requireAdmin, ...rest}: InferProps<typeof AdminGate.propTypes>) {
-    const user = useAuth();
+    const {user} = useAuth();
 
     if (user.isLoading) {
         return <Loading open={true}/>

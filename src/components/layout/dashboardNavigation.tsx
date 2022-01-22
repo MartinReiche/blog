@@ -1,16 +1,16 @@
 import * as React from "react";
+import PropTypes, {InferProps} from 'prop-types';
 import Button from "@mui/material/Button";
 import {useLocation} from "@reach/router";
 import {getAuth} from 'firebase/auth';
-
-
 import {useAuth} from "../auth-provider";
 import Link from "../link";
+import MenuItem from "@mui/material/MenuItem";
+import {Typography} from "@mui/material";
 
-
-export default function DashboardNavigation() {
+export default function DashboardNavigation({type}: InferProps<typeof DashboardNavigation.propTypes>) {
     const [onDashboard, setOnDashboard] = React.useState(false);
-    const user = useAuth();
+    const {user} = useAuth();
     const {pathname} = useLocation();
 
     React.useEffect(() => {
@@ -31,22 +31,46 @@ export default function DashboardNavigation() {
     // render logout button if on dashboard
     if (onDashboard) {
         return (
-            <Button
-                sx={{my: 2, color: 'secondary.light', display: 'block'}}
-                onClick={handleLogoutClick}
-            >
-                Logout
-            </Button>
+            type === 'button' ? (
+                <Button
+                    sx={{my: 2, color: 'secondary.light', display: 'block'}}
+                    onClick={handleLogoutClick}
+                >
+                    Logout
+                </Button>
+            ) : (
+                <MenuItem onClick={handleLogoutClick}>
+                    <Typography color="primary">
+                        Logout
+                    </Typography>
+                </MenuItem>
+            )
         )
     }
     // render link to dashboard if somewhere else
     return (
-        <Link to="/app/dashboard/">
-            <Button
-                sx={{my: 2, color: 'secondary.light', display: 'block'}}
-            >
-                Dashboard
-            </Button>
-        </Link>
+        type === 'button' ? (
+            <Link to="/app/dashboard/">
+                <Button
+                    sx={{my: 2, color: 'secondary.light', display: 'block'}}
+                >
+                    Dashboard
+                </Button>
+            </Link>
+        ) : (
+            <Link to="/app/dashboard/">
+                <MenuItem>
+                    Dashboard
+                </MenuItem>
+            </Link>
+        )
     )
+}
+
+DashboardNavigation.propTypes = {
+    type: PropTypes.oneOf(['menu', 'button'])
+}
+
+DashboardNavigation.defaultProps = {
+    type: "button"
 }

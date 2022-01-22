@@ -46,7 +46,7 @@ const Header = () => {
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
                             size="large"
-                            aria-label="account of current user"
+                            aria-label={t("i18n:menu")}
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
@@ -79,6 +79,7 @@ const Header = () => {
                                     </MenuItem>
                                 </Link>
                             ))}
+                            <DashboardNavigation type="menu"/>
                         </Menu>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -97,7 +98,9 @@ const Header = () => {
                             </Link>
                         ))}
                     </Box>
-                    <DashboardNavigation/>
+                    <Box sx={{ display: { xs: 'none', md: 'block'}}}>
+                        <DashboardNavigation type="button"/>
+                    </Box>
                     <ChangeLocale/>
                 </Toolbar>
             </Container>

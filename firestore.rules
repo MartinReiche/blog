@@ -1,30 +1,50 @@
 rules_version = '2';
 
 service cloud.firestore {
-
-  // Auth utility functions
-  function isAdmin() {
-    return request.auth.token.admin == true
-  }
-
   match /databases/{database}/documents {
-    match /blog/{document} {
-        allow read: if true;
-        match /comments/{document} {
-            allow read: if resource.data.visible == true || isAdmin();
-            allow create: if request.resource.data.keys().hasOnly(['name', 'message', 'userId']) || isAdmin();
-            allow update: if resource.data.userId == request.auth.uid;
-            allow delete: if isAdmin();
-        }
-    }
-    match /requests/{document=**} {
-     allow read: if isAdmin();
-     allow create: if request.resource.data.keys().hasAll(['name', 'email', 'body', 'locale'])
-        && request.resource.data.name is string
-        && request.resource.data.email is string
-        && request.resource.data.body is string
-        && request.resource.data.locale is string
+    // Auth utility functions
+    function isAdmin() {
+      return request.auth.token.admin == true
     }
 
+    match /commentRequests/{document} {
+        allow read: if isAdmin()
+        allow create:
+            if request.resource.data.keys().hasOnly(['name', 'message', 'uid', 'pathname', 'title', 'createdAt'])
+            && request.resource.data.name is string
+            && request.resource.data.message is string
+            && request.resource.data.uid is string
+            && request.resource.data.pathname is string
+            && request.resource.data.title is string
+            && request.resource.data.createdAt is timestamp
+        allow delete: if isAdmin()
+    }
+
+    match /rejectedComments/{document} {
+        allow read: if isAdmin()
+        allow create:
+            if request.resource.data.keys().hasOnly(['name', 'message', 'uid', 'pathname', 'title', 'createdAt'])
+            && isAdmin()
+            && request.resource.data.name is string
+            && request.resource.data.message is string
+            && request.resource.data.uid is string
+            && request.resource.data.pathname is string
+            && request.resource.data.title is string
+            && request.resource.data.createdAt is timestamp
+        allow delete: if isAdmin()
+    }
+
+    match /comments/{document} {
+        allow read: if true
+        allow create:
+            if request.resource.data.keys().hasOnly(['name', 'message', 'uid', 'pathname', 'createdAt'])
+            && isAdmin()
+            && request.resource.data.name is string
+            && request.resource.data.message is string
+            && request.resource.data.uid is string
+            && request.resource.data.pathname is string
+            && request.resource.data.createdAt is timestamp
+        allow delete: if isAdmin()
+    }
   }
 }
