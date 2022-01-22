@@ -3,7 +3,7 @@ import PropTypes, {InferProps} from 'prop-types';
 
 import getFirebase from "../../utils/getFirebase";
 import {deleteDoc, doc, collection, addDoc, Timestamp} from 'firebase/firestore';
-import CommentCard from "./commentCard";
+import CommentCard from "../comments/commentCard";
 
 export default function RejectedComment({ commentData }: InferProps<typeof RejectedComment.propTypes>) {
 

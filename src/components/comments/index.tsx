@@ -8,7 +8,6 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import NewComment from "./newComment";
 import CommentList from "./commentList";
-import {Divider} from "@mui/material";
 import {useLocation} from "@reach/router";
 
 
@@ -45,7 +44,6 @@ export default function Comments({title}: InferProps<typeof Comments.propTypes>)
                     </IconButton>
                 </Box>
                 <NewComment pathname={pathname} title={title} />
-                <Divider />
                 <CommentList pathname={pathname} />
             </Box>
         )

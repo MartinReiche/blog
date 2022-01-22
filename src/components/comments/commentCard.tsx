@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import {Link} from "gatsby-theme-material-ui";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import CheckIcon from "@mui/icons-material/CheckCircle";
 import {ConfirmationDialog} from "../dialogs";
@@ -38,54 +37,60 @@ export default function CommentCard(
                 }
                 title={
                     <Box sx={{display: 'inline-block'}}>
-                        {name}{' in '}
-                        <Link underline="none" to={pathname}>{title}</Link>
+                        {name}
+                        {title && (
+                            <React.Fragment>
+                                {' in '}<Link underline="none" to={pathname}>{title}</Link>
+                            </React.Fragment>
+                        )}
                     </Box>
                 }
                 subheader={createdAt.toDate().toLocaleDateString(
                     language === 'de' ? 'de-DE' : 'en-US',
                     { year: 'numeric', month: 'long', day: 'numeric'}
                 )}
+                action={
+                    <Box sx={{display: { xs: 'block', sm: 'flex'}}}>
+                        {handleAcceptClick && (
+                            <IconButton color="success" aria-label="accept comment" onClick={handleAcceptClick}>
+                                <CheckIcon/>
+                            </IconButton>
+                        )}
+                        {handleRestoreClick && (
+                            <IconButton color="success" aria-label="accept comment" onClick={handleRestoreClick}>
+                                <RestoreIcon />
+                            </IconButton>
+                        )}
+                        {handleRejectClick && (
+                            <ConfirmationDialog
+                                onClickOk={handleRejectClick}
+                                title={t("i18n:comments:reject-title")}
+                                description={t("i18n:comments:reject-description")}
+                            >
+                                <IconButton color="warning" aria-label="reject comment">
+                                    <CancelIcon/>
+                                </IconButton>
+                            </ConfirmationDialog>
+                        )}
+                        {handleDeleteClick && (
+                            <ConfirmationDialog
+                                onClickOk={handleDeleteClick}
+                                title={t("i18n:comments:delete-title")}
+                                description={t("i18n:comments:delete-description")}
+                            >
+                                <IconButton color="error" aria-label="reject comment">
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ConfirmationDialog>
+                        )}
+                    </Box>
+                }
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
                     {message}
                 </Typography>
             </CardContent>
-            <CardActions disableSpacing>
-                {handleAcceptClick && (
-                    <IconButton color="success" aria-label="accept comment" onClick={handleAcceptClick}>
-                        <CheckIcon/>
-                    </IconButton>
-                )}
-                {handleRestoreClick && (
-                    <IconButton color="success" aria-label="accept comment" onClick={handleRestoreClick}>
-                        <RestoreIcon />
-                    </IconButton>
-                )}
-                {handleRejectClick && (
-                    <ConfirmationDialog
-                        onClickOk={handleRejectClick}
-                        title={t("i18n:comments:reject-title")}
-                        description={t("i18n:comments:reject-description")}
-                    >
-                        <IconButton color="warning" aria-label="reject comment">
-                            <CancelIcon/>
-                        </IconButton>
-                    </ConfirmationDialog>
-                )}
-                {handleDeleteClick && (
-                    <ConfirmationDialog
-                        onClickOk={handleDeleteClick}
-                        title={t("i18n:comments:delete-title")}
-                        description={t("i18n:comments:delete-description")}
-                    >
-                        <IconButton color="error" aria-label="reject comment">
-                            <DeleteIcon />
-                        </IconButton>
-                    </ConfirmationDialog>
-                )}
-            </CardActions>
         </Card>
     );
 }
@@ -96,8 +101,8 @@ CommentCard.propTypes = {
         uid: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         pathname: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
         message: PropTypes.string.isRequired,
+        title: PropTypes.string,
         createdAt: PropTypes.instanceOf(Timestamp).isRequired,
     }).isRequired,
     handleAcceptClick: PropTypes.func,
