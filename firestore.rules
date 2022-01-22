@@ -31,6 +31,7 @@ service cloud.firestore {
             && request.resource.data.pathname is string
             && request.resource.data.title is string
             && request.resource.data.createdAt is timestamp
+        allow delete: if isAdmin()
     }
 
     match /comments/{document} {
