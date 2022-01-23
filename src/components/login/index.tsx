@@ -71,9 +71,9 @@ export default function Login() {
                     <Typography
                         variant={"h2"}
                         component="h1"
-                        color={"primary"}
+                        color="primary.dark"
                         gutterBottom
-                        sx={{fontWeight: 'bold', textAlign: 'center'}}
+                        sx={{textAlign: 'center'}}
                     >
                         Login
                     </Typography>

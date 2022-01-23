@@ -40,7 +40,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                             variant="h2"
                             component="h1"
                             color="primary.dark"
-                            sx={{fontWeight: 'fontWeightBold', mt: 1}}
+                            sx={{mt: 1}}
                             itemProp="headline"
                         >
                             {title}

@@ -27,7 +27,6 @@ export default function BlogCard({blogData}: InferProps<typeof BlogCard.propType
                                 variant="h2"
                                 component="h1"
                                 color="primary.dark"
-                                sx={{fontWeight: '700', fontFamily: 'Playfair Display'}}
                             >
                                 {title}
                             </Typography>

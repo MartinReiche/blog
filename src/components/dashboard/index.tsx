@@ -75,7 +75,7 @@ export default function Dashboard() {
                 variant="h2"
                 component="h1"
                 color="primary.dark"
-                sx={{fontWeight: 'bold', mb: 2}}
+                sx={{mb: 2}}
             >
                 {t("i18n:comments")}
             </Typography>
