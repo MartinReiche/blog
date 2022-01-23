@@ -31,7 +31,7 @@ function CommentCard(
     const {name, pathname, title, message, createdAt} = commentData;
 
     return (
-        <Card ref={observerRef} >
+        <Card ref={observerRef} sx={{ borderRadius: 0 }}>
             <CardHeader
                 avatar={
                     <NameAvatar name={name}/>
@@ -94,7 +94,7 @@ function CommentCard(
                 }
             />
             <CardContent>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2">
                     {message}
                 </Typography>
             </CardContent>

@@ -65,15 +65,15 @@ export default function Login() {
                 width: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: '20vh'
+                mt: '20vh'
             }}>
                 <Container maxWidth={"xs"}>
                     <Typography
                         variant={"h2"}
                         component="h1"
-                        color={"primary"}
+                        color="primary.dark"
                         gutterBottom
-                        sx={{fontWeight: 'bold', textAlign: 'center'}}
+                        sx={{textAlign: 'center'}}
                     >
                         Login
                     </Typography>

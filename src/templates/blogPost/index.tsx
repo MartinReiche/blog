@@ -9,7 +9,7 @@ import {graphql} from "gatsby";
 
 import Layout from "../../components/layout"
 import Seo from "../../components/layout/seo"
-import PageNavigation from "../../components/page-navigation";
+import PageNavigation from "../../components/blog/pageNavigation";
 import ArticleInfo from "../../components/article-info";
 import MDXProvider from "../../components/mdx-provider";
 import Comments from "../../components/comments";
@@ -25,12 +25,10 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
             <Seo
                 title={title}
                 description={description || post.excerpt}
-                image={image}
+                image={title_image?.src}
                 article={true}
             />
-            <Box sx={{
-                marginTop: (theme) => theme.spacing(5)
-            }}>
+            <Box>
                 <article
                     className="blog-post"
                     itemScope
@@ -38,35 +36,38 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                 >
                     <header>
                         <PageNavigation previous={previous} next={next}/>
-
-                        <Typography variant="h2" component="h1" color="primary.dark" sx={{fontWeight: 'fontWeightBold'}}
-                                    itemProp="headline">
+                        <Typography
+                            variant="h2"
+                            component="h1"
+                            color="primary.dark"
+                            sx={{mt: 1}}
+                            itemProp="headline"
+                        >
                             {title}
                         </Typography>
                         {description && (
-                            <Typography variant="h5" component="h2" color="primary">
+                            <Typography variant="h5" component="h2" color="text.secondary">
                                 {description}
                             </Typography>
                         )}
 
-                        <ArticleInfo date={date} title={title} description={description} />
+                        <ArticleInfo date={date} title={title} description={description}/>
                         {image && <GatsbyImage image={image} alt={title}/>}
                     </header>
                     {!image && <Divider/>}
                     <section itemProp="articleBody">
-                        <Box>
-                            <MDXProvider>
-                                <MDXRenderer galleryImages={gallery_images} test={"Test Props privided in MDXRenderer"}>
-                                    {post.body}
-                                </MDXRenderer>
-                            </MDXProvider>
-                        </Box>
+                        <MDXProvider>
+                            <MDXRenderer galleryImages={gallery_images} test={"Test Props privided in MDXRenderer"}>
+                                {post.body}
+                            </MDXRenderer>
+                        </MDXProvider>
                     </section>
-                    <Comments documentId={post.slug.replace(/\//g,"-")} collectionName="blog" title={title}/>
-                    <Divider/>
+                    <PageNavigation previous={previous} next={next}/>
+                    <Divider sx={{ my: 2}}/>
+                    <Comments documentId={post.slug.replace(/\//g, "-")} collectionName="blog" title={title}/>
                 </article>
             </Box>
-            <PageNavigation previous={previous} next={next}/>
+
         </Layout>
     )
 }

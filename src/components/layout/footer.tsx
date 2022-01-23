@@ -25,17 +25,17 @@ const Footer = () => {
   `)
 
     return (
-        <AppBar position="static" color="secondary">
+        <AppBar position="static" color="primary">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Grid container justifyContent="center" spacing={5}>
+                    <Grid container justifyContent="center" spacing={5} alignItems="center">
                         <Grid item>
-                            <Typography color="primary.main" >
+                            <Typography>
                                 © {new Date().getFullYear()} {data.site.siteMetadata.author.name}
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Link to="/impressum/">
+                            <Link to="/impressum/" sx={{color: 'inherit'}}>
                                 {t('i18n:impressum')}
                             </Link>
                         </Grid>

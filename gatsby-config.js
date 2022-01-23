@@ -107,11 +107,27 @@ module.exports = {
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/logo.svg`, // This path is relative to the root of the site.
+        icon: `src/images/logo_bright.svg`, // This path is relative to the root of the site.
       },
     },
     {
       resolve: `gatsby-theme-material-ui`,
+       options: {
+        webFontsConfig: {
+          fonts: {
+            google2: [
+              {
+                family: "Playfair Display",
+                axes: "wght@700",
+              },
+              {
+                family: "Montserrat",
+                axes: "wght@400;500;700",
+              },
+            ],
+          },
+        },
+      },
     },
     {
       resolve: `gatsby-plugin-force-trailing-slashes`,

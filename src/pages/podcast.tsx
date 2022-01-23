@@ -11,8 +11,6 @@ const PodcastPage = () => {
     return (
         <Layout>
             <Seo title={t('i18n:podcast')} />
-            <h1>{t('i18n:podcast')}</h1>
-            <p>{t('i18n:podcast:text')}</p>
         </Layout>
     )
 }

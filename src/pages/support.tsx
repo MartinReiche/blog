@@ -10,8 +10,6 @@ const SupportPage = () => {
     return (
         <Layout>
             <Seo title={t("i18n:support")} />
-            <h1>{t('i18n:support')}</h1>
-            <p>{t('i18n:support:text')}</p>
         </Layout>
     )
 }

@@ -10,7 +10,6 @@ import NewComment from "./newComment";
 import CommentList from "./commentList";
 import {useLocation} from "@reach/router";
 
-
 export default function Comments({title}: InferProps<typeof Comments.propTypes>) {
     const {t} = useTranslation();
     const {pathname} = useLocation();
@@ -27,9 +26,9 @@ export default function Comments({title}: InferProps<typeof Comments.propTypes>)
 
     if (open) {
         return (
-            <Box id="comments-section" sx={{ marginTop: 5 }}>
+            <Box id="comments-section">
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                    <Typography variant="h4" component="h2" color="secondary.dark" sx={{fontWeight: 'fontWeightBold'}}>
+                    <Typography variant="h4" component="h2"  sx={{fontWeight: 'fontWeightBold'}}>
                         {t("i18n:comments")}
                     </Typography>
                     <IconButton
@@ -51,11 +50,10 @@ export default function Comments({title}: InferProps<typeof Comments.propTypes>)
         return (
             <Button
                 onClick={handleClickOpen}
-                sx={{marginBottom: 2}}
-                size="small"
                 aria-controls="comments-section"
+                color="secondary"
             >
-                {t("i18n:comments")}
+                {t("i18n:comments:comment")}
             </Button>
         )
     }

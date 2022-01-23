@@ -10,8 +10,6 @@ const AboutPage = () => {
     return (
         <Layout>
             <Seo title={t('i18n:about')}  />
-            <h1>{t('i18n:about')}</h1>
-            <p>{t('i18n:about:text')}</p>
         </Layout>
     )
 }

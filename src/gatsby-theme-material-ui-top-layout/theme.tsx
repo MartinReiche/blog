@@ -1,19 +1,36 @@
-import { red, deepOrange, blueGrey } from '@mui/material/colors';
+import { red } from '@mui/material/colors';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 // A custom theme for this app
 const theme = createTheme({
     palette: {
         primary: {
-            main: deepOrange[900],
+            main: '#242b38',
         },
         secondary: {
-            main: blueGrey[50],
+            main: '#e84c1d'
         },
         error: {
             main: red.A400,
         },
+        background: {
+            default: '#f5f5f5'
+        },
     },
+    typography: {
+        fontFamily: "Montserrat",
+        body1: {
+            fontSize: '1.1em'
+        },
+        h1: {
+            fontFamily: "Playfair Display",
+            fontWeight: "700"
+        },
+        h2: {
+            fontFamily: "Playfair Display",
+            fontWeight: "700"
+        }
+    }
 });
 
 export default responsiveFontSizes(theme);

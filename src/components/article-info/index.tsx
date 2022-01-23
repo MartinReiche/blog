@@ -29,11 +29,11 @@ export default function ArticleInfo({date, title, description}: InferProps<typeo
                             <StaticImage src={'../../images/portrait_sm.png'} alt={'Martin Reiche'}/>
                         </Avatar>
                         <Box>
-                            <Typography>
+                            <Typography color={"text.secondary"}>
                                 {author.name}
                             </Typography>
                             {date && (
-                                <Typography variant="caption" color="primary">
+                                <Typography color="text.secondary">
                                     {date}
                                 </Typography>
                             )}
@@ -42,7 +42,6 @@ export default function ArticleInfo({date, title, description}: InferProps<typeo
 
                 </Link>
             </Box>
-
             <ShareButtons title={title} description={description}/>
         </Box>
     )
