@@ -98,7 +98,7 @@ export default function CommentList({pathname, title}: InferProps<typeof Comment
     return (
         <React.Fragment>
             {!!comments.length && (
-                <Stack spacing={2}>
+                <Stack spacing={1}>
                     {comments.map((comment, i) => (
                         <CommentCard
                             observerRef={comments.length-1 === i ? ref : undefined}

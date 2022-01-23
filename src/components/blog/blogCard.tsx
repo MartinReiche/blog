@@ -16,7 +16,7 @@ export default function BlogCard({blogData}: InferProps<typeof BlogCard.propType
     const image = title_image ? getImage(title_image.src) : null;
 
     return (
-        <Card>
+        <Card sx={{ borderRadius: 0}}>
             <Link to={path} underline="none">
                 <CardActionArea>
                     <CardHeader
