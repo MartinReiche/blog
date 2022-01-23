@@ -24,9 +24,9 @@ export default function BlogCard({blogData}: InferProps<typeof BlogCard.propType
                     <CardHeader
                         title={
                             <Typography
-                                variant="h2"
+                                variant="h3"
                                 component="h1"
-                                color="primary.dark"
+                                color="primary"
                             >
                                 {title}
                             </Typography>

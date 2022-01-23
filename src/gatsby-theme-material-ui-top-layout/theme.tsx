@@ -29,6 +29,10 @@ const theme = createTheme({
         h2: {
             fontFamily: "Playfair Display",
             fontWeight: "700"
+        },
+        h3: {
+            fontFamily: "Playfair Display",
+            fontWeight: "700"
         }
     }
 });

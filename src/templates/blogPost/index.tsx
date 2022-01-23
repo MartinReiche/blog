@@ -39,7 +39,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                         <Typography
                             variant="h2"
                             component="h1"
-                            color="primary.dark"
+                            color="primary"
                             sx={{mt: 1}}
                             itemProp="headline"
                         >
