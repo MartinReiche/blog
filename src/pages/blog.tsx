@@ -4,33 +4,47 @@ import {useTranslation} from 'gatsby-plugin-react-i18next';
 import Layout from "../components/layout"
 import Seo from "../components/layout/seo"
 import {graphql} from "gatsby";
-import Link from '../components/link';
+import BlogCard from "../components/blog/blogCard";
+import {Stack} from "@mui/material";
+import {ImageDataLike} from "gatsby-plugin-image";
 
-const BlogPage: React.FC<QueryData> = ({data}) => {
+type BlogData = {
+    data: {
+        blog: {
+            nodes: {
+                id: string,
+                timeToRead: number;
+                excerpt: string;
+                frontmatter: {
+                    date: string;
+                    description: string;
+                    lang: string;
+                    path: string;
+                    title: string;
+                    title_image: ImageDataLike;
+                }
+            }[]
+        }
+    }
+}
+
+const BlogPage: React.FC<BlogData> = ({data}) => {
     const {t} = useTranslation();
 
     const postData = data.blog.nodes.map(post => {
-        const { path, title } = post.frontmatter;
-        return { path , title }
+        const { excerpt } = post;
+        const { path, title, date, description, title_image } = post.frontmatter;
+        return { path , title, description, date, excerpt, title_image }
     });
 
     return (
         <Layout>
             <Seo title={t('i18n:blog')} />
-            <h1>{t('i18n:blog')}</h1>
-            <p>{t('i18n:blog:text')}</p>
-
-            <ul>
-                {postData.map(post => {
-                    return (
-                        <li key={post.path}>
-                            <Link to={post.path}>
-                                {post.title}
-                            </Link>
-                        </li>
-                    )
-                })}
-            </ul>
+            <Stack spacing={2} sx={{marginTop: 5}}>
+                {postData.map((post, i) => (
+                    <BlogCard key={i} blogData={post}/>
+                ))}
+            </Stack>
         </Layout>
     )
 }
@@ -58,9 +72,9 @@ export const query = graphql`
     nodes {
       id
       timeToRead
-      excerpt
+      excerpt(pruneLength: 1000)
       frontmatter {
-        date
+        date(formatString: "dddd, Do MMMM YYYY", locale: $language)
         title
         path
         lang
@@ -83,23 +97,5 @@ export const query = graphql`
   }
 `;
 
-type QueryData = {
-    data: {
-        blog: {
-            nodes: {
-                id: string,
-                timeToRead: number;
-                excerpt: string;
-                frontmatter: {
-                    date: string;
-                    description: string;
-                    lang: string;
-                    path: string;
-                    title: string;
-                }
-            }[]
-        }
-    }
-}
 
 export default BlogPage

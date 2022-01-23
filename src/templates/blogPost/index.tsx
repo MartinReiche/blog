@@ -25,7 +25,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
             <Seo
                 title={title}
                 description={description || post.excerpt}
-                image={image}
+                image={title_image?.src}
                 article={true}
             />
             <Box sx={{
