@@ -118,11 +118,11 @@ module.exports = {
             google2: [
               {
                 family: "Playfair Display",
-                axes: "wght@400;500;600;700;800;900",
+                axes: "wght@700",
               },
               {
                 family: "Montserrat",
-                axes: "wght@400;500;600;700;800;900",
+                axes: "wght@400;500;700",
               },
             ],
           },

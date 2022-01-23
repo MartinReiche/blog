@@ -54,7 +54,7 @@ export default function Comments({title}: InferProps<typeof Comments.propTypes>)
                 aria-controls="comments-section"
                 color="secondary"
             >
-                {t("i18n:comments")}
+                {t("i18n:comments:comment")}
             </Button>
         )
     }
