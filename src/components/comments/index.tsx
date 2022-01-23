@@ -10,7 +10,6 @@ import NewComment from "./newComment";
 import CommentList from "./commentList";
 import {useLocation} from "@reach/router";
 
-
 export default function Comments({title}: InferProps<typeof Comments.propTypes>) {
     const {t} = useTranslation();
     const {pathname} = useLocation();
