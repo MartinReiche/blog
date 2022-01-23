@@ -33,14 +33,14 @@ export default function DashboardNavigation({type}: InferProps<typeof DashboardN
         return (
             type === 'button' ? (
                 <Button
-                    sx={{my: 2, color: 'secondary.light', display: 'block'}}
+                    sx={{my: 2, color: 'inherit', display: 'block'}}
                     onClick={handleLogoutClick}
                 >
                     Logout
                 </Button>
             ) : (
                 <MenuItem onClick={handleLogoutClick}>
-                    <Typography color="primary">
+                    <Typography>
                         Logout
                     </Typography>
                 </MenuItem>
@@ -50,9 +50,9 @@ export default function DashboardNavigation({type}: InferProps<typeof DashboardN
     // render link to dashboard if somewhere else
     return (
         type === 'button' ? (
-            <Link to="/app/dashboard/">
+            <Link to="/app/dashboard/" sx={{ color: 'inherit' }}>
                 <Button
-                    sx={{my: 2, color: 'secondary.light', display: 'block'}}
+                    sx={{my: 2, color: 'inherit', display: 'block'}}
                 >
                     Dashboard
                 </Button>

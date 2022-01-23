@@ -40,7 +40,7 @@ const BlogPage: React.FC<BlogData> = ({data}) => {
     return (
         <Layout>
             <Seo title={t('i18n:blog')} />
-            <Stack spacing={2} sx={{marginTop: 5, marginBottom: 5}}>
+            <Stack spacing={2}>
                 {postData.map((post, i) => (
                     <BlogCard key={i} blogData={post}/>
                 ))}

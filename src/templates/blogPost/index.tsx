@@ -9,7 +9,7 @@ import {graphql} from "gatsby";
 
 import Layout from "../../components/layout"
 import Seo from "../../components/layout/seo"
-import PageNavigation from "../../components/page-navigation";
+import PageNavigation from "../../components/blog/pageNavigation";
 import ArticleInfo from "../../components/article-info";
 import MDXProvider from "../../components/mdx-provider";
 import Comments from "../../components/comments";
@@ -28,7 +28,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                 image={title_image?.src}
                 article={true}
             />
-            <Box sx={{ mt: 5 }}>
+            <Box>
                 <article
                     className="blog-post"
                     itemScope
@@ -36,13 +36,17 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                 >
                     <header>
                         <PageNavigation previous={previous} next={next}/>
-
-                        <Typography variant="h2" component="h1" color="primary.dark" sx={{fontWeight: 'fontWeightBold'}}
-                                    itemProp="headline">
+                        <Typography
+                            variant="h2"
+                            component="h1"
+                            color="primary.dark"
+                            sx={{fontWeight: 'fontWeightBold', mt: 1}}
+                            itemProp="headline"
+                        >
                             {title}
                         </Typography>
                         {description && (
-                            <Typography variant="h5" component="h2" color="primary">
+                            <Typography variant="h5" component="h2" color="text.secondary">
                                 {description}
                             </Typography>
                         )}
@@ -58,11 +62,12 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                             </MDXRenderer>
                         </MDXProvider>
                     </section>
+                    <PageNavigation previous={previous} next={next}/>
+                    <Divider sx={{ my: 2}}/>
                     <Comments documentId={post.slug.replace(/\//g, "-")} collectionName="blog" title={title}/>
-                    <Divider/>
                 </article>
             </Box>
-            <PageNavigation previous={previous} next={next}/>
+
         </Layout>
     )
 }

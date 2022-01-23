@@ -82,22 +82,20 @@ export function StepperGallery({images, imageIndex = 0, onClose, maxHeight}: Inf
                             size="small"
                             onClick={handleNext}
                             disabled={activeStep === maxSteps - 1}
+                            sx={{ pr: 0}}
                         >
                             {t('i18n:next')}
-                            {theme.direction === 'rtl' ? (
-                                <KeyboardArrowLeft/>
-                            ) : (
-                                <KeyboardArrowRight/>
-                            )}
+                            <KeyboardArrowRight/>
                         </Button>
                     }
                     backButton={
-                        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                            {theme.direction === 'rtl' ? (
-                                <KeyboardArrowRight/>
-                            ) : (
-                                <KeyboardArrowLeft/>
-                            )}
+                        <Button
+                            size="small"
+                            onClick={handleBack}
+                            disabled={activeStep === 0}
+                            sx={{ pl: 0}}
+                        >
+                            <KeyboardArrowLeft/>
                             {t('i18n:back')}
                         </Button>
                     }

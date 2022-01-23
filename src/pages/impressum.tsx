@@ -10,8 +10,6 @@ const ImpressumPage = () => {
     return (
         <Layout>
             <Seo title={t("i18n:impressum")} />
-            <h1>{t('i18n:impressum')}</h1>
-            <p>{t('i18n:impressum:text')}</p>
         </Layout>
     )
 }

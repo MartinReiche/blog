@@ -146,7 +146,7 @@ export default function NewComment({pathname, title}: InferProps<typeof NewComme
                     />
                 </Grid>
                 <Grid item>
-                    <Button color="primary" type="submit" disabled={submitting}>
+                    <Button variant="outlined" type="submit" disabled={submitting}>
                         {t("i18n:comments:send")}
                     </Button>
                 </Grid>

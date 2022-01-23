@@ -12,7 +12,7 @@ import {useTranslation} from "gatsby-plugin-react-i18next";
 import Link from '../link';
 import {ChangeLocale} from "./ChangeLocale";
 // @ts-ignore because this is handled by gatsby-plugin-react-svg
-import Logo from "../../images/logo.svg";
+import Logo from "../../images/logo_bright.svg";
 import DashboardNavigation from "./dashboardNavigation";
 
 const pages = [
@@ -89,9 +89,9 @@ const Header = () => {
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
-                            <Link to={page.path} key={page.label}>
+                            <Link to={page.path} key={page.label} sx={{color: 'inherit'}}>
                                 <Button
-                                    sx={{my: 2, color: 'secondary.light', display: 'block'}}
+                                    sx={{my: 2, display: 'block', color: 'inherit'}}
                                 >
                                     {t(page.label)}
                                 </Button>

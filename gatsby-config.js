@@ -112,6 +112,22 @@ module.exports = {
     },
     {
       resolve: `gatsby-theme-material-ui`,
+       options: {
+        webFontsConfig: {
+          fonts: {
+            google2: [
+              {
+                family: "Playfair Display",
+                axes: "wght@400;500;600;700;800;900",
+              },
+              {
+                family: "Montserrat",
+                axes: "wght@400;500;600;700;800;900",
+              },
+            ],
+          },
+        },
+      },
     },
     {
       resolve: `gatsby-plugin-force-trailing-slashes`,
