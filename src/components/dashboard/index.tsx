@@ -75,7 +75,7 @@ export default function Dashboard() {
                 variant="h2"
                 component="h1"
                 color="primary.dark"
-                sx={{fontWeight: 'bold', marginTop: 5, marginBottom: 2}}
+                sx={{fontWeight: 'bold', mt: 5, mb: 2}}
             >
                 {t("i18n:comments")}
             </Typography>
@@ -97,7 +97,7 @@ export default function Dashboard() {
                 </Box>
             )}
             {!loading && sections[section].collection === 'commentRequests' && (
-                <Box sx={{marginTop: 2, marginBottom: 4}}>
+                <Box sx={{mt: 2, mb: 4}}>
                     {commentRequests.length > 0 ? (
                         <Stack spacing={2}>
                             {commentRequests.map((commentRequest, i) => (
@@ -110,9 +110,9 @@ export default function Dashboard() {
                 </Box>
             )}
             {!loading && sections[section].collection === 'rejectedComments' && (
-                <Box sx={{marginTop: 2, marginBottom: 4}}>
+                <Box sx={{mt: 2, mb: 4}}>
                     {commentRequests.length > 0 ? (
-                        <Stack spacing={2} sx={{marginTop: 2, marginBottom: 4}}>
+                        <Stack spacing={2} sx={{mt: 2, mb: 4}}>
                             {commentRequests.map((commentRequest, i) => (
                                 <RejectedComment key={i} commentData={commentRequest}/>
                             ))}

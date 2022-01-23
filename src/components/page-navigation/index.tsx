@@ -10,7 +10,7 @@ import {useTranslation} from "gatsby-plugin-react-i18next";
 export default function PageNavigation({previous, next}: InferProps<typeof PageNavigation.propTypes>) {
     const {t} = useTranslation();
     return (
-        <Box sx={{ marginTop: 2, marginBottom: 2, display: 'flex', justifyContent: 'space-between'}}>
+        <Box sx={{ my: 2, display: 'flex', justifyContent: 'space-between'}}>
             <Box>
                 {previous && (<Link to={previous.frontmatter.path}>
                     <Button

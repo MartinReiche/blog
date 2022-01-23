@@ -27,7 +27,7 @@ export default function Comments({title}: InferProps<typeof Comments.propTypes>)
 
     if (open) {
         return (
-            <Box id="comments-section" sx={{ marginTop: 5 }}>
+            <Box id="comments-section" sx={{ mt: 5 }}>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                     <Typography variant="h4" component="h2" color="secondary.dark" sx={{fontWeight: 'fontWeightBold'}}>
                         {t("i18n:comments")}

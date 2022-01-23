@@ -28,9 +28,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                 image={title_image?.src}
                 article={true}
             />
-            <Box sx={{
-                marginTop: (theme) => theme.spacing(5)
-            }}>
+            <Box sx={{ mt: 5 }}>
                 <article
                     className="blog-post"
                     itemScope
@@ -49,20 +47,18 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                             </Typography>
                         )}
 
-                        <ArticleInfo date={date} title={title} description={description} />
+                        <ArticleInfo date={date} title={title} description={description}/>
                         {image && <GatsbyImage image={image} alt={title}/>}
                     </header>
                     {!image && <Divider/>}
                     <section itemProp="articleBody">
-                        <Box>
-                            <MDXProvider>
-                                <MDXRenderer galleryImages={gallery_images} test={"Test Props privided in MDXRenderer"}>
-                                    {post.body}
-                                </MDXRenderer>
-                            </MDXProvider>
-                        </Box>
+                        <MDXProvider>
+                            <MDXRenderer galleryImages={gallery_images} test={"Test Props privided in MDXRenderer"}>
+                                {post.body}
+                            </MDXRenderer>
+                        </MDXProvider>
                     </section>
-                    <Comments documentId={post.slug.replace(/\//g,"-")} collectionName="blog" title={title}/>
+                    <Comments documentId={post.slug.replace(/\//g, "-")} collectionName="blog" title={title}/>
                     <Divider/>
                 </article>
             </Box>

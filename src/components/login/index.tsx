@@ -65,7 +65,7 @@ export default function Login() {
                 width: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: '20vh'
+                mt: '20vh'
             }}>
                 <Container maxWidth={"xs"}>
                     <Typography

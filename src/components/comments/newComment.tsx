@@ -115,7 +115,7 @@ export default function NewComment({pathname, title}: InferProps<typeof NewComme
                 direction="column"
                 component="form"
                 onSubmit={formik.handleSubmit}
-                sx={{marginTop: 2, marginBottom: 2}}
+                sx={{my: 2}}
             >
                 <Grid item>
                     <TextField
@@ -130,7 +130,7 @@ export default function NewComment({pathname, title}: InferProps<typeof NewComme
                         helperText={formik.touched.name && t(formik.errors.name as string) || ' '}
                     />
                 </Grid>
-                <Grid item sx={{marginTop: 1}}>
+                <Grid item sx={{mt: 1}}>
                     <TextField
                         fullWidth
                         id="message"
