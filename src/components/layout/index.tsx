@@ -9,7 +9,7 @@ const Layout: React.FC = ({children}) => {
     return (
         <Box sx={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
             <Header/>
-            <Box sx={{flexGrow: 1, my: 5}}>
+            <Box sx={{flexGrow: 1, py: 5}}>
                 <Container maxWidth="md" >
                     <main>{children}</main>
                 </Container>
