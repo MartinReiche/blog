@@ -19,7 +19,7 @@ export function CombinedGallery({images, config, options}: InferProps<typeof Com
     }
 
     // this is here because of gatsby-plugin-feed
-    if (!images) return null;
+    if (!images || images.length === 0) return null;
 
     return (
         <React.Fragment>
@@ -33,19 +33,15 @@ export function CombinedGallery({images, config, options}: InferProps<typeof Com
                         justifyContent: 'center',
                         maxWidth: 'md',
                         margin: 'auto',
-                        padding: 1
+                        padding: 1,
                     }}
                 >
-                    <Box  >
-                        <StepperGallery
-                            images={images}
-                            imageIndex={activeStep}
-                            onClose={handleCloseStepper}
-                            maxHeight="90vh"
-                        />
-
-                    </Box>
-
+                    <StepperGallery
+                        images={images}
+                        imageIndex={activeStep}
+                        onClose={handleCloseStepper}
+                        maxHeight="80vh"
+                    />
                 </Box>
             </Modal>
         </React.Fragment>
