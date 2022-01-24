@@ -60,9 +60,9 @@ export default function BlogCard({blogData}: InferProps<typeof BlogCard.propType
                     {excerpt}
                 </Typography>
             </CardContent>
-            <CardActions sx={{justifyContent: 'flex-end'}}>
+            <CardActions sx={{justifyContent: 'flex-start', px: 2, pb: 2}}>
                 <Link to={path} underline="none">
-                    <Button color="secondary">
+                    <Button variant="outlined" size="small">
                         {t("i18n:blog:continue-reading")}
                     </Button>
                 </Link>

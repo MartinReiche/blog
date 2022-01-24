@@ -13,7 +13,7 @@ export default function PageNavigation({previous, next}: InferProps<typeof PageN
         <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
             <Box>
                 {previous && (<Link to={previous.frontmatter.path}>
-                    <Button size="small" sx={{ pl: 0 }} color="secondary">
+                    <Button size="small" sx={{ pl: 0 }}>
                         <KeyboardArrowLeft />
                         <Box sx={{ display: {xs: 'none', sm: 'inline-block'}}}>
                             {previous.frontmatter.title}
@@ -26,7 +26,7 @@ export default function PageNavigation({previous, next}: InferProps<typeof PageN
             </Box>
             <Box>
                 {next && (<Link to={next.frontmatter.path}>
-                    <Button size="small" sx={{ pr: 0}} color="secondary">
+                    <Button size="small" sx={{ pr: 0}}>
                         <Box sx={{ display: {xs: 'none', sm: 'inline-block', }}}>
                             {next.frontmatter.title}
                         </Box>
