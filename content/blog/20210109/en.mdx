@@ -1,6 +1,6 @@
 ---
-title: "Around the World by Bike"
-description: "The Story of a Dream"
+title: "The Ruins of Tomorrow"
+description: "Aliquam vitae elit nec augue varius tempor sed at orci."
 date: "2021-01-09T12:00:00Z"
 path: "/blog/20210109/"
 lang: "en"
@@ -11,20 +11,12 @@ title_image:
 gallery_images:
     - src: "./img/sunset-1200x900.jpg"
       title: "Sunset"
-      rows: 2
-      cols: 2
     - src: "./img/qualle-1200x900.jpg"
       title: "Jellyfish!"
-      rows: 1
-      cols: 1
     - src: "./img/jane-1200x900.jpg"
       title: "Jane B Metpo"
-      rows: 1
-      cols: 1
     - src: "./img/water-1200x900.jpg"
       title: "Water"
-      rows: 2
-      cols: 2
 ---
 
 Fusce cursus sit amet est a venenatis. Maecenas ut nibh consectetur est tristique vestibulum tempus sagittis mauris. 
@@ -40,7 +32,8 @@ ac varius turpis consectetur. Sed ut tincidunt sapien, sed elementum mi. Duis fi
 tincidunt non. Integer at neque sagittis, bibendum diam vel, rutrum nulla.
 
 <CombinedGallery
-    images={props.galleryImages}
+    images={props.galleryImages?.filter((img,i) => [0,2].includes(i))}
+    config={[ [1,1], [1,1] ]}
     options={{cols:2}}
 />
 

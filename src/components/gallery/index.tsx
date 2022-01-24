@@ -1,10 +1,11 @@
 import * as React from "react";
+import PropTypes, {InferProps} from "prop-types";
 import GridGallery from "./gridGallery";
 import StepperGallery from "./stepperGallery";
 import Modal from '@mui/material/Modal';
 import Box from "@mui/material/Box";
 
-export const CombinedGallery = ({images, options}: GalleryProps) => {
+export function CombinedGallery({images, config, options}: InferProps<typeof CombinedGallery.propTypes>) {
     const [activeStep, setActiveStep] = React.useState(0);
     const [stepperOpen, setStepperOpen] = React.useState(false);
 
@@ -22,7 +23,7 @@ export const CombinedGallery = ({images, options}: GalleryProps) => {
 
     return (
         <React.Fragment>
-            <GridGallery images={images} options={options} onClick={handleImageClick}/>
+            <GridGallery images={images} config={config} options={options} onClick={handleImageClick}/>
             <Modal open={stepperOpen}>
                 <Box
                     sx={{
@@ -51,21 +52,40 @@ export const CombinedGallery = ({images, options}: GalleryProps) => {
     )
 }
 
+CombinedGallery.propTypes = {
+    images: PropTypes.arrayOf(
+        PropTypes.shape({
+            src: PropTypes.any.isRequired,
+            title: PropTypes.string.isRequired
+        }).isRequired
+    ),
+    options: PropTypes.shape({
+        cols: PropTypes.number,
+        rowHeight: PropTypes.number
+    }).isRequired,
+    config: configValidator,
+}
+
+export function configValidator(props: any, propName: string, componentName: string) {
+    if (props.images.length !== props[propName].length) {
+        return Error(
+            `Array passed to config in ${componentName} must be of same length as array passed to images.`
+        );
+    }
+    props[propName].map((item: number[]) => {
+        if (item.length !== 2) {
+            return Error(
+                `Array passed to config in ${componentName} must consist of two element arrays with`
+                + `numbers for rows and columns.`
+            );
+        }
+        if (!item.every(element => typeof element === 'number')) {
+            return Error(
+                `Elements in array passed to config in ${componentName} be numeric.`
+            );
+        }
+    })
+}
+
 export * from './gridGallery';
 export * from './stepperGallery';
-export * from './test'
-
-type GalleryProps = {
-    images: Image[]
-    options: {
-        cols?: number
-        rowHeight?: number
-    }
-}
-
-type Image = {
-    src: any
-    title: string
-    rows?: number
-    cols?: number
-}
