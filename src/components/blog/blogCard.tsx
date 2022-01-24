@@ -37,7 +37,7 @@ export default function BlogCard({blogData}: InferProps<typeof BlogCard.propType
                                 <Typography
                                     variant="h5"
                                     component="h2"
-                                    sx={{mb: 2}}
+                                    sx={{mb: 2 }}
                                 >
                                     {description}
                                 </Typography>

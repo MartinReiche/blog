@@ -72,7 +72,7 @@ export const query = graphql`
     nodes {
       id
       timeToRead
-      excerpt(pruneLength: 1000)
+      excerpt(pruneLength: 500)
       frontmatter {
         date(formatString: "dddd, Do MMMM YYYY", locale: $language)
         title
