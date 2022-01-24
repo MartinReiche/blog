@@ -13,12 +13,22 @@ import PageNavigation from "../../components/blog/pageNavigation";
 import ArticleInfo from "../../components/article-info";
 import MDXProvider from "../../components/mdx-provider";
 import Comments from "../../components/comments";
+import {getI18nPathFromSlug} from "../../utils";
 
 export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTemplate.propTypes>) {
     const {post, previous, next} = data
     const {title_image, gallery_images, description, title, date} = post.frontmatter;
 
     const image = title_image ? getImage(title_image.src) : null;
+
+    const nextPost = next && {
+        title: next.frontmatter.title,
+        path: getI18nPathFromSlug(next.slug)
+    }
+    const previousPost = previous && {
+        title: previous.frontmatter.title,
+        path: getI18nPathFromSlug(previous.slug)
+    }
 
     return (
         <Layout>
@@ -35,7 +45,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                     itemType="http://schema.org/Article"
                 >
                     <header>
-                        <PageNavigation previous={previous} next={next}/>
+                        <PageNavigation previous={previousPost} next={nextPost}/>
                         <Typography
                             variant="h2"
                             component="h1"
@@ -62,7 +72,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                             </MDXRenderer>
                         </MDXProvider>
                     </section>
-                    <PageNavigation previous={previous} next={next}/>
+                    <PageNavigation previous={previousPost} next={nextPost}/>
                     <Divider sx={{ my: 2}}/>
                     <Comments documentId={post.slug.replace(/\//g, "-")} collectionName="blog" title={title}/>
                 </article>
@@ -75,8 +85,8 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
 const AdjacentBlog = PropTypes.shape({
     frontmatter: PropTypes.shape({
         title: PropTypes.string.isRequired,
-        path: string.isRequired
-    }).isRequired
+    }).isRequired,
+    slug: PropTypes.string.isRequired
 });
 
 const Image = PropTypes.shape({
@@ -88,8 +98,6 @@ const FrontMatter = PropTypes.shape({
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired,
-    lang: PropTypes.string.isRequired,
     title_image: Image,
     gallery_images: PropTypes.arrayOf(Image)
 });
@@ -111,8 +119,8 @@ BlogPostTemplate.propTypes = {
 export const pageQuery = graphql`
   query BlogPostBySlug(
     $id: String!
-    $previousPostId: String
-    $nextPostId: String
+    $previousId: String
+    $nextId: String
     $language: String!
   ) {
     post: mdx(id: { eq: $id }) {
@@ -124,8 +132,6 @@ export const pageQuery = graphql`
         title
         date(formatString: "dddd, Do MMMM YYYY", locale: $language)
         description
-        path
-        lang
         title_image {
           title
           src {
@@ -148,19 +154,17 @@ export const pageQuery = graphql`
         }
       }
     }
-    previous: mdx(id: { eq: $previousPostId }) {
+    previous: mdx(id: { eq: $previousId }) {
       frontmatter {
         title
-        path
-        lang
       }
+      slug
     }
-    next: mdx(id: { eq: $nextPostId }) {
+    next: mdx(id: { eq: $nextId }) {
       frontmatter {
         title
-        path
-        lang
       }
+      slug
     }
     locales: allLocale(filter: {language: {eq: $language}}) {
       edges {

@@ -153,7 +153,6 @@ module.exports = {
           {
             serialize: ({query: {site, allMdx}}) => {
               return allMdx.nodes
-                .filter(node => node.frontmatter.type === "blog" && node.frontmatter.lang === "de")
                 .map(node => {
                   return Object.assign({}, node.frontmatter, {
                     description: node.excerpt,
@@ -168,16 +167,15 @@ module.exports = {
               {
                 allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] },
+                  filter: {slug: {glob: "blog/*/de"}}
                 ) {
                   nodes {
                     excerpt
                     html
+                    slug
                     frontmatter {
                       title
                       date(formatString: "dddd, Do MMMM YYYY", locale: "de")
-                      path
-                      lang
-                      type
                     }
                   }
                 }
@@ -196,7 +194,6 @@ module.exports = {
           {
             serialize: ({query: {site, allMdx}}) => {
               return allMdx.nodes
-                .filter(node => node.frontmatter.type === "blog" && node.frontmatter.lang === "en")
                 .map(node => {
                   return Object.assign({}, node.frontmatter, {
                     description: node.excerpt,
@@ -211,6 +208,7 @@ module.exports = {
               {
                 allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] },
+                  filter: {slug: {glob: "blog/*/en"}}
                 ) {
                   nodes {
                     excerpt
@@ -218,9 +216,6 @@ module.exports = {
                     frontmatter {
                       title
                       date(formatString: "dddd, Do MMMM YYYY", locale: "en")
-                      path
-                      lang
-                      type
                     }
                   }
                 }
