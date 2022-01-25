@@ -9,7 +9,7 @@ import {
     FacebookIcon,
     TelegramIcon,
     TwitterIcon,
-    WhatsappIcon,
+    WhatsappIcon
 } from "react-share";
 import Menu from "@mui/material/Menu";
 import ShareIcon from "@mui/icons-material/Share"
