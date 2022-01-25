@@ -69,6 +69,10 @@ module.exports = {
             matchPath: '/:lang?/blog/:uid',
             getLanguageFromPath: true,
           },
+          {
+            matchPath: '/:lang?/blog',
+            getLanguageFromPath: true,
+          },
         ]
       }
     },

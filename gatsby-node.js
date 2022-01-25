@@ -90,9 +90,13 @@ exports.createPages = async ({graphql, actions, reporter}) => {
     const numPages = Math.ceil(pagesPerLang.length / postsPerPage);
 
     Array.from({length: numPages}).forEach((_, i) => {
+
+      const path = i === 0
+        ? getI18nPathFromSlug(`blog/${currentLang}`)
+        : getI18nPathFromSlug(`blog/${i + 1}/${currentLang}`)
+
       actions.createPage({
-        path: i === 0 ? getI18nPathFromSlug(`blog/${currentLang}`)
-          : getI18nPathFromSlug(`blog/${i + 1}/${currentLang}`),
+        path,
         component: components['blogList'],
         context: {
           slugGlobFilter: `blog/**/${currentLang}`,
