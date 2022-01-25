@@ -19,9 +19,6 @@ const theme = createTheme({
     },
     typography: {
         fontFamily: "Montserrat",
-        body1: {
-            fontSize: '1.1em'
-        },
         h1: {
             fontFamily: "Playfair Display",
             fontWeight: "700"
