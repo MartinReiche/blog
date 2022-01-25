@@ -1,8 +1,10 @@
 export const getI18nPathFromSlug = (slug: string, defaultLang='de') => {
-    const [type, entryId, lang] = slug.split('/');
-    if (defaultLang === lang) {
-        return `/${type}/${entryId}/`;
+    const slugParts = slug.split('/');
+    if (slugParts.length == 2) {
+        const [type, lang] = slugParts;
+        return lang === defaultLang ? `/${type}/` : `/${lang}/${type}/`
     } else {
-        return `/${lang}/${type}/${entryId}/`;
+        const [type, entryId, lang] = slugParts;
+         return lang === defaultLang ? `/${type}/${entryId}/` : `/${lang}/${type}/${entryId}/`;
     }
 };
