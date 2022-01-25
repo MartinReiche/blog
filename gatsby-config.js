@@ -50,6 +50,30 @@ module.exports = {
         name: `locale`
       }
     },
+     {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Martin Reiche | Blog`,
+        short_name: `Martin Reiche`,
+        description: DESCRIPTION_DE,
+        lang: 'de',
+        start_url: `/`,
+        background_color: `#242b38`,
+        theme_color: `#242b38`,
+        display: `standalone`,
+        icon: `src/images/logo_bright.svg`, // This path is relative to the root of the site.
+        cache_busting_mode: 'none',
+        localize: [
+          {
+            start_url: `/en/`,
+            lang: `en`,
+            name: `Martin Reiche | Blog`,
+            short_name: `Martin Reiche`,
+            description: DESCRIPTION_EN,
+          },
+        ],
+      },
+    },
     {
       resolve: `gatsby-plugin-react-i18next`,
       options: {
@@ -223,37 +247,11 @@ module.exports = {
         ],
       },
     },
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Martin Reiche | Blog`,
-        short_name: `Martin Reiche`,
-        description: DESCRIPTION_DE,
-        lang: 'de',
-        start_url: `/`,
-        background_color: `#242b38`,
-        theme_color: `#242b38`,
-        display: `standalone`,
-        icon: `src/images/logo_bright.svg`, // This path is relative to the root of the site.
-        cache_busting_mode: 'none',
-        localize: [
-          {
-            start_url: `/en/`,
-            lang: `en`,
-            name: `Martin Reiche | Blog`,
-            short_name: `Martin Reiche`,
-            description: DESCRIPTION_EN,
-          },
-        ],
-      },
-    },
     // 'gatsby-plugin-remove-serviceworker',
     {
       resolve: 'gatsby-plugin-offline',
       options: {
-        workboxConfig: {
-          globPatterns: ['**/logo_bright*']
-        }
+        debug: true
       }
     }
   ],
