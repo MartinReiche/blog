@@ -226,26 +226,36 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Martin Reiche`,
+        name: `Martin Reiche | Blog`,
         short_name: `Martin Reiche`,
+        description: DESCRIPTION_DE,
+        lang: 'de',
         start_url: `/`,
         background_color: `#242b38`,
-        // This will impact how browsers show your PWA/website
-        // https://css-tricks.com/meta-theme-color-and-trickery/
         theme_color: `#242b38`,
-        display: `minimal-ui`,
+        display: `standalone`,
         icon: `src/images/logo_bright.svg`, // This path is relative to the root of the site.
-        cache_busting_mode: 'none'
+        cache_busting_mode: 'none',
+        localize: [
+          {
+            start_url: `/en/`,
+            lang: `en`,
+            name: `Martin Reiche | Blog`,
+            short_name: `Martin Reiche`,
+            description: DESCRIPTION_EN,
+          },
+        ],
       },
     },
-    {
-      resolve: 'gatsby-plugin-offline',
-      options: {
-        workboxConfig: {
-          globPatterns: ['**/logo_bright*']
-        }
-      }
-    }
+    'gatsby-plugin-remove-serviceworker',
+    // {
+    //   resolve: 'gatsby-plugin-offline',
+    //   options: {
+    //     workboxConfig: {
+    //       globPatterns: ['**/logo_bright*']
+    //     }
+    //   }
+    // }
   ],
 }
 
