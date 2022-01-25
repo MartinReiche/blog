@@ -89,7 +89,7 @@ export default function ShareButtons({title, description}: InferProps<typeof Sha
             <Box sx={{display: {xs: 'block', sm: "none"}}}>
                 <IconButton
                     id="basic-button"
-                    color="secondary"
+                    color="primary"
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-label="Share on Social Media"
