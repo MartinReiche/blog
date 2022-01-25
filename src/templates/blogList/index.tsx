@@ -85,6 +85,7 @@ const BlogListPage: React.FC<BlogData> = ({data, pageContext}) => {
                     showFirstButton={numPages > 2}
                     showLastButton={numPages > 2}
                     siblingCount={0}
+                    renderItem={renderPaginationItem}
                     size="small"
                   />
                 </Box>}
