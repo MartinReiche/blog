@@ -247,15 +247,15 @@ module.exports = {
         ],
       },
     },
-    'gatsby-plugin-remove-serviceworker',
-    // {
-    //   resolve: 'gatsby-plugin-offline',
-    //   options: {
-    //     workboxConfig: {
-    //       globPatterns: ['**/logo_bright*']
-    //     }
-    //   }
-    // }
+    // 'gatsby-plugin-remove-serviceworker',
+    {
+      resolve: 'gatsby-plugin-offline',
+      options: {
+        workboxConfig: {
+          globPatterns: ['**/logo_bright*']
+        }
+      }
+    }
   ],
 }
 
