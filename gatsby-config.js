@@ -228,7 +228,7 @@ module.exports = {
       options: {
         name: `Martin Reiche`,
         short_name: `Martin Reiche`,
-        start_url: `${process.env.SITE_URL}`,
+        start_url: `/`,
         background_color: `#242b38`,
         // This will impact how browsers show your PWA/website
         // https://css-tricks.com/meta-theme-color-and-trickery/
