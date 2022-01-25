@@ -100,22 +100,8 @@ module.exports = {
       }
     },
     {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Martin Reiche`,
-        short_name: `Martin Reiche`,
-        start_url: `/`,
-        background_color: `#663399`,
-        // This will impact how browsers show your PWA/website
-        // https://css-tricks.com/meta-theme-color-and-trickery/
-        // theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/logo_bright.svg`, // This path is relative to the root of the site.
-      },
-    },
-    {
       resolve: `gatsby-theme-material-ui`,
-       options: {
+      options: {
         webFontsConfig: {
           fonts: {
             google2: [
@@ -237,7 +223,29 @@ module.exports = {
         ],
       },
     },
-    'gatsby-plugin-offline'
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Martin Reiche`,
+        short_name: `Martin Reiche`,
+        start_url: `${process.env.SITE_URL}`,
+        background_color: `#242b38`,
+        // This will impact how browsers show your PWA/website
+        // https://css-tricks.com/meta-theme-color-and-trickery/
+        theme_color: `#242b38`,
+        display: `minimal-ui`,
+        icon: `src/images/logo_bright.svg`, // This path is relative to the root of the site.
+        cache_busting_mode: 'none'
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-offline',
+      options: {
+        workboxConfig: {
+          globPatterns: ['**/logo_bright*']
+        }
+      }
+    }
   ],
 }
 
