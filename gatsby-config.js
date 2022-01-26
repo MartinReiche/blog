@@ -247,13 +247,18 @@ module.exports = {
         ],
       },
     },
+    // `gatsby-plugin-perf-budgets`,
+    // {
+    //   resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
+    //   options: {
+    //     disabled: false,
+    //     analyzerMode: "server",
+    //     analyzerPort: "8888",
+    //   },
+    // },
     // 'gatsby-plugin-remove-serviceworker',
-    {
-      resolve: 'gatsby-plugin-offline',
-      options: {
-        debug: true
-      }
-    }
+    // 'gatsby-plugin-no-sourcemaps',
+    'gatsby-plugin-offline',
   ],
 }
 
