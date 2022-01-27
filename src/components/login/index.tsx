@@ -69,9 +69,9 @@ export default function Login() {
             }}>
                 <Container maxWidth={"xs"}>
                     <Typography
-                        variant={"h2"}
+                        variant="h2"
                         component="h1"
-                        color="primary.dark"
+                        color="primary"
                         gutterBottom
                         sx={{textAlign: 'center'}}
                     >

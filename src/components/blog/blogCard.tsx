@@ -24,9 +24,10 @@ export default function BlogCard({blogData}: InferProps<typeof BlogCard.propType
                     <CardHeader
                         title={
                             <Typography
-                                variant="h2"
+                                variant="h3"
                                 component="h1"
-                                color="primary.dark"
+                                color="primary"
+                                sx={{my: 1}}
                             >
                                 {title}
                             </Typography>
@@ -36,7 +37,7 @@ export default function BlogCard({blogData}: InferProps<typeof BlogCard.propType
                                 <Typography
                                     variant="h5"
                                     component="h2"
-                                    sx={{mb: 2}}
+                                    sx={{mb: 2 }}
                                 >
                                     {description}
                                 </Typography>
@@ -60,9 +61,9 @@ export default function BlogCard({blogData}: InferProps<typeof BlogCard.propType
                     {excerpt}
                 </Typography>
             </CardContent>
-            <CardActions sx={{justifyContent: 'flex-end'}}>
+            <CardActions sx={{justifyContent: 'flex-start', px: 2, pb: 2}}>
                 <Link to={path} underline="none">
-                    <Button color="secondary">
+                    <Button variant="outlined" size="small">
                         {t("i18n:blog:continue-reading")}
                     </Button>
                 </Link>

@@ -4,6 +4,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import {GitHub, Twitter} from "@mui/icons-material";
+import { Link as GatsbyThemeLink } from "gatsby-theme-material-ui"
 
 import {useTranslation} from "gatsby-plugin-react-i18next";
 import Link from '../link';
@@ -28,15 +30,40 @@ const Footer = () => {
         <AppBar position="static" color="primary">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Grid container justifyContent="center" spacing={5} alignItems="center">
-                        <Grid item>
-                            <Typography>
+                    <Grid
+                        container
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+
+                        <Grid item sx={{p: 2}}>
+                            <GatsbyThemeLink
+                                to="https://twitter.com/martin_reiche"
+                                target="_blank"
+                                sx={{color: 'inherit'}}
+                            >
+                                <Twitter sx={{ display: 'block'}}/>
+                            </GatsbyThemeLink>
+                        </Grid>
+                        <Grid item sx={{p: 2}}>
+                            <GatsbyThemeLink
+                                to="https://github.com/MartinReiche/blog"
+                                target="_blank"
+                                sx={{color: 'inherit'}}
+                            >
+                                <GitHub sx={{ display: 'block'}}/>
+                            </GatsbyThemeLink>
+                        </Grid>
+                        <Grid item sx={{p: 2}}>
+                            <Typography variant="body2">
                                 © {new Date().getFullYear()} {data.site.siteMetadata.author.name}
                             </Typography>
                         </Grid>
-                        <Grid item>
+                        <Grid item sx={{p: 2}}>
                             <Link to="/impressum/" sx={{color: 'inherit'}}>
-                                {t('i18n:impressum')}
+                                <Typography variant="body2">
+                                    {t('i18n:impressum')}
+                                </Typography>
                             </Link>
                         </Grid>
                     </Grid>

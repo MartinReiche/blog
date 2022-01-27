@@ -50,6 +50,30 @@ module.exports = {
         name: `locale`
       }
     },
+     {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Martin Reiche | Blog`,
+        short_name: `Martin Reiche`,
+        description: DESCRIPTION_DE,
+        lang: 'de',
+        start_url: `/`,
+        background_color: `#242b38`,
+        theme_color: `#242b38`,
+        display: `standalone`,
+        icon: `src/images/logo_bright.svg`, // This path is relative to the root of the site.
+        cache_busting_mode: 'none',
+        localize: [
+          {
+            start_url: `/en/`,
+            lang: `en`,
+            name: `Martin Reiche | Blog`,
+            short_name: `Martin Reiche`,
+            description: DESCRIPTION_EN,
+          },
+        ],
+      },
+    },
     {
       resolve: `gatsby-plugin-react-i18next`,
       options: {
@@ -69,12 +93,15 @@ module.exports = {
             matchPath: '/:lang?/blog/:uid',
             getLanguageFromPath: true,
           },
+          {
+            matchPath: '/:lang?/blog',
+            getLanguageFromPath: true,
+          },
         ]
       }
     },
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
-    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -97,22 +124,8 @@ module.exports = {
       }
     },
     {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Martin Reiche`,
-        short_name: `Martin Reiche`,
-        start_url: `/`,
-        background_color: `#663399`,
-        // This will impact how browsers show your PWA/website
-        // https://css-tricks.com/meta-theme-color-and-trickery/
-        // theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/logo_bright.svg`, // This path is relative to the root of the site.
-      },
-    },
-    {
       resolve: `gatsby-theme-material-ui`,
-       options: {
+      options: {
         webFontsConfig: {
           fonts: {
             google2: [
@@ -153,7 +166,6 @@ module.exports = {
           {
             serialize: ({query: {site, allMdx}}) => {
               return allMdx.nodes
-                .filter(node => node.frontmatter.type === "blog" && node.frontmatter.lang === "de")
                 .map(node => {
                   return Object.assign({}, node.frontmatter, {
                     description: node.excerpt,
@@ -168,16 +180,15 @@ module.exports = {
               {
                 allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] },
+                  filter: {slug: {glob: "blog/*/de"}}
                 ) {
                   nodes {
                     excerpt
                     html
+                    slug
                     frontmatter {
                       title
                       date(formatString: "dddd, Do MMMM YYYY", locale: "de")
-                      path
-                      lang
-                      type
                     }
                   }
                 }
@@ -196,7 +207,6 @@ module.exports = {
           {
             serialize: ({query: {site, allMdx}}) => {
               return allMdx.nodes
-                .filter(node => node.frontmatter.type === "blog" && node.frontmatter.lang === "en")
                 .map(node => {
                   return Object.assign({}, node.frontmatter, {
                     description: node.excerpt,
@@ -211,6 +221,7 @@ module.exports = {
               {
                 allMdx(
                   sort: { order: DESC, fields: [frontmatter___date] },
+                  filter: {slug: {glob: "blog/*/en"}}
                 ) {
                   nodes {
                     excerpt
@@ -218,9 +229,6 @@ module.exports = {
                     frontmatter {
                       title
                       date(formatString: "dddd, Do MMMM YYYY", locale: "en")
-                      path
-                      lang
-                      type
                     }
                   }
                 }
@@ -239,6 +247,18 @@ module.exports = {
         ],
       },
     },
+    // `gatsby-plugin-perf-budgets`,
+    // {
+    //   resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
+    //   options: {
+    //     disabled: false,
+    //     analyzerMode: "server",
+    //     analyzerPort: "8888",
+    //   },
+    // },
+    // 'gatsby-plugin-remove-serviceworker',
+    // 'gatsby-plugin-no-sourcemaps',
+    'gatsby-plugin-offline',
   ],
 }
 

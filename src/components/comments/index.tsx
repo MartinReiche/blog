@@ -26,7 +26,7 @@ export default function Comments({title}: InferProps<typeof Comments.propTypes>)
 
     if (open) {
         return (
-            <Box id="comments-section">
+            <Box>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                     <Typography variant="h4" component="h2"  sx={{fontWeight: 'fontWeightBold'}}>
                         {t("i18n:comments")}
@@ -48,11 +48,7 @@ export default function Comments({title}: InferProps<typeof Comments.propTypes>)
         )
     } else {
         return (
-            <Button
-                onClick={handleClickOpen}
-                aria-controls="comments-section"
-                color="secondary"
-            >
+            <Button onClick={handleClickOpen}>
                 {t("i18n:comments:comment")}
             </Button>
         )

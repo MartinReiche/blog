@@ -1,4 +1,6 @@
 const path = require(`path`)
+const {getI18nPathFromSlug} = require('./src/utils/getI18nPath');
+
 
 // workaround for i18n prefixes on catchall client-only routes
 function langPrefix(page) {
@@ -7,8 +9,9 @@ function langPrefix(page) {
     ? ''
     : `/${page.context.language}`
 }
-exports.onCreatePage = ({ page, actions }) => {
-  const { createPage } = actions
+
+exports.onCreatePage = ({page, actions}) => {
+  const {createPage} = actions
   // Removing the ^ skips an optional /:lang prefix
   if (page.path.match(/\/app/)) {
     // adding lang if it's not the default page.
@@ -19,10 +22,13 @@ exports.onCreatePage = ({ page, actions }) => {
 
 exports.createPages = async ({graphql, actions, reporter}) => {
 
-  // Define a template for blog post
-  const blogPost = path.resolve(`./src/templates/blogPost/index.tsx`)
+  // Load components
+  const components = {
+    blog: path.resolve(`./src/templates/blogPost/index.tsx`),
+    blogList: path.resolve(`./src/templates/blogList/index.tsx`)
+  }
 
-  // Get all markdown blog posts sorted by date
+  // Get all markdown entries sorted by date
   const result = await graphql(
     `
       {
@@ -32,11 +38,7 @@ exports.createPages = async ({graphql, actions, reporter}) => {
         ) {
           nodes {
             id
-            frontmatter {
-              path
-              lang
-              type
-            }
+            slug
           }
         }
       }
@@ -51,19 +53,63 @@ exports.createPages = async ({graphql, actions, reporter}) => {
     return
   }
 
-  const posts = result.data.allMdx.nodes.filter(node => node.frontmatter.type === 'blog');
+  const pages = result.data.allMdx.nodes;
 
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
+  if (pages.length > 0) {
+    ['de', 'en'].map(currentLang => {
+      const pagesPerLang = pages
+        .map(page => ([...page.slug.split('/'), page.id, page.slug]))
+        .map(([type, entryId, lang, id, slug]) => ({type, entryId, lang, id, slug}))
+        .filter(({lang}) => lang === currentLang)
 
-
-  if (posts.length > 0) {
-    ['de', 'en'].map(lang => {
-      const languageSpecificPosts = posts.filter(post => post.frontmatter.lang === lang);
-      createMdxPages(languageSpecificPosts,blogPost,actions);
+      pagesPerLang
+        .map(page => ({...page, path: getI18nPathFromSlug(page.slug, 'de')}))
+        .map((page, i) => ({...page, previousId: i === 0 ? null : pagesPerLang[i - 1].id}))
+        .map((page, i) => ({...page, nextId: i === pagesPerLang.length - 1 ? null : pagesPerLang[i + 1].id}))
+        .forEach(({id, previousId, nextId, path, type}) => {
+          // createMdxPages();
+          actions.createPage({
+            path,
+            component: components[type],
+            context: {id, previousId, nextId},
+          })
+        });
     });
   }
+  // create blog list pages per language
+  const postsPerPage = 3;
+  ['de', 'en'].map(currentLang => {
+    const pagesPerLang = pages
+      .map(page => ([...page.slug.split('/'), page.id, page.slug]))
+      .map(([type, entryId, lang, id, slug]) => ({type, entryId, lang, id, slug}))
+      .filter(({lang}) => lang === currentLang);
+
+    const numPages = Math.ceil(pagesPerLang.length / postsPerPage);
+
+    Array.from({length: numPages}).forEach((_, i) => {
+
+      const path = i === 0
+        ? getI18nPathFromSlug(`blog/${currentLang}`)
+        : getI18nPathFromSlug(`blog/${i + 1}/${currentLang}`)
+
+      actions.createPage({
+        path,
+        component: components['blogList'],
+        context: {
+          slugGlobFilter: `blog/**/${currentLang}`,
+          limit: postsPerPage,
+          skip: i * postsPerPage,
+          numPages,
+          currentPage: i + 1,
+        },
+      })
+    });
+
+  });
+
 }
 
 
@@ -104,9 +150,6 @@ exports.createSchemaCustomization = ({actions}) => {
       title: String
       description: String
       date: Date @dateformat
-      path: String
-      lang: String
-      type: String
       title_image: Image
       gallery_images: [Image] 
     }
@@ -117,31 +160,3 @@ exports.createSchemaCustomization = ({actions}) => {
   `)
 }
 
-
-function createMdxPages(items, component, actions) {
-  const { createPage } = actions;
-  items.forEach((item, index) => {
-
-    const previousPostId = index === 0 ? null : items[index - 1].id
-    const nextPostId = index === items.length - 1 ? null : items[index + 1].id
-
-    createPage({
-      path: getI18nPath(item.frontmatter, 'de'),
-      component: component,
-      context: {
-        id: item.id,
-        previousPostId,
-        nextPostId,
-      },
-    })
-  })
-}
-
-
-const getI18nPath = (frontMatter, defaultLang) => {
-  if (defaultLang === frontMatter.lang) {
-    return `${frontMatter.path}`;
-  } else {
-    return `/${frontMatter.lang}${frontMatter.path}`;
-  }
-};

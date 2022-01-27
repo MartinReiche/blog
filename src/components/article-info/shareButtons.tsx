@@ -2,16 +2,14 @@ import * as React from "react";
 import PropTypes, {InferProps} from 'prop-types';
 import Box from "@mui/material/Box";
 import {
-    EmailShareButton,
     FacebookShareButton,
     TelegramShareButton,
     TwitterShareButton,
     WhatsappShareButton,
-    EmailIcon,
     FacebookIcon,
     TelegramIcon,
     TwitterIcon,
-    WhatsappIcon,
+    WhatsappIcon
 } from "react-share";
 import Menu from "@mui/material/Menu";
 import ShareIcon from "@mui/icons-material/Share"
@@ -54,42 +52,34 @@ export default function ShareButtons({title, description}: InferProps<typeof Sha
                     title={share.title}
                     style={{padding: '2px', display: 'flex', alignItems: 'center'}}
                 >
-                    <TwitterIcon size={30} round={true}/>
+                    <TwitterIcon size={35} round={true}/>
                 </TwitterShareButton>
                 <FacebookShareButton
                     url={share.url}
                     quote={share.title}
                     style={{padding: '2px', display: 'flex', alignItems: 'center'}}
                 >
-                    <FacebookIcon size={30} round={true}/>
+                    <FacebookIcon size={35} round={true}/>
                 </FacebookShareButton>
                 <TelegramShareButton
                     url={share.url}
                     title={share.title}
                     style={{padding: '2px', display: 'flex', alignItems: 'center'}}
                 >
-                    <TelegramIcon size={30} round={true}/>
+                    <TelegramIcon size={35} round={true}/>
                 </TelegramShareButton>
                 <WhatsappShareButton
                     url={share.url}
                     title={share.title}
                     style={{padding: '2px', display: 'flex', alignItems: 'center'}}
                 >
-                    <WhatsappIcon size={30} round={true}/>
+                    <WhatsappIcon size={35} round={true}/>
                 </WhatsappShareButton>
-                <EmailShareButton
-                    url={share.url}
-                    subject={share.title}
-                    body={share.description}
-                    style={{padding: '2px', display: 'flex', alignItems: 'center'}}
-                >
-                    <EmailIcon size={30} round={true}/>
-                </EmailShareButton>
             </Box>
             <Box sx={{display: {xs: 'block', sm: "none"}}}>
                 <IconButton
-                    color="primary"
                     id="basic-button"
+                    color="primary"
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-label="Share on Social Media"
@@ -140,15 +130,6 @@ export default function ShareButtons({title, description}: InferProps<typeof Sha
                     >
                         <WhatsappIcon size={30} round={true}/>
                     </WhatsappShareButton>
-                    <EmailShareButton
-                        url={share.url}
-                        subject={share.title}
-                        body={share.description}
-                        style={{padding: '6px', display: 'flex'}}
-                        onClick={handleClose}
-                    >
-                        <EmailIcon size={30} round={true}/>
-                    </EmailShareButton>
                 </Menu>
             </Box>
         </React.Fragment>

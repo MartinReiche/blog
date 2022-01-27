@@ -46,7 +46,7 @@ export function StepperGallery({images, imageIndex = 0, onClose, maxHeight}: Inf
 
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
-            <Box sx={{flexGrow: 1}}>
+            <Box>
                 <SwipeableViews
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                     index={activeStep}
@@ -56,20 +56,18 @@ export function StepperGallery({images, imageIndex = 0, onClose, maxHeight}: Inf
                     {images.map((step, index) => {
                         if (!step) return null;
                         return (
-                            <div key={index}>
-                                {Math.abs(activeStep - index) <= 2 ? (
-                                    <Box
-                                        sx={{
-                                            display: 'block',
-                                            overflow: 'hidden',
-                                            width: '100%',
-                                            maxHeight: maxHeight || undefined
-                                        }}
-                                    >
-                                        <GatsbyImage alt={step.title} image={getImage(step.src) as IGatsbyImageData}/>
-                                    </Box>
-                                ) : null}
-                            </div>
+                            Math.abs(activeStep - index) <= 2 ? (
+                                <Box
+                                    key={index}
+                                    sx={{ maxHeight: maxHeight || '80vh' }}
+                                >
+                                    <GatsbyImage
+                                        alt={step.title}
+                                        image={getImage(step.src) as IGatsbyImageData}
+                                    />
+                                </Box>
+
+                            ) : null
                         )
                     })}
                 </SwipeableViews>
@@ -82,7 +80,7 @@ export function StepperGallery({images, imageIndex = 0, onClose, maxHeight}: Inf
                             size="small"
                             onClick={handleNext}
                             disabled={activeStep === maxSteps - 1}
-                            sx={{ pr: 0}}
+                            sx={{pr: 0}}
                         >
                             {t('i18n:next')}
                             <KeyboardArrowRight/>
@@ -93,13 +91,14 @@ export function StepperGallery({images, imageIndex = 0, onClose, maxHeight}: Inf
                             size="small"
                             onClick={handleBack}
                             disabled={activeStep === 0}
-                            sx={{ pl: 0}}
+                            sx={{pl: 0}}
                         >
                             <KeyboardArrowLeft/>
                             {t('i18n:back')}
                         </Button>
                     }
                 />
+
             </Box>
         </ClickAwayListener>
     );

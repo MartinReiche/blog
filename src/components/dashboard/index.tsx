@@ -74,7 +74,7 @@ export default function Dashboard() {
             <Typography
                 variant="h2"
                 component="h1"
-                color="primary.dark"
+                color="primary"
                 sx={{mb: 2}}
             >
                 {t("i18n:comments")}
