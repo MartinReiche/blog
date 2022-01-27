@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes, {InferProps} from "prop-types";
 import {navigate} from "gatsby";
-import {useAuth} from "../auth-provider";
+import {useAuth} from "../auth/authProvider";
 import Loading from "../loading";
 
 function AdminGate({component: Component, location, redirectTo, requireAdmin, ...rest}: InferProps<typeof AdminGate.propTypes>) {

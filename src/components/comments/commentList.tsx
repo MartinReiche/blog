@@ -19,7 +19,7 @@ import {
 } from "firebase/firestore";
 import CommentCard from './commentCard';
 import Stack from "@mui/material/Stack";
-import {useAuth} from "../auth-provider";
+import {useAuth} from "../auth/authProvider";
 import {useInView} from 'react-intersection-observer';
 
 const LOAD_INITIAL_COMMETS = 5;

@@ -3,7 +3,7 @@ import PropTypes, {InferProps} from 'prop-types';
 import Button from "@mui/material/Button";
 import {useLocation} from "@reach/router";
 import {getAuth} from 'firebase/auth';
-import {useAuth} from "../auth-provider";
+import {useAuth} from "../auth/authProvider";
 import Link from "../link";
 import MenuItem from "@mui/material/MenuItem";
 import {Typography} from "@mui/material";

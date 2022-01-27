@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import {useFormik} from 'formik';
 import * as yup from 'yup';
 import getFirebase from "../../utils/getFirebase";
-import {useAuth} from "../auth-provider";
+import {useAuth} from "../auth/authProvider";
 import {useTranslation} from "gatsby-plugin-react-i18next";
 import {getFirestore, collection, addDoc, serverTimestamp} from "firebase/firestore";
 import {getAuth, signInAnonymously, updateProfile, User} from "firebase/auth";
