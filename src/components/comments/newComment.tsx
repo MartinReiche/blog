@@ -10,7 +10,7 @@ import * as yup from 'yup';
 import getFirebase from "../../utils/getFirebase";
 import {useAuth} from "../auth-provider";
 import {useTranslation} from "gatsby-plugin-react-i18next";
-import {collection, addDoc, serverTimestamp} from "firebase/firestore";
+import {getFirestore, collection, addDoc, serverTimestamp} from "firebase/firestore";
 import {getAuth, signInAnonymously, updateProfile, User} from "firebase/auth";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -31,6 +31,8 @@ export default function NewComment({pathname, title}: InferProps<typeof NewComme
     const [showNotification, setShowNotification] = React.useState(false);
     const [notification, setNotification] = React.useState('');
     const {user, setUser} = useAuth();
+    const app = getFirebase();
+    const db = getFirestore(app);
 
     const formik = useFormik({
         initialValues: {
@@ -39,17 +41,16 @@ export default function NewComment({pathname, title}: InferProps<typeof NewComme
         },
         validationSchema: validationSchema,
         onSubmit: async ({name, message}, {setFieldValue}) => {
-            const {db} = getFirebase();
             setSubmitting(true);
             try {
                 if (!user.isAuthenticated) {
-                    const auth = getAuth();
+                    const auth = getAuth(app);
                     const authResult = await signInAnonymously(auth);
                     await updateProfile(authResult.user, {
                         displayName: name
                     });
-                } else if (getAuth().currentUser && user.displayName !== name) {
-                    await updateProfile(getAuth().currentUser as User, {
+                } else if (getAuth(app).currentUser && user.displayName !== name) {
+                    await updateProfile(getAuth(app).currentUser as User, {
                         displayName: name
                     });
                 }
@@ -61,7 +62,7 @@ export default function NewComment({pathname, title}: InferProps<typeof NewComme
                     message,
                     title,
                     createdAt: serverTimestamp(),
-                    uid: getAuth().currentUser?.uid,
+                    uid: getAuth(app).currentUser?.uid,
                 })
                 setSubmitting(false);
                 setFieldValue('message', '', false);

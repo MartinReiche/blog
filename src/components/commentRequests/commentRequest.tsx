@@ -2,13 +2,13 @@ import * as React from 'react';
 import PropTypes, {InferProps} from 'prop-types';
 
 import getFirebase from "../../utils/getFirebase";
-import {deleteDoc, doc, collection, addDoc, Timestamp} from 'firebase/firestore';
+import {getFirestore, deleteDoc, doc, collection, addDoc, Timestamp} from 'firebase/firestore';
 import CommentCard from "../comments/commentCard";
 
 export default function CommentRequest({ commentData }: InferProps<typeof CommentRequest.propTypes>) {
+    const db = getFirestore(getFirebase());
 
     const handleRejectClick = async () => {
-        const {db} = getFirebase();
         try {
             await addDoc(collection(db, 'rejectedComments'), {
                 uid: commentData.uid,
@@ -25,7 +25,6 @@ export default function CommentRequest({ commentData }: InferProps<typeof Commen
     }
 
     const handleAcceptClick = async () => {
-        const {db} = getFirebase();
         try {
             await addDoc(collection(db, 'comments'), {
                 uid: commentData.uid,

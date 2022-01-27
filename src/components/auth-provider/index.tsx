@@ -1,6 +1,7 @@
 import * as React from "react";
 import PropTypes, {InferProps} from "prop-types";
 import getFirebase from "../../utils/getFirebase";
+import {getAuth} from 'firebase/auth';
 import {Dispatch, SetStateAction} from "react";
 
 type User = {
@@ -28,7 +29,8 @@ export function AuthProvider({children}: InferProps<typeof AuthProvider.propType
     const [user, setUser] = React.useState(defaultUser);
 
     React.useEffect(() => {
-        const {auth} = getFirebase();
+        const auth = getAuth(getFirebase());
+
 
         const cancelAuthListener = auth
             .onAuthStateChanged(async function(user) {

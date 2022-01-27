@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import Grid from "@mui/material/Grid";
 import {Container} from "@mui/material";
 import getFirebase from "../../utils/getFirebase";
-import {signInWithEmailAndPassword} from "firebase/auth";
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import Loading from "../loading";
 import Layout from "../layout";
 
@@ -33,7 +33,7 @@ export default function Login() {
         },
         validationSchema: validationSchema,
         onSubmit: async ({email, password}, {setFieldError, setFieldValue}) => {
-            const {auth} = getFirebase();
+            const auth = getAuth(getFirebase());
             setSubmitting(true)
             try {
                 await signInWithEmailAndPassword(auth, email, password);

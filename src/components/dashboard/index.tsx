@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Layout from "../layout";
 import getFirebase from "../../utils/getFirebase";
 
-import {collection, query, limit, orderBy, onSnapshot, Timestamp} from "firebase/firestore";
+import {getFirestore, collection, query, limit, orderBy, onSnapshot, Timestamp} from "firebase/firestore";
 import CommentRequest from "../commentRequests/commentRequest";
 import RejectedComment from "../commentRequests/rejectedComment";
 import Stack from "@mui/material/Stack";
@@ -34,10 +34,10 @@ export default function Dashboard() {
     const [loading, setLoading] = React.useState(true);
     const [section, setSection] = React.useState(0);
     const {t} = useTranslation();
+    const db = getFirestore(getFirebase());
 
     React.useEffect(() => {
         setLoading(true);
-        const {db} = getFirebase();
         const q = query(
             collection(db, sections[section].collection),
             orderBy("createdAt", "desc"),
