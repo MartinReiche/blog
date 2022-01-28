@@ -13,7 +13,7 @@ import Link from '../link';
 import {ChangeLocale} from "./ChangeLocale";
 // @ts-ignore because this is handled by gatsby-plugin-react-svg
 import Logo from "../../images/logo_bright.svg";
-import DashboardNavigation from "./dashboardNavigation";
+import ProfileButton from "./profileButton";
 
 const pages = [
     {label: 'i18n:blog', path: '/blog/'},
@@ -79,7 +79,7 @@ const Header = () => {
                                     </MenuItem>
                                 </Link>
                             ))}
-                            <DashboardNavigation type="menu"/>
+                            <ProfileButton type="menu"/>
                         </Menu>
                     </Box>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -99,7 +99,7 @@ const Header = () => {
                         ))}
                     </Box>
                     <Box sx={{ display: { xs: 'none', md: 'block'}}}>
-                        <DashboardNavigation type="button"/>
+                        <ProfileButton type="button"/>
                     </Box>
                     <ChangeLocale/>
                 </Toolbar>

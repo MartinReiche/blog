@@ -1,16 +1,14 @@
 import * as React from "react"
 import Layout from "../components/layout"
 import Seo from "../components/layout/seo"
-import SignInPopUp from "../components/auth/signInPopUp";
 import Box from '@mui/material/Box';
 import {graphql} from "gatsby";
-
 const IndexPage = () => {
     return (
         <Layout>
             <Seo title="Home" />
             <Box sx={{ display: 'flex', alignItems: "center", justifyContent: 'center' }}>
-                <SignInPopUp />
+
             </Box>
         </Layout>
     )

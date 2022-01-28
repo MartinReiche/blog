@@ -2,7 +2,7 @@ import * as React from "react";
 import PropTypes, {InferProps} from "prop-types";
 import {Dispatch, SetStateAction} from "react";
 
-type User = {
+export type User = {
     isAuthenticated: boolean
     isAdmin: boolean
     listening?: boolean
