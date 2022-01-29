@@ -50,6 +50,7 @@ module.exports = {
         name: `locale`
       }
     },
+
      {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -63,6 +64,9 @@ module.exports = {
         display: `standalone`,
         icon: `src/images/logo_bright.svg`, // This path is relative to the root of the site.
         cache_busting_mode: 'none',
+        icon_options: {
+          purpose: `any maskable`,
+        },
         localize: [
           {
             start_url: `/en/`,

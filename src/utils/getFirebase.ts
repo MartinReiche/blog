@@ -1,6 +1,4 @@
 import {getApps, getApp, initializeApp} from 'firebase/app';
-import {getFirestore} from 'firebase/firestore';
-import {getAuth} from 'firebase/auth';
 import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
 
 export function getFirebase() {
@@ -27,11 +25,9 @@ export function getFirebase() {
             provider: new ReCaptchaV3Provider(process.env.GATSBY_FIREBASE_RECAPTCHA_KEY as string),
             isTokenAutoRefreshEnabled: true
         });
-
-        return {app, auth: getAuth(app), db: getFirestore(app)};
+        return app;
     } else {
-        const app = getApp();
-        return {app, auth: getAuth(app), db: getFirestore(app)};
+        return getApp();
     }
 }
 

@@ -6,9 +6,20 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import NewComment from "./newComment";
-import CommentList from "./commentList";
+import CircularProgress from "@mui/material/CircularProgress";
 import {useLocation} from "@reach/router";
+
+// lazy loaded components
+const NewComment = React.lazy(() => import('./newComment'));
+const CommentList = React.lazy(() => import('./commentList'));
+
+function Loading() {
+    return (
+        <Box sx={{ p: 4, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <CircularProgress />
+        </Box>
+    )
+}
 
 export default function Comments({title}: InferProps<typeof Comments.propTypes>) {
     const {t} = useTranslation();
@@ -28,7 +39,7 @@ export default function Comments({title}: InferProps<typeof Comments.propTypes>)
         return (
             <Box>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                    <Typography variant="h4" component="h2"  sx={{fontWeight: 'fontWeightBold'}}>
+                    <Typography variant="h4" component="h2" sx={{fontWeight: 'fontWeightBold'}}>
                         {t("i18n:comments")}
                     </Typography>
                     <IconButton
@@ -42,8 +53,10 @@ export default function Comments({title}: InferProps<typeof Comments.propTypes>)
                         <CloseIcon/>
                     </IconButton>
                 </Box>
-                <NewComment pathname={pathname} title={title} />
-                <CommentList pathname={pathname} title={title} />
+                <React.Suspense fallback={<Loading />}>
+                    <NewComment pathname={pathname} title={title}/>
+                    <CommentList pathname={pathname} title={title}/>
+                </React.Suspense>
             </Box>
         )
     } else {

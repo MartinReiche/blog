@@ -1,5 +1,5 @@
 import React from "react";
-import AuthProvider from "./src/components/auth-provider";
+import AuthProvider from "./src/components/auth/authProvider";
 
 export const wrapRootElement = ({ element }) => {
   return (

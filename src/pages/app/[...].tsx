@@ -5,7 +5,7 @@ import AdminGate from "../../components/route-gates/admin-gate";
 import Dashboard from "../../components/dashboard";
 import {graphql} from "gatsby";
 
-const Path = () => (
+const App = () => (
     <React.Fragment>
         <Router basepath="/app">
             <AdminGate requireAdmin={true} component={Dashboard} path="/dashboard" redirectTo="/app/login"/>
@@ -32,4 +32,4 @@ export const query = graphql`
   }
 `;
 
-export default Path
+export default App

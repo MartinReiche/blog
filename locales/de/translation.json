@@ -5,6 +5,7 @@
   "i18n:about": "Über den Autor",
   "i18n:support": "Unterstützen",
   "i18n:impressum": "Impressum",
+  "i18n:privacy": "Datenschutzerklärung",
   "i18n:comments": "Kommentare",
   "i18n:comments:load": "Weitere Kommentare Laden",
   "i18n:comments:empty": "Bisher hat noch niemand kommentiert. Warum schreibst Du nicht einfach einen?",
@@ -28,5 +29,7 @@
   "i18n:ok": "OK",
   "i18n:cancel": "Abbrechen",
   "i18n:next": "Weiter",
-  "i18n:back": "Zurück"
+  "i18n:back": "Zurück",
+  "i18n:my-twitter": "Mein Twitter account",
+  "i18n:my-github": "Quellcode Github"
 }

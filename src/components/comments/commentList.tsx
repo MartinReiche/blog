@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import getFirebase from "../../utils/getFirebase";
 import {
+    getFirestore,
     collection,
     limit,
     onSnapshot,
@@ -18,7 +19,7 @@ import {
 } from "firebase/firestore";
 import CommentCard from './commentCard';
 import Stack from "@mui/material/Stack";
-import {useAuth} from "../auth-provider";
+import {useAuth} from "../auth/authProvider";
 import {useInView} from 'react-intersection-observer';
 
 const LOAD_INITIAL_COMMETS = 5;
@@ -43,6 +44,7 @@ export default function CommentList({pathname, title}: InferProps<typeof Comment
         threshold: 0,
         delay: 500
     });
+    const db = getFirestore(getFirebase());
 
     React.useEffect(() => {
         if (inView && comments.length === queryLimit) {
@@ -52,7 +54,6 @@ export default function CommentList({pathname, title}: InferProps<typeof Comment
 
     React.useEffect(() => {
         setLoading(true);
-        const {db} = getFirebase();
         const q = query(
             collection(db, "comments"),
             where("pathname", '==', pathname),
@@ -78,7 +79,6 @@ export default function CommentList({pathname, title}: InferProps<typeof Comment
     }, [queryLimit])
 
     const handleRejectClick = async (commentData: Comment) => {
-        const {db} = getFirebase();
         try {
             await addDoc(collection(db, 'rejectedComments'), {
                 uid: commentData.uid,

@@ -67,7 +67,7 @@ export default function BlogPostTemplate({data}: InferProps<typeof BlogPostTempl
                     {!image && <Divider/>}
                     <section itemProp="articleBody">
                         <MDXProvider>
-                            <MDXRenderer galleryImages={gallery_images} test={"Test Props privided in MDXRenderer"}>
+                            <MDXRenderer galleryImages={gallery_images}>
                                 {post.body}
                             </MDXRenderer>
                         </MDXProvider>
