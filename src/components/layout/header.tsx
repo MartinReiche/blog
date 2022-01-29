@@ -90,9 +90,7 @@ const Header = () => {
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
                             <Link to={page.path} key={page.label} sx={{color: 'inherit'}}>
-                                <Button
-                                    sx={{my: 2, display: 'block', color: 'inherit'}}
-                                >
+                                <Button sx={{my: 2, display: 'block', color: 'inherit'}}>
                                     {t(page.label)}
                                 </Button>
                             </Link>

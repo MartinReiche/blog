@@ -50,6 +50,7 @@ module.exports = {
         name: `locale`
       }
     },
+
      {
       resolve: `gatsby-plugin-manifest`,
       options: {

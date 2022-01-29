@@ -7,17 +7,17 @@ import {graphql} from "gatsby";
 import {MDXRenderer} from "gatsby-plugin-mdx";
 import Typography from "@mui/material/Typography";
 
-function ImpressumPage({data}: InferProps<typeof ImpressumPage.propTypes>) {
-    const {impressum, locales} = data
+function PrivacyPage({data}: InferProps<typeof PrivacyPage.propTypes>) {
+    const {privacy, locales} = data
     const lang = locales.edges[0].node.language;
-    const body = impressum.nodes.filter(node => node.slug.endsWith(lang)).map(node => node.body);
+    const body = privacy.nodes.filter(node => node.slug.endsWith(lang)).map(node => node.body);
 
     const {t} = useTranslation();
     return (
         <Layout>
-            <Seo title={t("i18n:impressum")}/>
+            <Seo title={t("i18n:privacy")}/>
             <Typography lang={lang} variant="h2" component="h1" color="primary" sx={{hyphens: 'auto'}}>
-                {t("i18n:impressum")}
+                {t("i18n:privacy")}
             </Typography>
             <MDXRenderer>
                 {body[0]}
@@ -28,7 +28,7 @@ function ImpressumPage({data}: InferProps<typeof ImpressumPage.propTypes>) {
 
 
 export const query = graphql`
-  query ImpressumPageQuery($language: String!) {
+  query PrivacyPageQuery($language: String!) {
     locales: allLocale(filter: {language: {eq: $language}}) {
       edges {
         node {
@@ -38,7 +38,7 @@ export const query = graphql`
         }
       }
     }
-    impressum: allMdx(filter: {slug: {glob: "legal/impressum/*"}}) {
+    privacy: allMdx(filter: {slug: {glob: "legal/privacy/*"}}) {
         nodes {
             slug        
             body
@@ -47,9 +47,9 @@ export const query = graphql`
   }
 `;
 
-ImpressumPage.propTypes = {
+PrivacyPage.propTypes = {
     data: PropTypes.shape({
-        impressum: PropTypes.shape({
+        privacy: PropTypes.shape({
             nodes: PropTypes.arrayOf(
                 PropTypes.shape({
                     slug: PropTypes.string.isRequired,
@@ -70,4 +70,4 @@ ImpressumPage.propTypes = {
     }).isRequired
 }
 
-export default ImpressumPage
+export default PrivacyPage;
